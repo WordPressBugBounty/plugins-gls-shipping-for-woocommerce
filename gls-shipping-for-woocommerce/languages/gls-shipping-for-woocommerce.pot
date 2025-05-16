@@ -1,0 +1,595 @@
+# Copyright (C) 2024 Inchoo
+# This file is distributed under the GPLv2.
+msgid ""
+msgstr ""
+"Project-Id-Version: GLS Shipping for WooCommerce 1.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gls-wp\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-12-09T10:51:53+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: gls-shipping-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: gls-shipping-for-woocommerce.php
+msgid "GLS Shipping for WooCommerce"
+msgstr ""
+
+#. Description of the plugin
+#: gls-shipping-for-woocommerce.php
+msgid "Offical GLS Shipping for WooCommerce plugin"
+msgstr ""
+
+#. Author of the plugin
+#: gls-shipping-for-woocommerce.php
+msgid "Inchoo"
+msgstr ""
+
+#. Author URI of the plugin
+#: gls-shipping-for-woocommerce.php
+msgid "https://inchoo.hr"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-bulk.php:51
+msgid "Download GLS Label"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-bulk.php:58
+msgid "Generate GLS Label"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-bulk.php:68
+msgid "Bulk Generate GLS Labels"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-bulk.php:69
+msgid "Bulk Print GLS Labels"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-bulk.php:184
+msgid "%s GLS label was successfully generated."
+msgid_plural "%s GLS labels were successfully generated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/class-gls-shipping-bulk.php:196
+msgid "%s label failed to generate."
+msgid_plural "%s labels failed to generate."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/class-gls-shipping-bulk.php:205
+#: includes/admin/class-gls-shipping-bulk.php:242
+msgid "Failed order IDs: %s"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-bulk.php:221
+msgid "GLS label for %s order has been generated. "
+msgid_plural "GLS labels for %s orders have been generated. "
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/class-gls-shipping-bulk.php:233
+msgid "%s label failed to generate. "
+msgid_plural "%s labels failed to generate. "
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/class-gls-shipping-bulk.php:248
+msgid "<br><a href=\"%s\" target=\"_blank\">Click here to download the PDF</a>"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-bulk.php:255
+msgid "An error occurred while generating the GLS labels PDF."
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:32
+msgid "GLS Shipping Info"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:53
+#: includes/public/class-gls-shipping-my-account.php:32
+msgid "GLS Pickup Location:"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:54
+#: includes/public/class-gls-shipping-my-account.php:33
+msgid "ID:"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:55
+#: includes/public/class-gls-shipping-my-account.php:34
+msgid "Name:"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:56
+#: includes/public/class-gls-shipping-my-account.php:35
+msgid "Address:"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:57
+#: includes/public/class-gls-shipping-my-account.php:36
+msgid "Country:"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:62
+msgid "GLS Tracking Numbers:"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:71
+#: includes/public/class-gls-shipping-my-account.php:43
+msgid "GLS Tracking Number: "
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:90
+msgid "Print Label"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:93
+#: includes/admin/class-gls-shipping-order.php:103
+msgid "Number of Packages:"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:97
+msgid "Regenerate Shipping Label"
+msgstr ""
+
+#: includes/admin/class-gls-shipping-order.php:107
+msgid "Generate Shipping Label"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:20
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:18
+msgid "GLS Parcel Locker"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:21
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:19
+msgid "Parcel Shop Delivery (PSD) service that ships parcels to the GLS Locker. GLS Parcel Locker can be selected from the interactive GLS Parcel Shop and GLS Locker finder map."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:28
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:24
+msgid "Delivery to GLC Parcel Locker"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:52
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:54
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:52
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:54
+#: includes/methods/class-gls-shipping-method-zones.php:52
+#: includes/methods/class-gls-shipping-method.php:66
+msgid "Title"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:54
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:54
+#: includes/methods/class-gls-shipping-method-zones.php:54
+msgid "Title to be displayed on site"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:55
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:57
+msgid "Delivery to GLS Parcel Locker"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:58
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:60
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:58
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:60
+#: includes/methods/class-gls-shipping-method-zones.php:58
+#: includes/methods/class-gls-shipping-method.php:72
+msgid "Shipping Price"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:60
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:62
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:60
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:62
+#: includes/methods/class-gls-shipping-method-zones.php:60
+#: includes/methods/class-gls-shipping-method.php:74
+msgid "Enter the shipping price for this method."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:65
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:67
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:65
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:67
+#: includes/methods/class-gls-shipping-method-zones.php:65
+#: includes/methods/class-gls-shipping-method.php:79
+msgid "Weight Based Rates: max_weight|cost"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:67
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:69
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:67
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:69
+#: includes/methods/class-gls-shipping-method-zones.php:67
+#: includes/methods/class-gls-shipping-method.php:81
+msgid "Optional: Enter weight based rates (one per line). Format: max_weight|cost. Example: 1|100 means up to 1 %s costs 100. Leave empty to use default price."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:74
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:76
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:74
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:76
+#: includes/methods/class-gls-shipping-method-zones.php:74
+#: includes/methods/class-gls-shipping-method.php:88
+msgid "Free Shipping Threshold"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:76
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:78
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:76
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:78
+#: includes/methods/class-gls-shipping-method-zones.php:76
+#: includes/methods/class-gls-shipping-method.php:90
+msgid "Cart total amount above which shipping will be free. Set to 0 to disable."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:48
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:48
+#: includes/methods/class-gls-shipping-method.php:60
+msgid "Enable"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:50
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:50
+#: includes/methods/class-gls-shipping-method.php:62
+msgid "Enable this shipping globally."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:56
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:56
+#: includes/methods/class-gls-shipping-method.php:68
+msgid "Title to be display on site"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:87
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:87
+#: includes/methods/class-gls-shipping-method.php:99
+msgid "Supported Countries"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:92
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:92
+#: includes/methods/class-gls-shipping-method.php:137
+msgid "Croatia"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:93
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:93
+#: includes/methods/class-gls-shipping-method.php:138
+msgid "Czech Republic"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:94
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:94
+#: includes/methods/class-gls-shipping-method.php:139
+msgid "Hungary"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:95
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:95
+#: includes/methods/class-gls-shipping-method.php:140
+msgid "Romania"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:96
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:96
+#: includes/methods/class-gls-shipping-method.php:141
+msgid "Slovenia"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:97
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:97
+#: includes/methods/class-gls-shipping-method.php:142
+msgid "Slovakia"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:98
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:98
+#: includes/methods/class-gls-shipping-method.php:143
+msgid "Serbia"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-locker.php:102
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:102
+#: includes/methods/class-gls-shipping-method.php:106
+msgid "Select countries to support for this shipping method."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:20
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:18
+msgid "GLS Parcel Shop"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:21
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:19
+msgid "Parcel Shop Delivery (PSD) service that ships parcels to the GLS Parcel Shop. GLS Parcel Shop can be selected from the interactive GLS Parcel Shop and GLS Locker finder map."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:28
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:24
+msgid "Delivery to GLC Parcel Shop"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:55
+#: includes/methods/class-gls-shipping-method-parcel-shop.php:57
+msgid "Delivery to GLS Parcel Shop"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-zones.php:20
+#: includes/methods/class-gls-shipping-method.php:20
+msgid "GLS Delivery to Address"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-zones.php:21
+#: includes/methods/class-gls-shipping-method.php:21
+msgid "Parcels are shipped to the customer’s address."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method-zones.php:28
+#: includes/methods/class-gls-shipping-method-zones.php:55
+#: includes/methods/class-gls-shipping-method.php:26
+#: includes/methods/class-gls-shipping-method.php:69
+msgid "Delivery to Address"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:109
+msgid "GLS API Settings"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:111
+msgid "API Settings for all of the GLS Shipping Options."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:114
+msgid "Client ID"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:116
+msgid "Enter your GLS Client ID."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:120
+msgid "Username"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:122
+msgid "Enter your GLS Username."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:126
+msgid "Password"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:128
+msgid "Enter your GLS Password."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:132
+#: includes/public/class-gls-shipping-assets.php:49
+msgid "Country"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:134
+msgid "Select the country for the GLS service."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:147
+msgid "Mode"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:149
+msgid "Select the mode for the GLS API."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:152
+msgid "Production"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:153
+msgid "Sandbox"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:157
+msgid "Enable Logging"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:159
+msgid "Enable logging of GLS API requests and responses"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:163
+msgid "Sender Identity Card Number. Required for Serbia."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:165
+msgid "Only in Serbia! REQUIRED"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:170
+msgid "Content. Only for Serbia."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:172
+msgid "Parcel info printed on label. Only for Serbia."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:177
+msgid "Order Reference Format"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:179
+msgid "Enter the format for order reference. Use {{order_id}} where you want the order ID to be inserted."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:184
+msgid "Print Position"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:186
+msgid "Select the Print Position."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:196
+msgid "Type of Printer"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:198
+msgid "Select the Printer Type."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:208
+msgid "GLS Services"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:210
+msgid "Enable/Disable each of GLS Services for your store."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:213
+msgid "Guaranteed 24h Service (24H)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:215
+msgid "Enable 24H"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:216
+msgid "Not available in Serbia."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:221
+msgid "Express Delivery Service (T09, T10, T12)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:223
+msgid "Express Delivery Service Time"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:224
+msgid "Availability depends on the country. Can’t be used with FDS and FSS services."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:234
+msgid "Contact Service (CS1)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:236
+msgid "Enable CS1"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:240
+msgid "Flexible Delivery Service (FDS)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:242
+msgid "Enable FDS"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:243
+msgid "Can’t be used with T09, T10, and T12 services."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:248
+msgid "Flexible Delivery SMS Service (FSS)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:250
+msgid "Enable FSS"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:251
+msgid "Not available without FDS service."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:256
+msgid "SMS Service (SM1)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:258
+msgid "Enable SM1"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:259
+msgid "SMS service with a maximum text length of 130."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:264
+msgid "SMS Service Text"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:266
+msgid "SM1 Service Text"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:267
+msgid "SMS Service Text. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:271
+msgid "SMS Pre-advice Service (SM2)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:273
+msgid "Enable SM2"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:277
+msgid "Addressee Only Service (AOS)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:279
+msgid "Enable AOS"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:283
+msgid "Insurance Service (INS)"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:285
+msgid "Enable INS"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:286
+msgid "Available within specific limits based on the country."
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:291
+#: includes/methods/class-gls-shipping-method.php:293
+msgid "Store Phone Number"
+msgstr ""
+
+#: includes/methods/class-gls-shipping-method.php:294
+msgid "Store Phone number that will be sent to GLS as a contact information."
+msgstr ""
+
+#: includes/public/class-gls-shipping-assets.php:46
+msgid "Pickup Location"
+msgstr ""
+
+#: includes/public/class-gls-shipping-assets.php:47
+msgid "Name"
+msgstr ""
+
+#: includes/public/class-gls-shipping-assets.php:48
+msgid "Address"
+msgstr ""
+
+#: includes/public/class-gls-shipping-checkout.php:67
+msgid "Please select a parcel locker/shop by clicking on Select Parcel button."
+msgstr ""
+
+#: includes/public/class-gls-shipping-checkout.php:101
+msgid "Select Parcel Locker"
+msgstr ""
+
+#: includes/public/class-gls-shipping-checkout.php:103
+msgid "Select Parcel Shop"
+msgstr ""
