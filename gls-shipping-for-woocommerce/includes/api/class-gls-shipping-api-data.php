@@ -67,16 +67,16 @@ class GLS_Shipping_API_Data
             GLS_SHIPPING_METHOD_PARCEL_LOCKER_ZONES_ID,
             GLS_SHIPPING_METHOD_PARCEL_SHOP_ZONES_ID
         ];
-    
+
         foreach ($shipping_methods as $shipping_method) {
             if (in_array($shipping_method->get_method_id(), $gls_shipping_methods)) {
                 return true;
             }
         }
-    
+
         return false;
     }
-    
+
 
     /**
      * Gets pickup information for an order.
@@ -356,9 +356,10 @@ class GLS_Shipping_API_Data
     /**
      * Gets the pickup address for the shipment.
      *
+     * @param \WC_Order $order The WooCommerce order instance.
      * @return array The pickup address information.
      */
-    public function get_pickup_address()
+    public function get_pickup_address($order)
     {
         $store_address = get_option('woocommerce_store_address');
         $store_address_2 = get_option('woocommerce_store_address_2');
@@ -381,7 +382,7 @@ class GLS_Shipping_API_Data
             'ContactEmail' => get_option('admin_email')
         ];
 
-        return apply_filters('gls_shipping_for_woocommerce_api_get_pickup_address', $pickup_address);
+        return apply_filters('gls_shipping_for_woocommerce_api_get_pickup_address', $pickup_address, $order);
     }
 
     /**
@@ -431,7 +432,7 @@ class GLS_Shipping_API_Data
                 'ClientReference' => $clientReference,
                 'Count' => 1
             ];
-            $parcel['PickupAddress'] = $this->get_pickup_address();
+            $parcel['PickupAddress'] = $this->get_pickup_address($order);
             $parcel['DeliveryAddress'] = $this->get_delivery_address($order);
             $parcel['ServiceList'] = $this->get_service_list($order, $is_parcel_delivery_service, $pickup_info);
 
@@ -439,7 +440,7 @@ class GLS_Shipping_API_Data
                 $parcel['SenderIdentityCardNumber'] = $senderIdentityCardNumber;
                 $parcel['Content'] = $content;
             }
-            
+
             if ($order->get_payment_method() === 'cod') {
                 $parcel['CODAmount'] = $order->get_total();
                 $parcel['CODReference'] = $orderId;
@@ -487,7 +488,7 @@ class GLS_Shipping_API_Data
             'ClientReference' => $clientReference,
             'Count' => $count
         ];
-        $parcel['PickupAddress'] = $this->get_pickup_address();
+        $parcel['PickupAddress'] = $this->get_pickup_address($order);
         $parcel['DeliveryAddress'] = $this->get_delivery_address($order);
         $parcel['ServiceList'] = $this->get_service_list($order, $is_parcel_delivery_service, $pickup_info);
 
@@ -495,7 +496,7 @@ class GLS_Shipping_API_Data
             $parcel['SenderIdentityCardNumber'] = $senderIdentityCardNumber;
             $parcel['Content'] = $content;
         }
-        
+
         if ($order->get_payment_method() === 'cod') {
             $parcel['CODAmount'] = $order->get_total();
             $parcel['CODReference'] = $orderId;
@@ -512,4 +513,3 @@ class GLS_Shipping_API_Data
         return $params;
     }
 }
-

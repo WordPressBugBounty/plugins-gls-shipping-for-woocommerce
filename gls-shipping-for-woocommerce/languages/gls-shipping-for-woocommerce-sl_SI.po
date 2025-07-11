@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-01 08:11+0000\n"
-"PO-Revision-Date: 2024-12-09 12:27+0000\n"
+"PO-Revision-Date: 2025-03-21 14:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -13,12 +13,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.7; wp-6.5.3"
+"X-Loco-Version: 2.6.7; wp-6.6.1"
 
 #: includes/admin/class-gls-shipping-bulk.php:184
 msgid "%s GLS label was successfully generated."
 msgid_plural "%s GLS labels were successfully generated."
-msgstr[0] "Oznaka GLS %s je bila uspešno ustvarjena."
+msgstr[0] "Oznaka GLS %s je bila uspešno ustvarjena.lo"
 msgstr[1] "Oznaka GLS %s je bila uspešno ustvarjena."
 msgstr[2] "Oznaka GLS %s je bila uspešno ustvarjena."
 msgstr[3] "Oznaka GLS %s je bila uspešno ustvarjena."
@@ -125,7 +125,7 @@ msgstr "Država:"
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:92
 #: includes/methods/class-gls-shipping-method.php:137
 msgid "Croatia"
-msgstr "Slovenia"
+msgstr "Hrvaška"
 
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:93
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:93
