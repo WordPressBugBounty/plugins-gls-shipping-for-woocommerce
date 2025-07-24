@@ -31,8 +31,8 @@ class GLS_Shipping_Assets
      */
     public static function footer_map()
     {
-        echo '<gls-dpm-dialog country="hr" class="inchoo-gls-map gls-map-locker" filter-type="parcel-locker"></gls-dpm-dialog>';
-        echo '<gls-dpm-dialog country="hr" class="inchoo-gls-map gls-map-shop" filter-type="parcel-shop"></gls-dpm-dialog>';
+        echo '<gls-dpm-dialog country="hr" style="position: relative; z-index: 9999;" class="inchoo-gls-map gls-map-locker" filter-type="parcel-locker"></gls-dpm-dialog>';
+        echo '<gls-dpm-dialog country="hr" style="position: relative; z-index: 9999;" class="inchoo-gls-map gls-map-shop" filter-type="parcel-shop"></gls-dpm-dialog>';
     }
 
     /**
