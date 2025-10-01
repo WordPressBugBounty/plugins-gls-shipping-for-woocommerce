@@ -27,10 +27,15 @@ class GLS_Shipping_Assets
     /**
      * Echoes GLS map dialog HTML in the footer.
      *
-     * Outputs a GLS map dialog element, used for displaying the GLS map, to the footer of the page.
+     * Outputs a GLS map dialog element, used for displaying the GLS map, to the footer of cart and checkout pages only.
      */
     public static function footer_map()
     {
+        // Only output map dialogs on cart and checkout pages
+        if (!is_cart() && !is_checkout()) {
+            return;
+        }
+
         echo '<gls-dpm-dialog country="hr" style="position: relative; z-index: 9999;" class="inchoo-gls-map gls-map-locker" filter-type="parcel-locker"></gls-dpm-dialog>';
         echo '<gls-dpm-dialog country="hr" style="position: relative; z-index: 9999;" class="inchoo-gls-map gls-map-shop" filter-type="parcel-shop"></gls-dpm-dialog>';
     }
@@ -38,10 +43,15 @@ class GLS_Shipping_Assets
     /**
      * Enqueues necessary JavaScript for the frontend.
      *
-     * Loads the JavaScript required for the GLS Shipping functionality on the frontend.
+     * Loads the JavaScript required for the GLS Shipping functionality on cart and checkout pages only.
      */
     public static function load_scripts()
     {
+        // Only load scripts on cart and checkout pages
+        if (!is_cart() && !is_checkout()) {
+            return;
+        }
+
         $translation_array = array(
             'pickup_location' => __('Pickup Location', 'gls-shipping-for-woocommerce'),
             'name' => __('Name', 'gls-shipping-for-woocommerce'),
@@ -77,12 +87,24 @@ class GLS_Shipping_Assets
     {
         $currentScreen = get_current_screen();
         $screenID = $currentScreen->id;
-        if ($screenID === "shop_order" || $screenID === "woocommerce_page_wc-orders" || $screenID === "edit-shop_order") {
+        
+        // Check if we're on order pages OR shipping settings page
+        $isOrderPage = ($screenID === "shop_order" || $screenID === "woocommerce_page_wc-orders" || $screenID === "edit-shop_order");
+        $isShippingSettingsPage = ($screenID === "woocommerce_page_wc-settings" && isset($_GET['tab']) && $_GET['tab'] === 'shipping');
+        
+        if ($isOrderPage || $isShippingSettingsPage) {
             $translation_array = array(
                 'ajaxNonce' => wp_create_nonce('import-nonce'),
                 'adminAjaxUrl' => admin_url('admin-ajax.php'),
+                'pickup_location' => __('Pickup Location', 'gls-shipping-for-woocommerce'),
+                'name' => __('Name', 'gls-shipping-for-woocommerce'),
+                'address' => __('Address', 'gls-shipping-for-woocommerce'),
+                'country' => __('Country', 'gls-shipping-for-woocommerce'),
             );
-            wp_enqueue_script('gls-shipping-backend', GLS_SHIPPING_URL . 'includes/admin/assets/js/gls-shipping-admin.js', array(), GLS_SHIPPING_VERSION, true);
+            
+            // GLS map scripts will be loaded dynamically when needed
+            
+            wp_enqueue_script('gls-shipping-backend', GLS_SHIPPING_URL . 'includes/admin/assets/js/gls-shipping-admin.js', array('jquery'), time(), true);
             wp_localize_script(
                 'gls-shipping-backend',
                 'gls_croatia',
@@ -90,6 +112,8 @@ class GLS_Shipping_Assets
             );
         }
     }
+
+
 }
 
 GLS_Shipping_Assets::init();

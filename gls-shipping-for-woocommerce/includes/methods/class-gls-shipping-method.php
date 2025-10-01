@@ -101,7 +101,7 @@ max_weight|cost',
 						'class'   => 'wc-enhanced-select',
 						'css'     => 'width: 400px;',
 						'options' => WC()->countries->get_countries(),
-						'default' => array('HR', 'CZ', 'HU', 'RO', 'SI', 'SK', 'RS'),
+						'default' => array('AT', 'BE', 'BG', 'CZ', 'DE', 'DK', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU', 'IT', 'LU', 'NL', 'PL', 'PT', 'RO', 'RS', 'SI', 'SK'),
 						'desc_tip' => true,
 						'description' => __('Select countries to support for this shipping method.', 'gls-shipping-for-woocommerce'),
 					),
@@ -109,6 +109,23 @@ max_weight|cost',
 						'title'       => __('GLS API Settings', 'gls-shipping-for-woocommerce'),
 						'type'        => 'title',
 						'description' => __('API Settings for all of the GLS Shipping Options.', 'gls-shipping-for-woocommerce'),
+					),
+					'account_mode' => array(
+						'title'       => __('Account Mode', 'gls-shipping-for-woocommerce'),
+						'type'        => 'select',
+						'description' => __('Choose between single or multiple GLS accounts.', 'gls-shipping-for-woocommerce'),
+						'desc_tip'    => true,
+						'default'     => 'single',
+						'options'     => array(
+							'single'   => __('Single GLS Account', 'gls-shipping-for-woocommerce'),
+							'multiple' => __('Multiple GLS Accounts', 'gls-shipping-for-woocommerce'),
+						),
+					),
+					'gls_accounts_grid' => array(
+						'title'       => __('GLS Accounts', 'gls-shipping-for-woocommerce'),
+						'type'        => 'gls_accounts_grid',
+						'description' => __('Manage multiple GLS accounts. Each account can have different credentials and country settings.', 'gls-shipping-for-woocommerce'),
+						'desc_tip'    => true,
 					),
 					'client_id' => array(
 						'title'       => __('Client ID', 'gls-shipping-for-woocommerce'),
@@ -134,8 +151,8 @@ max_weight|cost',
 						'description' => __('Select the country for the GLS service.', 'gls-shipping-for-woocommerce'),
 						'desc_tip'    => true,
 						'options'     => array(
-							'HR' => __('Croatia', 'gls-shipping-for-woocommerce'),
 							'CZ' => __('Czech Republic', 'gls-shipping-for-woocommerce'),
+							'HR' => __('Croatia', 'gls-shipping-for-woocommerce'),
 							'HU' => __('Hungary', 'gls-shipping-for-woocommerce'),
 							'RO' => __('Romania', 'gls-shipping-for-woocommerce'),
 							'SI' => __('Slovenia', 'gls-shipping-for-woocommerce'),
@@ -153,6 +170,12 @@ max_weight|cost',
 							'sandbox'    => __('Sandbox', 'gls-shipping-for-woocommerce'),
 						),
 					),
+					'sender_addresses_grid' => array(
+						'title'       => __('Sender Addresses', 'gls-shipping-for-woocommerce'),
+						'type'        => 'sender_addresses_grid',
+						'description' => __('Manage multiple sender addresses. Each address can be set as default for shipments.', 'gls-shipping-for-woocommerce'),
+						'desc_tip'    => true,
+					),
 					'logging' => array(
 						'title'       => __('Enable Logging', 'gls-shipping-for-woocommerce'),
 						'type'        => 'checkbox',
@@ -167,10 +190,10 @@ max_weight|cost',
 						'desc_tip' => true,
 					),
 					'content' => array(
-						'title' => __('Content. Only for Serbia.', 'gls-shipping-for-woocommerce'),
+						'title' => __('Content', 'gls-shipping-for-woocommerce'),
 						'type' => 'text',
-						'description' => __('Parcel info printed on label. Only for Serbia.', 'gls-shipping-for-woocommerce'),
-						'default' => '',
+						'description' => __('Parcel info printed on label. Use placeholders: {{order_id}}, {{customer_comment}}, {{customer_name}}, {{customer_email}}, {{customer_phone}}, {{order_total}}, {{shipping_method}}.', 'gls-shipping-for-woocommerce'),
+						'default' => 'Order: {{order_id}}',
 						'desc_tip' => true,
 					),
 					'client_reference_format' => array(
@@ -295,11 +318,361 @@ max_weight|cost',
 						'desc_tip' => true,
 					),
 					'sub_section2' => array(
+						'title'       => __('Display Options', 'gls-shipping-for-woocommerce'),
+						'type'        => 'title',
+						'description' => __('Customize how GLS shipping methods are displayed to customers.', 'gls-shipping-for-woocommerce'),
+					),
+					'show_gls_logo' => array(
+						'title'       => __('Show GLS Logo', 'gls-shipping-for-woocommerce'),
+						'type'        => 'checkbox',
+						'label'       => __('Display GLS logo next to shipping methods', 'gls-shipping-for-woocommerce'),
+						'description' => __('Show the GLS logo icon next to all GLS shipping methods in cart and checkout to highlight your GLS delivery options.', 'gls-shipping-for-woocommerce'),
+						'desc_tip'    => true,
+						'default'     => 'no',
+					),
+					'sub_section3' => array(
 						'title'       => '',
 						'type'        => 'title',
 					),
 				);
 			}
+
+			/**
+			 * Generate custom field for sender addresses grid
+			 */
+			public function generate_sender_addresses_grid_html($key, $data)
+			{
+				$field_key = $this->get_field_key($key);
+				$defaults = array(
+					'title'       => '',
+					'disabled'    => false,
+					'class'       => '',
+					'css'         => '',
+					'placeholder' => '',
+					'type'        => 'sender_addresses_grid',
+					'desc_tip'    => false,
+					'description' => '',
+				);
+
+				$data = wp_parse_args($data, $defaults);
+				$addresses = $this->get_option('sender_addresses_grid', array());
+				
+				ob_start();
+				?>
+				<tr valign="top" id="sender_addresses_row">
+					<th scope="row" class="titledesc">
+						<label for="<?php echo esc_attr($field_key); ?>"><?php echo wp_kses_post($data['title']); ?> <?php echo $this->get_tooltip_html($data); ?></label>
+					</th>
+					<td class="forminp">
+						<fieldset>
+							<legend class="screen-reader-text"><span><?php echo wp_kses_post($data['title']); ?></span></legend>
+							<div id="sender-addresses-container">
+								<table class="sender-addresses-table wp-list-table widefat fixed striped" style="margin-bottom: 10px;">
+									<thead>
+										<tr>
+											<th><?php _e('Default', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php _e('Name', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php _e('Actions', 'gls-shipping-for-woocommerce'); ?></th>
+										</tr>
+									</thead>
+									<tbody id="sender-addresses-tbody">
+										<!-- Default "No custom address" option -->
+										<tr class="sender-address-row" data-index="none">
+											<td>
+												<input type="radio" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>_default" value="none" <?php checked(!$this->has_default_address($addresses), true); ?> class="address-default-radio" />
+											</td>
+											<td>
+												<span class="address-name-display" style="font-style: italic; color: #666;"><?php _e('No custom sender address (use default from store settings)', 'gls-shipping-for-woocommerce'); ?></span>
+											</td>
+											<td>
+												<!-- No actions for default option -->
+											</td>
+										</tr>
+										<?php
+										if (!empty($addresses)) {
+											foreach ($addresses as $index => $address) {
+												$this->render_address_row($index, $address);
+											}
+										}
+										?>
+									</tbody>
+								</table>
+								<button type="button" id="add-sender-address" class="button button-secondary"><?php _e('Add New Address', 'gls-shipping-for-woocommerce'); ?></button>
+							</div>
+							<?php echo $this->get_description_html($data); ?>
+						</fieldset>
+					</td>
+				</tr>
+				<?php
+				return ob_get_clean();
+			}
+
+			/**
+			 * Generate custom field for GLS accounts grid
+			 */
+			public function generate_gls_accounts_grid_html($key, $data)
+			{
+				$field_key = $this->get_field_key($key);
+				$defaults = array(
+					'title'       => '',
+					'disabled'    => false,
+					'class'       => '',
+					'css'         => '',
+					'placeholder' => '',
+					'type'        => 'gls_accounts_grid',
+					'desc_tip'    => false,
+					'description' => '',
+				);
+
+				$data = wp_parse_args($data, $defaults);
+				$accounts = $this->get_option('gls_accounts_grid', array());
+				
+				ob_start();
+				?>
+				<tr valign="top" id="gls_accounts_row" style="<?php echo $this->get_option('account_mode', 'single') === 'single' ? 'display: none;' : ''; ?>">
+					<th scope="row" class="titledesc">
+						<label for="<?php echo esc_attr($field_key); ?>"><?php echo wp_kses_post($data['title']); ?> <?php echo $this->get_tooltip_html($data); ?></label>
+					</th>
+					<td class="forminp">
+						<fieldset>
+							<legend class="screen-reader-text"><span><?php echo wp_kses_post($data['title']); ?></span></legend>
+							<div id="gls-accounts-container">
+								<table class="gls-accounts-table wp-list-table widefat fixed striped" style="margin-bottom: 10px;">
+									<thead>
+										<tr>
+											<th><?php _e('Active', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php _e('Client ID', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php _e('Actions', 'gls-shipping-for-woocommerce'); ?></th>
+										</tr>
+									</thead>
+									<tbody id="gls-accounts-tbody">
+										<?php
+										if (!empty($accounts)) {
+											foreach ($accounts as $index => $account) {
+												$this->render_account_row($index, $account);
+											}
+										}
+										?>
+									</tbody>
+								</table>
+								<button type="button" id="add-gls-account" class="button button-secondary"><?php _e('Add New Account', 'gls-shipping-for-woocommerce'); ?></button>
+							</div>
+							<?php echo $this->get_description_html($data); ?>
+						</fieldset>
+					</td>
+				</tr>
+				<?php
+				return ob_get_clean();
+			}
+
+			/**
+			 * Check if any address is set as default
+			 */
+			private function has_default_address($addresses)
+			{
+				if (empty($addresses)) {
+					return false;
+				}
+				
+				foreach ($addresses as $address) {
+					if (!empty($address['is_default']) && $address['is_default']) {
+						return true;
+					}
+				}
+				
+				return false;
+			}
+
+			/**
+			 * Render a single address row
+			 */
+			private function render_address_row($index, $address = array())
+			{
+				$address = wp_parse_args($address, array(
+					'name' => '',
+					'contact_name' => '',
+					'street' => '',
+					'house_number' => '',
+					'city' => '',
+					'postcode' => '',
+					'country' => 'HR',
+					'phone' => '',
+					'email' => '',
+					'is_default' => false
+				));
+				?>
+				<tr class="sender-address-row" data-index="<?php echo $index; ?>">
+					<td>
+						<input type="radio" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>_default" value="<?php echo $index; ?>" <?php checked($address['is_default'], true); ?> class="address-default-radio" />
+					</td>
+					<td>
+						<span class="address-name-display"><?php echo esc_html($address['name'] ?: __('New Address', 'gls-shipping-for-woocommerce')); ?></span>
+					</td>
+					<td>
+						<button type="button" class="button button-small edit-address"><?php _e('Edit', 'gls-shipping-for-woocommerce'); ?></button>
+						<button type="button" class="button button-small delete-address"><?php _e('Delete', 'gls-shipping-for-woocommerce'); ?></button>
+						
+						<!-- Hidden fields to store all address data -->
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][name]" value="<?php echo esc_attr($address['name']); ?>" class="address-name" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][contact_name]" value="<?php echo esc_attr($address['contact_name']); ?>" class="address-contact-name" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][street]" value="<?php echo esc_attr($address['street']); ?>" class="address-street" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][house_number]" value="<?php echo esc_attr($address['house_number']); ?>" class="address-house-number" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][city]" value="<?php echo esc_attr($address['city']); ?>" class="address-city" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][postcode]" value="<?php echo esc_attr($address['postcode']); ?>" class="address-postcode" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][country]" value="<?php echo esc_attr($address['country']); ?>" class="address-country" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][phone]" value="<?php echo esc_attr($address['phone']); ?>" class="address-phone" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][email]" value="<?php echo esc_attr($address['email']); ?>" class="address-email" />
+						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][is_default]" value="<?php echo $address['is_default'] ? '1' : '0'; ?>" class="address-is-default" />
+					</td>
+				</tr>
+				<?php
+			}
+
+			/**
+			 * Render a single account row
+			 */
+			private function render_account_row($index, $account = array())
+			{
+				$account = wp_parse_args($account, array(
+					'name' => '',
+					'client_id' => '',
+					'username' => '',
+					'password' => '',
+					'country' => 'HR',
+					'mode' => 'production',
+					'active' => false
+				));
+				?>
+				<tr class="gls-account-row" data-index="<?php echo $index; ?>">
+					<td>
+						<input type="radio" name="gls_account_active_selection" value="<?php echo $index; ?>" <?php checked($account['active'], true); ?> class="account-active-radio" />
+					</td>
+					<td>
+						<span class="account-clientid-display"><?php echo esc_html($account['client_id'] ?: __('New Account', 'gls-shipping-for-woocommerce')); ?></span>
+					</td>
+					<td>
+						<button type="button" class="button button-small edit-account"><?php _e('Edit', 'gls-shipping-for-woocommerce'); ?></button>
+						<button type="button" class="button button-small delete-account"><?php _e('Delete', 'gls-shipping-for-woocommerce'); ?></button>
+						
+						<!-- Hidden fields to store all account data -->
+						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][name]" value="<?php echo esc_attr($account['name']); ?>" class="account-name" />
+						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][client_id]" value="<?php echo esc_attr($account['client_id']); ?>" class="account-client-id" />
+						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][username]" value="<?php echo esc_attr($account['username']); ?>" class="account-username" />
+						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][password]" value="<?php echo esc_attr($account['password']); ?>" class="account-password" />
+						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][country]" value="<?php echo esc_attr($account['country']); ?>" class="account-country" />
+						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][mode]" value="<?php echo esc_attr($account['mode']); ?>" class="account-mode" />
+						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][active]" value="<?php echo $account['active'] ? '1' : '0'; ?>" class="account-active-hidden" />
+					</td>
+				</tr>
+				<?php
+			}
+
+			/**
+			 * Validate account_mode field type
+			 */
+			public function validate_account_mode_field($key, $value)
+			{
+				// Sanitize the value
+				$sanitized_value = sanitize_text_field($value);
+				
+				// If user selected multiple mode, check if they have any valid accounts
+				if ($sanitized_value === 'multiple') {
+					$accounts_data = isset($_POST[$this->get_field_key('gls_accounts_grid')]) ? $_POST[$this->get_field_key('gls_accounts_grid')] : array();
+					
+					// Check if there are any accounts with required credentials
+					$has_valid_accounts = false;
+					if (is_array($accounts_data)) {
+						foreach ($accounts_data as $account) {
+							if (is_array($account) && 
+								!empty($account['client_id']) && 
+								!empty($account['username']) && 
+								!empty($account['password'])) {
+								$has_valid_accounts = true;
+								break;
+							}
+						}
+					}
+					
+					// If no valid accounts found, force back to single mode
+					if (!$has_valid_accounts) {
+						// Add admin notice to inform user
+						add_action('admin_notices', function() {
+							echo '<div class="notice notice-warning is-dismissible">';
+							echo '<p>' . __('Multiple accounts mode was not saved because no valid GLS accounts were found. Please add at least one account to use multiple accounts mode.', 'gls-shipping-for-woocommerce') . '</p>';
+							echo '</div>';
+						});
+						
+						return 'single';
+					}
+				}
+				
+				return $sanitized_value;
+			}
+
+			/**
+			 * Validate gls_accounts_grid field type
+			 */
+			public function validate_gls_accounts_grid_field($key, $value)
+			{
+				return GLS_Shipping_Account_Helper::validate_accounts_grid($value);
+			}
+
+			/**
+			 * Validate sender_addresses_grid field type
+			 */
+			public function validate_sender_addresses_grid_field($key, $value)
+			{
+				if (!is_array($value)) {
+					return array();
+				}
+
+				$validated_addresses = array();
+				$has_default = false;
+
+				foreach ($value as $index => $address) {
+					if (is_array($address)) {
+						// Validate required fields
+						$required_fields = array('name', 'street', 'house_number', 'city', 'postcode', 'country');
+						$is_valid = true;
+
+						foreach ($required_fields as $field) {
+							if (empty($address[$field])) {
+								$is_valid = false;
+								break;
+							}
+						}
+
+						if ($is_valid) {
+							$validated_address = array(
+								'name' => sanitize_text_field($address['name']),
+								'contact_name' => sanitize_text_field($address['contact_name'] ?? ''),
+								'street' => sanitize_text_field($address['street']),
+								'house_number' => sanitize_text_field($address['house_number']),
+								'city' => sanitize_text_field($address['city']),
+								'postcode' => sanitize_text_field($address['postcode']),
+								'country' => sanitize_text_field($address['country']),
+								'phone' => sanitize_text_field($address['phone'] ?? ''),
+								'email' => sanitize_email($address['email'] ?? ''),
+								'is_default' => !empty($address['is_default']) && $address['is_default'] === '1'
+							);
+
+							// Ensure only one default address
+							if ($validated_address['is_default']) {
+								if ($has_default) {
+									$validated_address['is_default'] = false;
+								} else {
+									$has_default = true;
+								}
+							}
+
+							$validated_addresses[] = $validated_address;
+						}
+					}
+				}
+
+				return $validated_addresses;
+			}
+
 
 			/**
 			 * Calculates the shipping rate based on the package details.

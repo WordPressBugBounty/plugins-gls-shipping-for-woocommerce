@@ -36,6 +36,16 @@ class GLS_Shipping_Bulk
 
         // Enqueue admin styles
         add_action('admin_print_styles', array($this, 'admin_enqueue_styles'));
+
+        // Add GLS Tracking Number column to orders list (both standard and HPOS)
+        add_filter('manage_edit-shop_order_columns', array($this, 'add_gls_parcel_id_column'));
+        add_filter('manage_woocommerce_page_wc-orders_columns', array($this, 'add_gls_parcel_id_column'));
+        
+        // Column content for standard WooCommerce
+        add_action('manage_shop_order_posts_custom_column', array($this, 'populate_gls_parcel_id_column'), 10, 2);
+        
+        // Column content for HPOS - unified approach
+        add_action('manage_woocommerce_page_wc-orders_custom_column', array($this, 'populate_gls_parcel_id_column'), 10, 2);
     }
 
     // Add GLS-specific order actions
@@ -77,23 +87,12 @@ class GLS_Shipping_Bulk
             $processed = 0;
             $failed_orders = array();
             foreach ($order_ids as $order_id) {
-                try {
-                    // Prepare data for API request
-                    $count = 1;
-                    $prepare_data = new GLS_Shipping_API_Data($order_id);
-                    $data = $prepare_data->generate_post_fields($count);
-
-                    // Send order to GLS API
-                    $api = new GLS_Shipping_API_Service();
-                    $body = $api->send_order($data);
-
-                    // Save label and tracking information
-                    $this->order_handler->save_label_and_tracking_info($body['body'], $order_id);
-
+                // Use centralized label generation method
+                $result = $this->order_handler->generate_single_order_label($order_id);
+                
+                if ($result['success']) {
                     $processed++;
-                } catch (Exception $e) {
-                    // Log any errors and add to failed orders
-                    error_log("Failed to generate GLS label for order $order_id: " . $e->getMessage());
+                } else {
                     $failed_orders[] = $order_id;
                 }
             }
@@ -126,6 +125,49 @@ class GLS_Shipping_Bulk
             $pdf_url = $this->bulk_create_print_labels($body);
     
             if ($pdf_url) {
+                // Save tracking numbers to order meta
+                if (!empty($body['PrintLabelsInfoList'])) {
+                    // Group tracking codes by order ID to handle multiple parcels per order
+                    $orders_data = array();
+                    
+                    foreach ($body['PrintLabelsInfoList'] as $labelInfo) {
+                        if (isset($labelInfo['ClientReference'])) {
+                            $order_id = str_replace('Order:', '', $labelInfo['ClientReference']);
+                            
+                            if (!isset($orders_data[$order_id])) {
+                                $orders_data[$order_id] = array(
+                                    'tracking_codes' => array(),
+                                    'parcel_ids' => array()
+                                );
+                            }
+                            
+                            if (isset($labelInfo['ParcelNumber'])) {
+                                $orders_data[$order_id]['tracking_codes'][] = $labelInfo['ParcelNumber'];
+                            }
+                            if (isset($labelInfo['ParcelId'])) {
+                                $orders_data[$order_id]['parcel_ids'][] = $labelInfo['ParcelId'];
+                            }
+                        }
+                    }
+                    
+                    // Now save all tracking codes for each order
+                    foreach ($orders_data as $order_id => $data) {
+                        $order = wc_get_order($order_id);
+                        if ($order) {
+                            if (!empty($data['tracking_codes'])) {
+                                $order->update_meta_data('_gls_tracking_codes', $data['tracking_codes']);
+                            }
+                            if (!empty($data['parcel_ids'])) {
+                                $order->update_meta_data('_gls_parcel_ids', $data['parcel_ids']);
+                            }
+                            
+                            // Save bulk PDF URL to individual orders so tracking button appears
+                            $order->update_meta_data('_gls_print_label', $pdf_url);
+                            $order->save();
+                        }
+                    }
+                }
+
                 // Add query args to URL for displaying notices and providing PDF link
                 $redirect = add_query_arg(
                     array(
@@ -161,7 +203,8 @@ class GLS_Shipping_Bulk
     
         $label_print = implode(array_map('chr', $body['Labels']));
         $upload_dir = wp_upload_dir();
-        $file_name = 'shipping_label_bulk_' . time() . '.pdf';
+        $timestamp = current_time('YmdHis');
+        $file_name = 'shipping_label_bulk_' . $timestamp . '.pdf';
         $file_url = $upload_dir['url'] . '/' . $file_name;
         $file_path = $upload_dir['path'] . '/' . $file_name;
         
@@ -182,6 +225,7 @@ class GLS_Shipping_Bulk
                 // Prepare success message
                 $message = sprintf(
                     _n(
+                        /* translators: %s: number of generated labels */
                         '%s GLS label was successfully generated.',
                         '%s GLS labels were successfully generated.',
                         $generated,
@@ -194,6 +238,7 @@ class GLS_Shipping_Bulk
                 if ($failed > 0) {
                     $message .= ' ' . sprintf(
                         _n(
+                            /* translators: %s: number of failed labels */
                             '%s label failed to generate.',
                             '%s labels failed to generate.',
                             $failed,
@@ -202,6 +247,7 @@ class GLS_Shipping_Bulk
                         number_format_i18n($failed)
                     );
                     $message .= ' ' . sprintf(
+                        /* translators: %s: comma-separated list of order IDs that failed */
                         __('Failed order IDs: %s', 'gls-shipping-for-woocommerce'),
                         implode(', ', $failed_orders)
                     );
@@ -219,6 +265,7 @@ class GLS_Shipping_Bulk
                     // Prepare success message
                     $message = sprintf(
                         _n(
+                            /* translators: %s: number of orders processed */
                             'GLS label for %s order has been generated. ',
                             'GLS labels for %s orders have been generated. ',
                             $printed,
@@ -231,6 +278,7 @@ class GLS_Shipping_Bulk
                     if ($failed > 0) {
                         $message .= sprintf(
                             _n(
+                                /* translators: %s: number of failed labels */
                                 '%s label failed to generate. ',
                                 '%s labels failed to generate. ',
                                 $failed,
@@ -245,6 +293,7 @@ class GLS_Shipping_Bulk
                     }
                     
                     $message .= sprintf(
+                        /* translators: %s: URL to download the PDF file */
                         __('<br><a href="%s" target="_blank">Click here to download the PDF</a>', 'gls-shipping-for-woocommerce'),
                         esc_url($pdf_url)
                     );
@@ -273,8 +322,96 @@ class GLS_Shipping_Bulk
                 a.button.gls-generate-label::after {
                     content: '\\f502';
                 }
+				.wc-action-button-gls-download-label {
+					background: #c0e2ad !important;
+					color: #2c4700 !important;
+					border-color: #2c4700 !important;
+				}
+
+				.wc-action-button-gls-generate-label {
+					background: #c8e7f2 !important;
+					color: #2c4700 !important;
+					border-color: #2c4700 !important;
+				}
             ";
             wp_add_inline_style('woocommerce_admin_styles', $custom_css);
+        }
+    }
+
+    /**
+     * Add GLS Tracking Number column to orders list
+     */
+    public function add_gls_parcel_id_column($columns)
+    {
+        // Insert the GLS Tracking Number column after the order status column
+        $new_columns = array();
+        foreach ($columns as $key => $value) {
+            $new_columns[$key] = $value;
+            if ($key === 'order_status') {
+                $new_columns['gls_parcel_id'] = __('GLS Tracking Number', 'gls-shipping-for-woocommerce');
+            }
+        }
+        return $new_columns;
+    }
+
+    /**
+     * Populate GLS Tracking Number column content (works for both standard and HPOS)
+     */
+    public function populate_gls_parcel_id_column($column, $order_data)
+    {
+        if ($column === 'gls_parcel_id') {
+            // Handle different parameter types for standard vs HPOS
+            if (is_object($order_data)) {
+                // HPOS passes order object
+                $order_id = $order_data->get_id();
+            } else {
+                // Standard WooCommerce passes post ID
+                $order_id = $order_data;
+            }
+            $this->display_parcel_ids($order_id);
+        }
+    }
+
+    /**
+     * Display tracking numbers for an order
+     */
+    private function display_parcel_ids($order_id)
+    {
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            echo '-';
+            return;
+        }
+
+        $tracking_numbers = array();
+
+        // Get tracking numbers from _gls_tracking_codes meta (preferred)
+        $stored_tracking_codes = $order->get_meta('_gls_tracking_codes', true);
+        if (!empty($stored_tracking_codes)) {
+            if (is_array($stored_tracking_codes)) {
+                foreach ($stored_tracking_codes as $tracking_code) {
+                    if (!in_array($tracking_code, $tracking_numbers)) {
+                        $tracking_numbers[] = esc_html($tracking_code);
+                    }
+                }
+            } else {
+                if (!in_array($stored_tracking_codes, $tracking_numbers)) {
+                    $tracking_numbers[] = esc_html($stored_tracking_codes);
+                }
+            }
+        } else {
+            // Legacy support - check for single tracking code
+            $legacy_tracking_code = $order->get_meta('_gls_tracking_code', true);
+            if (!empty($legacy_tracking_code)) {
+                $tracking_numbers[] = esc_html($legacy_tracking_code);
+            }
+        }
+
+        // Display the tracking numbers
+        if (!empty($tracking_numbers)) {
+            echo implode(' ', $tracking_numbers);
+        } else {
+            echo '-';
         }
     }
 }

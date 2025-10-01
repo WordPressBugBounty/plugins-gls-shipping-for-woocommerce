@@ -91,6 +91,18 @@ class GLS_Shipping_API_Data
     }
 
     /**
+     * Gets phone number with shipping priority over billing.
+     *
+     * @param \WC_Order $order The WooCommerce order instance.
+     * @return string The phone number, preferring shipping over billing.
+     */
+    private function get_order_phone($order)
+    {
+        $shipping_phone = $order->get_shipping_phone();
+        return !empty($shipping_phone) ? $shipping_phone : $order->get_billing_phone();
+    }
+
+    /**
      * Retrieves a specific setting option.
      *
      * @param string $key The key of the option to retrieve.
@@ -98,7 +110,7 @@ class GLS_Shipping_API_Data
      */
     public function get_option($key)
     {
-        return isset($this->shipping_method_settings[$key]) ? $this->shipping_method_settings[$key] : null;
+        return GLS_Shipping_Account_Helper::get_account_setting($key);
     }
 
     /**
@@ -109,10 +121,18 @@ class GLS_Shipping_API_Data
      * @param array|null $pickup_info Pickup information for the order.
      * @return array List of services included in the shipping.
      */
-    public function get_service_list($order, $is_parcel_delivery_service, $pickup_info)
+    public function get_service_list($order, $is_parcel_delivery_service, $pickup_info, $custom_services = null)
     {
         $express_service_is_valid = false;
         $service_list = [];
+        
+        // If no custom services provided, try to get saved order services first
+        if ($custom_services === null) {
+            $saved_order_services = $order->get_meta('_gls_services', true);
+            if (!empty($saved_order_services) && is_array($saved_order_services)) {
+                $custom_services = $saved_order_services;
+            }
+        }
 
         // Parcel Shop Delivery Service
         if ($is_parcel_delivery_service) {
@@ -129,20 +149,22 @@ class GLS_Shipping_API_Data
         }
 
         // Guaranteed 24h Service
-        if ($this->get_option('service_24h') === 'yes' && $order->get_shipping_country() !== 'RS') {
+        $service_24h = $custom_services['service_24h'] ?? $this->get_option('service_24h');
+        if ($service_24h === 'yes' && $order->get_shipping_country() !== 'RS') {
             $service_list[] = ['Code' => '24H'];
         }
 
         // Express Delivery Service
-        $expressDeliveryTime = $this->get_option('express_delivery_service');
+        $expressDeliveryTime = $custom_services['express_delivery_service'] ?? $this->get_option('express_delivery_service');
         if (!$is_parcel_delivery_service && $expressDeliveryTime && $this->isExpressDeliverySupported($expressDeliveryTime, $order)) {
             $express_service_is_valid = true;
             $service_list[] = ['Code' => $expressDeliveryTime];
         }
 
         // Contact Service
-        if (!$is_parcel_delivery_service && $this->get_option('contact_service') === 'yes') {
-            $recipientPhoneNumber = $order->get_billing_phone();
+        $contact_service = $custom_services['contact_service'] ?? $this->get_option('contact_service');
+        if (!$is_parcel_delivery_service && $contact_service === 'yes') {
+            $recipientPhoneNumber = $this->get_order_phone($order);
             $service_list[] = [
                 'Code' => 'CS1',
                 'CS1Parameter' => [
@@ -152,7 +174,8 @@ class GLS_Shipping_API_Data
         }
 
         // Flexible Delivery Service
-        if (!$is_parcel_delivery_service && $this->get_option('flexible_delivery_service') === 'yes' && !$express_service_is_valid) {
+        $flexible_delivery_service = $custom_services['flexible_delivery_service'] ?? $this->get_option('flexible_delivery_service');
+        if (!$is_parcel_delivery_service && $flexible_delivery_service === 'yes' && !$express_service_is_valid) {
             $recipientEmail = $order->get_billing_email();
             $service_list[] = [
                 'Code' => 'FDS',
@@ -163,8 +186,9 @@ class GLS_Shipping_API_Data
         }
 
         // Flexible Delivery SMS Service
-        if (!$is_parcel_delivery_service && $this->get_option('flexible_delivery_sms_service') === 'yes' && $this->get_option('flexible_delivery_service') === 'yes' && !$express_service_is_valid) {
-            $recipientPhoneNumber = $order->get_billing_phone();
+        $flexible_delivery_sms_service = $custom_services['flexible_delivery_sms_service'] ?? $this->get_option('flexible_delivery_sms_service');
+        if (!$is_parcel_delivery_service && $flexible_delivery_sms_service === 'yes' && $flexible_delivery_service === 'yes' && !$express_service_is_valid) {
+            $recipientPhoneNumber = $this->get_order_phone($order);
             $service_list[] = [
                 'Code' => 'FSS',
                 'FSSParameter' => [
@@ -174,9 +198,10 @@ class GLS_Shipping_API_Data
         }
 
         // SMS Service
-        if ($this->get_option('sms_service') === 'yes') {
-            $sm1Text = $this->get_option('sms_service_text');
-            $recipientPhoneNumber = $order->get_billing_phone();
+        $sms_service = $custom_services['sms_service'] ?? $this->get_option('sms_service');
+        if ($sms_service === 'yes') {
+            $sm1Text = $custom_services['sms_service_text'] ?? $this->get_option('sms_service_text');
+            $recipientPhoneNumber = $this->get_order_phone($order);
             $service_list[] = [
                 'Code' => 'SM1',
                 'SM1Parameter' => [
@@ -186,8 +211,9 @@ class GLS_Shipping_API_Data
         }
 
         // SMS Pre-advice Service
-        if ($this->get_option('sms_pre_advice_service') === 'yes') {
-            $recipientPhoneNumber = $order->get_billing_phone();
+        $sms_pre_advice_service = $custom_services['sms_pre_advice_service'] ?? $this->get_option('sms_pre_advice_service');
+        if ($sms_pre_advice_service === 'yes') {
+            $recipientPhoneNumber = $this->get_order_phone($order);
             $service_list[] = [
                 'Code' => 'SM2',
                 'SM2Parameter' => [
@@ -197,7 +223,8 @@ class GLS_Shipping_API_Data
         }
 
         // Addressee Only Service
-        if (!$is_parcel_delivery_service && $this->get_option('addressee_only_service') === 'yes') {
+        $addressee_only_service = $custom_services['addressee_only_service'] ?? $this->get_option('addressee_only_service');
+        if (!$is_parcel_delivery_service && $addressee_only_service === 'yes') {
             $recipientName = $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name();
             $service_list[] = [
                 'Code' => 'AOS',
@@ -208,7 +235,8 @@ class GLS_Shipping_API_Data
         }
 
         // Insurance Service
-        if ($this->get_option('insurance_service') === 'yes' && $this->isInsuranceAllowed($order)) {
+        $insurance_service = $custom_services['insurance_service'] ?? $this->get_option('insurance_service');
+        if ($insurance_service === 'yes' && $this->isInsuranceAllowed($order)) {
             $service_list[] = [
                 'Code' => 'INS',
                 'INSParameter' => [
@@ -355,36 +383,26 @@ class GLS_Shipping_API_Data
 
     /**
      * Gets the pickup address for the shipment.
+     * 
+     * Updated to use the new dedicated sender address helper.
      *
      * @param \WC_Order $order The WooCommerce order instance.
      * @return array The pickup address information.
      */
     public function get_pickup_address($order)
     {
-        $store_address = get_option('woocommerce_store_address');
-        $store_address_2 = get_option('woocommerce_store_address_2');
-        $store_city = get_option('woocommerce_store_city');
-        $store_postcode = get_option('woocommerce_store_postcode');
-        $store_raw_country = get_option('woocommerce_default_country');
-
-        // Split the country and state
-        $split_country = explode(":", $store_raw_country);
-        $store_country = isset($split_country[0]) ? $split_country[0] : '';
-
-        $pickup_address = [
-            'Name' => get_bloginfo('name'),
-            'Street' => $store_address . ' ' . $store_address_2,
-            'City' => $store_city,
-            'ZipCode' => $store_postcode,
-            'CountryIsoCode' => $store_country,
-            'ContactName' => get_bloginfo('name'),
-            'ContactPhone' => $this->get_option('phone_number'),
-            'ContactEmail' => get_option('admin_email')
-        ];
+        // Get default sender address (includes automatic store fallback)
+        $sender_address = GLS_Shipping_Sender_Address_Helper::get_default_sender_address();
+        
+        // Format for API using helper (includes field-level fallbacks)
+        $pickup_address = GLS_Shipping_Sender_Address_Helper::format_for_api_pickup(
+            $sender_address, 
+            $this->get_option('phone_number')
+        );
 
         return apply_filters('gls_shipping_for_woocommerce_api_get_pickup_address', $pickup_address, $order);
     }
-
+    
     /**
      * Gets the delivery address for a specific order.
      *
@@ -400,7 +418,7 @@ class GLS_Shipping_API_Data
             'ZipCode' => $order->get_shipping_postcode(),
             'CountryIsoCode' => $order->get_shipping_country(),
             'ContactName' => $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name(),
-            'ContactPhone' => $order->get_billing_phone(),
+            'ContactPhone' => $this->get_order_phone($order),
             'ContactEmail' => $order->get_billing_email()
         ];
 
@@ -415,6 +433,8 @@ class GLS_Shipping_API_Data
     public function generate_post_fields_multi()
     {
         $parcel_list = [];
+        $has_custom_print_position = false;
+        $first_print_position = null;
 
         foreach ($this->orders as $order_data) {
             $order = $order_data['order'];
@@ -427,32 +447,70 @@ class GLS_Shipping_API_Data
             $orderId = $order->get_id();
             $clientReference = str_replace('{{order_id}}', $orderId, $clientReferenceFormat);
 
+            // Get saved order settings
+            $saved_services = $order->get_meta('_gls_services', true);
+            $saved_cod_reference = $order->get_meta('_gls_cod_reference', true);
+            $saved_print_position = $order->get_meta('_gls_print_position', true);
+            $saved_label_count = $order->get_meta('_gls_label_count', true);
+
+            // Use saved services if available
+            $services = !empty($saved_services) ? $saved_services : null;
+            
+            // Use saved label count or default to 1
+            $label_count = !empty($saved_label_count) ? intval($saved_label_count) : 1;
+
+            // Track print positions for multi-order processing
+            if (!empty($saved_print_position)) {
+                $print_position = intval($saved_print_position);
+                if ($first_print_position === null) {
+                    $first_print_position = $print_position;
+                } elseif ($first_print_position !== $print_position) {
+                    $has_custom_print_position = true;
+                }
+            }
+
             $parcel = [
                 'ClientNumber' => (int)$this->get_option("client_id"),
                 'ClientReference' => $clientReference,
-                'Count' => 1
+                'Count' => $label_count
             ];
             $parcel['PickupAddress'] = $this->get_pickup_address($order);
             $parcel['DeliveryAddress'] = $this->get_delivery_address($order);
-            $parcel['ServiceList'] = $this->get_service_list($order, $is_parcel_delivery_service, $pickup_info);
+            $parcel['ServiceList'] = $this->get_service_list($order, $is_parcel_delivery_service, $pickup_info, $services);
 
+            // Add SenderIdentityCardNumber for Serbia
             if ($order->get_shipping_country() === 'RS') {
                 $parcel['SenderIdentityCardNumber'] = $senderIdentityCardNumber;
-                $parcel['Content'] = $content;
+            }
+            
+            // Add Content with placeholder processing (for all countries)
+            if (!empty($content)) {
+                $parcel['Content'] = $this->process_content_placeholders($content, $order);
             }
 
             if ($order->get_payment_method() === 'cod') {
                 $parcel['CODAmount'] = $order->get_total();
-                $parcel['CODReference'] = $orderId;
+                // Use saved COD reference if available, otherwise use order ID
+                $parcel['CODReference'] = !empty($saved_cod_reference) ? $saved_cod_reference : $orderId;
             }
 
             $parcel_list[] = $parcel;
         }
 
+        // Determine print position for the whole batch
+        $final_print_position = 1; // Default
+        if ($first_print_position !== null && !$has_custom_print_position) {
+            // All orders have the same custom print position
+            $final_print_position = $first_print_position;
+        } else {
+            // Use global setting if orders have different print positions or none set
+            $final_print_position = (int)$this->get_option("print_position") ?: 1;
+        }
+
         $params = [
             'WebshopEngine' => 'woocommercehr',
             'ParcelList' => $parcel_list,
-            'PrintPosition' => (int)$this->get_option("print_position") ?: 1,
+            'PrintPosition' => $final_print_position,
             'TypeOfPrinter' => $this->get_option("type_of_printer") ?: 'A4_2x2',
             'ShowPrintDialog' => false
         ];
@@ -464,9 +522,12 @@ class GLS_Shipping_API_Data
      * Generates post fields for the API request for a single order.
      *
      * @param int $count Number of packages.
+     * @param int|null $print_position Custom print position for this order.
+     * @param string|null $cod_reference Custom COD reference for this order.
+     * @param array|null $services Custom services for this order.
      * @return array The generated post fields for the API request.
      */
-    public function generate_post_fields($count = 1)
+    public function generate_post_fields($count = 1, $print_position = null, $cod_reference = null, $services = null)
     {
         if (empty($this->orders)) {
             throw new Exception("No orders available.");
@@ -490,26 +551,63 @@ class GLS_Shipping_API_Data
         ];
         $parcel['PickupAddress'] = $this->get_pickup_address($order);
         $parcel['DeliveryAddress'] = $this->get_delivery_address($order);
-        $parcel['ServiceList'] = $this->get_service_list($order, $is_parcel_delivery_service, $pickup_info);
+        $parcel['ServiceList'] = $this->get_service_list($order, $is_parcel_delivery_service, $pickup_info, $services);
 
+        // Add SenderIdentityCardNumber for Serbia
         if ($order->get_shipping_country() === 'RS') {
             $parcel['SenderIdentityCardNumber'] = $senderIdentityCardNumber;
-            $parcel['Content'] = $content;
+        }
+        
+        // Add Content with placeholder processing (for all countries)
+        if (!empty($content)) {
+            $parcel['Content'] = $this->process_content_placeholders($content, $order);
         }
 
         if ($order->get_payment_method() === 'cod') {
             $parcel['CODAmount'] = $order->get_total();
-            $parcel['CODReference'] = $orderId;
+            // Use custom COD reference if provided, otherwise fall back to order ID
+            $final_cod_reference = $cod_reference !== null ? $cod_reference : $orderId;
+            $parcel['CODReference'] = $final_cod_reference;
         }
+
+        // Use custom print position if provided, otherwise use default from settings
+        $final_print_position = $print_position !== null ? $print_position : ((int)$this->get_option("print_position") ?: 1);
 
         $params = [
             'WebshopEngine' => 'woocommercehr',
             'ParcelList' => [$parcel],
-            'PrintPosition' => (int)$this->get_option("print_position") ?: 1,
+            'PrintPosition' => $final_print_position,
             'TypeOfPrinter' => $this->get_option("type_of_printer") ?: 'A4_2x2',
             'ShowPrintDialog' => false
         ];
 
         return $params;
+    }
+
+    /**
+     * Process content placeholders with order data.
+     *
+     * @param string $content The content string with placeholders.
+     * @param \WC_Order $order The WooCommerce order instance.
+     * @return string The processed content with placeholders replaced.
+     */
+    private function process_content_placeholders($content, $order)
+    {
+        $placeholders = array(
+            '{{order_id}}' => $order->get_id(),
+            '{{customer_name}}' => trim($order->get_billing_first_name() . ' ' . $order->get_billing_last_name()),
+            '{{customer_email}}' => $order->get_billing_email(),
+            '{{customer_phone}}' => $this->get_order_phone($order),
+            '{{customer_comment}}' => $order->get_customer_note(),
+            '{{order_total}}' => $order->get_total(),
+            '{{shipping_method}}' => $order->get_shipping_method(),
+        );
+
+        // Replace placeholders with actual values
+        foreach ($placeholders as $placeholder => $value) {
+            $content = str_replace($placeholder, $value, $content);
+        }
+
+        return $content;
     }
 }

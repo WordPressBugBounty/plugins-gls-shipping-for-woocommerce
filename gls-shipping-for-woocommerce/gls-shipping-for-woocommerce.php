@@ -3,7 +3,7 @@
 /**
  * Plugin Name: GLS Shipping for WooCommerce
  * Description: Offical GLS Shipping for WooCommerce plugin
- * Version: 1.2.6
+ * Version: 1.3.0
  * Author: Inchoo
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,7 +14,7 @@
  * Tested up to: 6.7
  * Requires PHP: 7.1
  *
- * WC requires at least: 4.3
+ * WC requires at least: 5.6
  * WC tested up to: 9.1
  */
 
@@ -24,7 +24,7 @@ final class GLS_Shipping_For_Woo
 {
     private static $instance;
 
-    private $version = '1.2.6';
+    private $version = '1.3.0';
 
     private function __construct()
     {
@@ -37,15 +37,24 @@ final class GLS_Shipping_For_Woo
 
     private function includes()
     {
+        // Load helpers first
+        require_once(GLS_SHIPPING_ABSPATH . 'includes/helpers/class-gls-shipping-sender-address-helper.php');
+        require_once(GLS_SHIPPING_ABSPATH . 'includes/helpers/class-gls-shipping-account-helper.php');
+        
         require_once(GLS_SHIPPING_ABSPATH . 'includes/public/class-gls-shipping-assets.php');
         require_once(GLS_SHIPPING_ABSPATH . 'includes/public/class-gls-shipping-checkout.php');
         require_once(GLS_SHIPPING_ABSPATH . 'includes/public/class-gls-shipping-my-account.php');
+        require_once(GLS_SHIPPING_ABSPATH . 'includes/public/class-gls-shipping-logo-display.php');
+        require_once(GLS_SHIPPING_ABSPATH . 'includes/admin/class-gls-shipping-product-restrictions.php');
 
         if (is_admin()) {
             require_once(GLS_SHIPPING_ABSPATH . 'includes/admin/class-gls-shipping-order.php');
             require_once(GLS_SHIPPING_ABSPATH . 'includes/admin/class-gls-shipping-bulk.php');
+            require_once(GLS_SHIPPING_ABSPATH . 'includes/admin/class-gls-shipping-pickup-history.php');
+            require_once(GLS_SHIPPING_ABSPATH . 'includes/admin/class-gls-shipping-pickup.php');
             require_once(GLS_SHIPPING_ABSPATH . 'includes/api/class-gls-shipping-api-data.php');
             require_once(GLS_SHIPPING_ABSPATH . 'includes/api/class-gls-shipping-api-service.php');
+            require_once(GLS_SHIPPING_ABSPATH . 'includes/api/class-gls-shipping-pickup-api-service.php');
         }
 
         if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
