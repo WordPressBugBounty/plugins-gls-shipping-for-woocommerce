@@ -52,11 +52,15 @@ class GLS_Shipping_Assets
             return;
         }
 
+        // Get filter_saturation from parcel locker settings
+        $filter_saturation = self::get_locker_filter_saturation();
+
         $translation_array = array(
             'pickup_location' => __('Pickup Location', 'gls-shipping-for-woocommerce'),
             'name' => __('Name', 'gls-shipping-for-woocommerce'),
             'address' => __('Address', 'gls-shipping-for-woocommerce'),
             'country' => __('Country', 'gls-shipping-for-woocommerce'),
+            'filter_saturation' => $filter_saturation,
         );
         wp_enqueue_script('gls-shipping-dpm', 'https://map.gls-croatia.com/widget/gls-dpm.js', array(), GLS_SHIPPING_VERSION, false);
         wp_enqueue_script('gls-shipping-public', GLS_SHIPPING_URL . 'assets/js/gls-shipping-public.js', array('jquery', 'gls-shipping-dpm'), GLS_SHIPPING_VERSION, false);
@@ -65,6 +69,38 @@ class GLS_Shipping_Assets
             'gls_croatia',
             $translation_array
         );
+    }
+
+    /**
+     * Get filter_saturation setting from parcel locker shipping methods.
+     *
+     * Checks both regular and zones parcel locker methods and returns the configured filter.
+     *
+     * @return string Comma-separated filter saturation values or empty string.
+     */
+    private static function get_locker_filter_saturation()
+    {
+        // Try regular parcel locker method first
+        $parcel_locker_settings = get_option('woocommerce_' . GLS_SHIPPING_METHOD_PARCEL_LOCKER_ID . '_settings', array());
+        if (!empty($parcel_locker_settings['filter_saturation']) && is_array($parcel_locker_settings['filter_saturation'])) {
+            return implode(',', $parcel_locker_settings['filter_saturation']);
+        }
+
+        // Try zones parcel locker method - get from first active instance
+        $shipping_zones = WC_Shipping_Zones::get_zones();
+        foreach ($shipping_zones as $zone) {
+            foreach ($zone['shipping_methods'] as $method) {
+                if ($method->id === GLS_SHIPPING_METHOD_PARCEL_LOCKER_ZONES_ID && $method->enabled === 'yes') {
+                    $filter_saturation = $method->get_instance_option('filter_saturation', array());
+                    if (!empty($filter_saturation) && is_array($filter_saturation)) {
+                        return implode(',', $filter_saturation);
+                    }
+                }
+            }
+        }
+
+        // Default: show all
+        return '1,2,3';
     }
 
 

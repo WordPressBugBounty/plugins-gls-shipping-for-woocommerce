@@ -85,6 +85,20 @@ max_weight|cost',
 							'step' => '0.01'
 						)
 					),
+					'filter_saturation' => array(
+						'title'   => __('Hungary Locker Saturation Filter', 'gls-shipping-for-woocommerce'),
+						'type'    => 'multiselect',
+						'class'   => 'wc-enhanced-select',
+						'css'     => 'width: 400px;',
+						'options' => array(
+							'1' => __('High Volume', 'gls-shipping-for-woocommerce'),
+							'2' => __('Low Volume', 'gls-shipping-for-woocommerce'),
+							'3' => __('Out Of Order', 'gls-shipping-for-woocommerce'),
+						),
+						'default' => array('1', '2', '3'),
+						'desc_tip' => true,
+						'description' => __('Filter locker locations on the map for Hungary. Only applies when country is Hungary.', 'gls-shipping-for-woocommerce'),
+					),
 				);
 			}
 			
@@ -101,7 +115,11 @@ max_weight|cost',
 				$default_price = $this->get_instance_option('shipping_price', '0');
 				$free_shipping_threshold = $this->get_option('free_shipping_threshold', '0');
 
-				$cart_total = WC()->cart->get_subtotal() - WC()->cart->get_discount_total();
+				$cart_total = WC()->cart->get_displayed_subtotal();
+				$cart_total = $cart_total - WC()->cart->get_discount_total();
+				if ( WC()->cart->display_prices_including_tax() ) {
+					$cart_total = $cart_total - WC()->cart->get_discount_tax();
+				}
 
 				$shipping_price = $default_price;
 

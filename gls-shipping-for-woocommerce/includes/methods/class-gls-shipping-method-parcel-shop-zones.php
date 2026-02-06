@@ -97,7 +97,11 @@ max_weight|cost',
 				$default_price = $this->get_instance_option('shipping_price', '0');
 				$free_shipping_threshold = $this->get_option('free_shipping_threshold', '0');
 
-				$cart_total = WC()->cart->get_subtotal() - WC()->cart->get_discount_total();
+				$cart_total = WC()->cart->get_displayed_subtotal();
+				$cart_total = $cart_total - WC()->cart->get_discount_total();
+				if ( WC()->cart->display_prices_including_tax() ) {
+					$cart_total = $cart_total - WC()->cart->get_discount_tax();
+				}
 				$shipping_price = $default_price;
 
 				if ($free_shipping_threshold > 0 && $cart_total >= $free_shipping_threshold) {

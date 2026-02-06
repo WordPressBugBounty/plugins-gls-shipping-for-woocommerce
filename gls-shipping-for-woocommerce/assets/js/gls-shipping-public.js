@@ -61,7 +61,23 @@
 			var selectedCountry =
 				document.getElementById("billing_country").value;
 			var mapElement = document.querySelector("." + mapClass);
-			mapElement.setAttribute("country", selectedCountry.toLowerCase());
+			var countryLower = selectedCountry.toLowerCase();
+			mapElement.setAttribute("country", countryLower);
+
+			// Apply filter-saturation for Hungary parcel locker only
+			if (
+				countryLower === "hu" &&
+				mapClass === "gls-map-locker" &&
+				gls_croatia.filter_saturation
+			) {
+				mapElement.setAttribute(
+					"filter-saturation",
+					gls_croatia.filter_saturation
+				);
+			} else {
+				mapElement.removeAttribute("filter-saturation");
+			}
+
 			mapElement.showModal();
 		}
 
