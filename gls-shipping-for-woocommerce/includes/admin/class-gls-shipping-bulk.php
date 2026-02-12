@@ -113,101 +113,116 @@ class GLS_Shipping_Bulk
         }
         // Bulk print labels, dont generate for each but just print in single PDF
         if ('print_gls_labels' === $doaction) {
-            $prepare_data = new GLS_Shipping_API_Data($order_ids);
-            $data = $prepare_data->generate_post_fields_multi();
-    
-            // Send order to GLS API
-            $is_multi = true;
-            $api = new GLS_Shipping_API_Service();
-            $result = $api->send_order($data, $is_multi);
+            try {
+                $prepare_data = new GLS_Shipping_API_Data($order_ids);
+                $data = $prepare_data->generate_post_fields_multi();
+        
+                // Send order to GLS API
+                $is_multi = true;
+                $api = new GLS_Shipping_API_Service();
+                $result = $api->send_order($data, $is_multi);
 
-            $body = $result['body'];
-            $failed_orders = $result['failed_orders'];
-            
-            // Check if all orders failed - don't attempt PDF creation if no successful labels
-            if (count($failed_orders) >= count($order_ids)) {
-                $redirect = add_query_arg(
-                    array(
-                        'bulk_action' => 'print_gls_labels',
-                        'gls_labels_printed' => 0,
-                        'gls_labels_failed' => count($failed_orders),
-                        'failed_orders' => implode(',', array_column($failed_orders, 'order_id')),
-                    ),
-                    $redirect
-                );
-                return $redirect;
-            }
-    
-            $pdf_filename = $this->bulk_create_print_labels($body);
-    
-            if ($pdf_filename) {
-                // Save tracking numbers to order meta
-                if (!empty($body['PrintLabelsInfoList'])) {
-                    // Group tracking codes by order ID to handle multiple parcels per order
-                    $orders_data = array();
-                    
-                    foreach ($body['PrintLabelsInfoList'] as $labelInfo) {
-                        if (isset($labelInfo['ClientReference'])) {
-                            $order_id = str_replace('Order:', '', $labelInfo['ClientReference']);
-                            
-                            if (!isset($orders_data[$order_id])) {
-                                $orders_data[$order_id] = array(
-                                    'tracking_codes' => array(),
-                                    'parcel_ids' => array()
-                                );
-                            }
-                            
-                            if (isset($labelInfo['ParcelNumber'])) {
-                                $orders_data[$order_id]['tracking_codes'][] = $labelInfo['ParcelNumber'];
-                            }
-                            if (isset($labelInfo['ParcelId'])) {
-                                $orders_data[$order_id]['parcel_ids'][] = $labelInfo['ParcelId'];
-                            }
-                        }
-                    }
-                    
-                    // Now save all tracking codes for each order
-                    $successful_orders = array();
-                    foreach ($orders_data as $order_id => $data) {
-                        $order = wc_get_order($order_id);
-                        if ($order) {
-                            if (!empty($data['tracking_codes'])) {
-                                $order->update_meta_data('_gls_tracking_codes', $data['tracking_codes']);
-                            }
-                            if (!empty($data['parcel_ids'])) {
-                                $order->update_meta_data('_gls_parcel_ids', $data['parcel_ids']);
-                            }
-                            
-                            // Save just the filename, URL with nonce is generated on display
-                            $order->update_meta_data('_gls_print_label', $pdf_filename);
-                            $order->save();
-                            
-                            $successful_orders[] = $order_id;
-                        }
-                    }
-                    
-                    // Fire hook after successful bulk label generation
-                    do_action('gls_bulk_labels_generated', $order_ids, $successful_orders, $failed_orders);
+                $body = $result['body'];
+                $failed_orders = $result['failed_orders'];
+                
+                // Check if all orders failed - don't attempt PDF creation if no successful labels
+                if (count($failed_orders) >= count($order_ids)) {
+                    $redirect = add_query_arg(
+                        array(
+                            'bulk_action' => 'print_gls_labels',
+                            'gls_labels_printed' => 0,
+                            'gls_labels_failed' => count($failed_orders),
+                            'failed_orders' => implode(',', array_column($failed_orders, 'order_id')),
+                        ),
+                        $redirect
+                    );
+                    return $redirect;
                 }
+        
+                $pdf_filename = $this->bulk_create_print_labels($body);
+        
+                if ($pdf_filename) {
+                    // Save tracking numbers to order meta
+                    if (!empty($body['PrintLabelsInfoList'])) {
+                        // Group tracking codes by order ID to handle multiple parcels per order
+                        $orders_data = array();
+                        
+                        foreach ($body['PrintLabelsInfoList'] as $labelInfo) {
+                            if (isset($labelInfo['ClientReference'])) {
+                                $order_id = str_replace('Order:', '', $labelInfo['ClientReference']);
+                                
+                                if (!isset($orders_data[$order_id])) {
+                                    $orders_data[$order_id] = array(
+                                        'tracking_codes' => array(),
+                                        'parcel_ids' => array()
+                                    );
+                                }
+                                
+                                if (isset($labelInfo['ParcelNumber'])) {
+                                    $orders_data[$order_id]['tracking_codes'][] = $labelInfo['ParcelNumber'];
+                                }
+                                if (isset($labelInfo['ParcelId'])) {
+                                    $orders_data[$order_id]['parcel_ids'][] = $labelInfo['ParcelId'];
+                                }
+                            }
+                        }
+                        
+                        // Now save all tracking codes for each order
+                        $successful_orders = array();
+                        foreach ($orders_data as $order_id => $data) {
+                            $order = wc_get_order($order_id);
+                            if ($order) {
+                                if (!empty($data['tracking_codes'])) {
+                                    $order->update_meta_data('_gls_tracking_codes', $data['tracking_codes']);
+                                }
+                                if (!empty($data['parcel_ids'])) {
+                                    $order->update_meta_data('_gls_parcel_ids', $data['parcel_ids']);
+                                }
+                                
+                                // Save just the filename, URL with nonce is generated on display
+                                $order->update_meta_data('_gls_print_label', $pdf_filename);
+                                $order->save();
+                                
+                                $successful_orders[] = $order_id;
+                            }
+                        }
+                        
+                        // Fire hook after successful bulk label generation
+                        do_action('gls_bulk_labels_generated', $order_ids, $successful_orders, $failed_orders);
+                    }
 
-                // Add query args to URL for displaying notices and providing PDF link
-                $pdf_url = GLS_Shipping_For_Woo::get_label_download_url($pdf_filename);
-                $redirect = add_query_arg(
-                    array(
-                        'bulk_action' => 'print_gls_labels',
-                        'gls_labels_printed' => count($order_ids) - count($failed_orders),
-                        'gls_labels_failed' => count($failed_orders),
-                        'gls_pdf_url' => urlencode($pdf_url),
-                        'failed_orders' => implode(',', array_column($failed_orders, 'order_id')),
-                    ),
-                    $redirect
-                );
-            } else {
-                // Handle error case
+                    // Add query args to URL for displaying notices and providing PDF link
+                    $pdf_url = GLS_Shipping_For_Woo::get_label_download_url($pdf_filename);
+                    $redirect = add_query_arg(
+                        array(
+                            'bulk_action' => 'print_gls_labels',
+                            'gls_labels_printed' => count($order_ids) - count($failed_orders),
+                            'gls_labels_failed' => count($failed_orders),
+                            'gls_pdf_url' => urlencode($pdf_url),
+                            'failed_orders' => implode(',', array_column($failed_orders, 'order_id')),
+                        ),
+                        $redirect
+                    );
+                } else {
+                    // Handle error case
+                    $redirect = add_query_arg(
+                        array(
+                            'bulk_action' => 'print_gls_labels',
+                            'gls_labels_printed_error' => 'true',
+                        ),
+                        $redirect
+                    );
+                }
+            } catch (Exception $e) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional error logging for debugging
+                error_log('GLS Bulk Print Labels Error: ' . $e->getMessage());
+                
+                // Handle the exception gracefully - redirect with error message
                 $redirect = add_query_arg(
                     array(
                         'bulk_action' => 'print_gls_labels',
                         'gls_labels_printed_error' => 'true',
+                        'gls_error_message' => urlencode($e->getMessage()),
                     ),
                     $redirect
                 );
@@ -226,6 +241,7 @@ class GLS_Shipping_Bulk
     
         // Check if Labels exist and is an array
         if (empty($body['Labels']) || !is_array($body['Labels'])) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional error logging for debugging
             error_log('GLS Bulk Print: No labels found in API response. This may happen if all orders failed validation.');
             return false;
         }
@@ -248,17 +264,33 @@ class GLS_Shipping_Bulk
     }
 
     // Display admin notice after bulk action
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Display-only notice after redirect, nonce verified in original action
     public function gls_bulk_action_admin_notice() {
         if (isset($_REQUEST['bulk_action'])) {
-            if ('generate_gls_labels' == $_REQUEST['bulk_action']) {
-                $generated = intval($_REQUEST['gls_labels_generated']);
-                $failed = intval($_REQUEST['gls_labels_failed']);
-                $failed_orders = isset($_REQUEST['failed_orders']) ? explode(',', $_REQUEST['failed_orders']) : [];
+            // Sanitize the bulk action parameter
+            $bulk_action = sanitize_text_field(wp_unslash($_REQUEST['bulk_action']));
+            
+            if ('generate_gls_labels' === $bulk_action) {
+                $generated = isset($_REQUEST['gls_labels_generated']) ? intval($_REQUEST['gls_labels_generated']) : 0;
+                $failed = isset($_REQUEST['gls_labels_failed']) ? intval($_REQUEST['gls_labels_failed']) : 0;
+                
+                // Sanitize failed_orders - only allow integers (order IDs)
+                $failed_orders = array();
+                if (isset($_REQUEST['failed_orders']) && !empty($_REQUEST['failed_orders'])) {
+                    $raw_failed_orders = sanitize_text_field(wp_unslash($_REQUEST['failed_orders']));
+                    $failed_orders_array = explode(',', $raw_failed_orders);
+                    foreach ($failed_orders_array as $order_id) {
+                        $sanitized_id = absint(trim($order_id));
+                        if ($sanitized_id > 0) {
+                            $failed_orders[] = $sanitized_id;
+                        }
+                    }
+                }
 
                 // Prepare success message
                 $message = sprintf(
+                    /* translators: %s: number of generated labels */
                     _n(
-                        /* translators: %s: number of generated labels */
                         '%s GLS label was successfully generated.',
                         '%s GLS labels were successfully generated.',
                         $generated,
@@ -266,12 +298,12 @@ class GLS_Shipping_Bulk
                     ),
                     number_format_i18n($generated)
                 );
-                
+
                 // Add failure message if any labels failed to generate
                 if ($failed > 0) {
                     $message .= ' ' . sprintf(
+                        /* translators: %s: number of failed labels */
                         _n(
-                            /* translators: %s: number of failed labels */
                             '%s label failed to generate.',
                             '%s labels failed to generate.',
                             $failed,
@@ -279,26 +311,43 @@ class GLS_Shipping_Bulk
                         ),
                         number_format_i18n($failed)
                     );
-                    $message .= ' ' . sprintf(
-                        /* translators: %s: comma-separated list of order IDs that failed */
-                        __('Failed order IDs: %s', 'gls-shipping-for-woocommerce'),
-                        implode(', ', $failed_orders)
-                    );
+                    if (!empty($failed_orders)) {
+                        $message .= ' ' . sprintf(
+                            /* translators: %s: comma-separated list of order IDs that failed */
+                            __('Failed order IDs: %s', 'gls-shipping-for-woocommerce'),
+                            esc_html(implode(', ', $failed_orders))
+                        );
+                    }
                 }
 
-                // Display the notice
-                printf('<div id="message" class="updated notice is-dismissible"><p>' . $message . '</p></div>');
-            } elseif ('print_gls_labels' == $_REQUEST['bulk_action']) {
+                // Display the notice with proper escaping
+                printf(
+                    '<div id="message" class="updated notice is-dismissible"><p>%s</p></div>',
+                    wp_kses_post($message)
+                );
+            } elseif ('print_gls_labels' === $bulk_action) {
                 if (isset($_REQUEST['gls_labels_printed']) && isset($_REQUEST['gls_pdf_url'])) {
                     $printed = intval($_REQUEST['gls_labels_printed']);
-                    $failed = intval($_REQUEST['gls_labels_failed']);
-                    $pdf_url = urldecode($_REQUEST['gls_pdf_url']);
-                    $failed_orders = isset($_REQUEST['failed_orders']) ? explode(',', $_REQUEST['failed_orders']) : [];
+                    $failed = isset($_REQUEST['gls_labels_failed']) ? intval($_REQUEST['gls_labels_failed']) : 0;
+                    $pdf_url = esc_url_raw(urldecode(sanitize_text_field(wp_unslash($_REQUEST['gls_pdf_url']))));
+                    
+                    // Sanitize failed_orders - only allow integers (order IDs)
+                    $failed_orders = array();
+                    if (isset($_REQUEST['failed_orders']) && !empty($_REQUEST['failed_orders'])) {
+                        $raw_failed_orders = sanitize_text_field(wp_unslash($_REQUEST['failed_orders']));
+                        $failed_orders_array = explode(',', $raw_failed_orders);
+                        foreach ($failed_orders_array as $order_id) {
+                            $sanitized_id = absint(trim($order_id));
+                            if ($sanitized_id > 0) {
+                                $failed_orders[] = $sanitized_id;
+                            }
+                        }
+                    }
                     
                     // Prepare success message
                     $message = sprintf(
+                        /* translators: %s: number of orders processed */
                         _n(
-                            /* translators: %s: number of orders processed */
                             'GLS label for %s order has been generated. ',
                             'GLS labels for %s orders have been generated. ',
                             $printed,
@@ -310,8 +359,8 @@ class GLS_Shipping_Bulk
                     // Add failure message if any labels failed to generate
                     if ($failed > 0) {
                         $message .= sprintf(
+                            /* translators: %s: number of failed labels */
                             _n(
-                                /* translators: %s: number of failed labels */
                                 '%s label failed to generate. ',
                                 '%s labels failed to generate. ',
                                 $failed,
@@ -319,27 +368,49 @@ class GLS_Shipping_Bulk
                             ),
                             number_format_i18n($failed)
                         );
-                        $message .= sprintf(
-                            __('Failed order IDs: %s', 'gls-shipping-for-woocommerce'),
-                            implode(', ', $failed_orders)
-                        );
+                        if (!empty($failed_orders)) {
+                            $message .= sprintf(
+                                /* translators: %s: comma-separated list of order IDs that failed */
+                                __('Failed order IDs: %s', 'gls-shipping-for-woocommerce'),
+                                esc_html(implode(', ', $failed_orders))
+                            );
+                        }
                     }
-                    
+
                     $message .= sprintf(
                         /* translators: %s: URL to download the PDF file */
                         __('<br><a href="%s" target="_blank">Click here to download the PDF</a>', 'gls-shipping-for-woocommerce'),
                         esc_url($pdf_url)
                     );
 
-                    // Display the notice
-                    printf('<div id="message" class="updated notice is-dismissible"><p>' . $message . '</p></div>');
+                    // Display the notice with proper escaping
+                    printf(
+                        '<div id="message" class="updated notice is-dismissible"><p>%s</p></div>',
+                        wp_kses_post($message)
+                    );
                 } elseif (isset($_REQUEST['gls_labels_printed_error'])) {
                     $message = __('An error occurred while generating the GLS labels PDF.', 'gls-shipping-for-woocommerce');
-                    printf('<div id="message" class="error notice is-dismissible"><p>' . $message . '</p></div>');
+                    
+                    // Display specific error message if available
+                    if (isset($_REQUEST['gls_error_message']) && !empty($_REQUEST['gls_error_message'])) {
+                        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via sanitize_text_field after urldecode
+                        $error_detail = sanitize_text_field(urldecode(wp_unslash($_REQUEST['gls_error_message'])));
+                        $message .= ' ' . sprintf(
+                            /* translators: %s: error message from GLS API */
+                            __('Error: %s', 'gls-shipping-for-woocommerce'),
+                            $error_detail
+                        );
+                    }
+                    
+                    printf(
+                        '<div id="message" class="error notice is-dismissible"><p>%s</p></div>',
+                        esc_html($message)
+                    );
                 }
             }
         }
     }
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
     // Enqueue bulk styles
     public function admin_enqueue_styles()
@@ -440,9 +511,9 @@ class GLS_Shipping_Bulk
             }
         }
 
-        // Display the tracking numbers
+        // Display the tracking numbers (each element is already escaped with esc_html())
         if (!empty($tracking_numbers)) {
-            echo implode(' ', $tracking_numbers);
+            echo wp_kses_post( implode(' ', $tracking_numbers) );
         } else {
             echo '-';
         }

@@ -49,6 +49,7 @@ class GLS_Shipping_Product_Restrictions
      */
     public function save_product_shipping_restriction_field($post_id)
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for product meta
         $restrict_parcel_shipping = isset($_POST['_gls_restrict_parcel_shipping']) ? 'yes' : 'no';
         update_post_meta($post_id, '_gls_restrict_parcel_shipping', $restrict_parcel_shipping);
     }

@@ -63,6 +63,7 @@ class GLS_Shipping_Checkout
         // Check if GLS shipping method is selected
         if (array_intersect($this->map_selection_methods, $chosen_shipping_methods)) {
             // Check if the required GLS info is set and not empty
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for checkout
             if (empty($_POST['gls_pickup_info'])) {
                 wc_add_notice(__('Please select a parcel locker/shop by clicking on Select Parcel button.', 'gls-shipping-for-woocommerce'), 'error');
             }
@@ -119,16 +120,18 @@ class GLS_Shipping_Checkout
         $order = wc_get_order($order_id);
         $shipping_methods = $order->get_shipping_methods();
 
+        // phpcs:disable WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for checkout
         foreach ($shipping_methods as $shipping_method) {
             if (in_array($shipping_method->get_method_id(), $this->map_selection_methods)) {
                 if (!empty($_POST['gls_pickup_info'])) {
-                    $gls_pickup_info = sanitize_text_field(stripslashes($_POST['gls_pickup_info']));
+                    $gls_pickup_info = sanitize_text_field(wp_unslash($_POST['gls_pickup_info']));
                     $order->update_meta_data('_gls_pickup_info', $gls_pickup_info);
                     $order->save();
                 }
                 break;
             }
         }
+        // phpcs:enable WordPress.Security.NonceVerification.Missing
     }
 }
 

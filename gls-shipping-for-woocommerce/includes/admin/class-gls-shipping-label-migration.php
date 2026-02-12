@@ -116,21 +116,24 @@ class GLS_Shipping_Label_Migration
             Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
             // HPOS enabled
             $table = $wpdb->prefix . 'wc_orders_meta';
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name uses $wpdb->prefix + constant
             $exists = $wpdb->get_var($wpdb->prepare(
-                "SELECT 1 FROM {$table} 
-                WHERE meta_key = '_gls_print_label' 
-                AND meta_value LIKE %s 
+                "SELECT 1 FROM {$table}
+                WHERE meta_key = '_gls_print_label'
+                AND meta_value LIKE %s
                 AND meta_value NOT LIKE %s
                 LIMIT 1",
                 '%/wp-content/uploads/%',
                 '%gls_download_label%'
             ));
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
         } else {
             // Legacy post meta
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Using $wpdb->postmeta property
             $exists = $wpdb->get_var($wpdb->prepare(
-                "SELECT 1 FROM {$wpdb->postmeta} 
-                WHERE meta_key = '_gls_print_label' 
-                AND meta_value LIKE %s 
+                "SELECT 1 FROM {$wpdb->postmeta}
+                WHERE meta_key = '_gls_print_label'
+                AND meta_value LIKE %s
                 AND meta_value NOT LIKE %s
                 LIMIT 1",
                 '%/wp-content/uploads/%',
@@ -156,22 +159,25 @@ class GLS_Shipping_Label_Migration
             Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
             // HPOS enabled
             $table = $wpdb->prefix . 'wc_orders_meta';
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name uses $wpdb->prefix + constant
             $order_ids = $wpdb->get_col($wpdb->prepare(
-                "SELECT order_id FROM {$table} 
-                WHERE meta_key = '_gls_print_label' 
-                AND meta_value LIKE %s 
+                "SELECT order_id FROM {$table}
+                WHERE meta_key = '_gls_print_label'
+                AND meta_value LIKE %s
                 AND meta_value NOT LIKE %s
                 LIMIT %d",
                 '%/wp-content/uploads/%',
                 '%gls_download_label%',
                 $limit
             ));
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
         } else {
             // Legacy post meta
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Using $wpdb->postmeta property
             $order_ids = $wpdb->get_col($wpdb->prepare(
-                "SELECT post_id FROM {$wpdb->postmeta} 
-                WHERE meta_key = '_gls_print_label' 
-                AND meta_value LIKE %s 
+                "SELECT post_id FROM {$wpdb->postmeta}
+                WHERE meta_key = '_gls_print_label'
+                AND meta_value LIKE %s
                 AND meta_value NOT LIKE %s
                 LIMIT %d",
                 '%/wp-content/uploads/%',
@@ -278,7 +284,7 @@ class GLS_Shipping_Label_Migration
         $order->save();
 
         // Delete old file
-        @unlink($old_path);
+        wp_delete_file($old_path);
 
         return true;
     }
@@ -330,13 +336,13 @@ class GLS_Shipping_Label_Migration
                 continue;
             }
             foreach ($files as $file) {
-                if (@unlink($file)) {
-                    $deleted_count++;
-                }
+                wp_delete_file($file);
+                $deleted_count++;
             }
         }
         
         if ($deleted_count > 0) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional logging for migration process
             error_log("GLS Migration: Cleaned up {$deleted_count} orphaned label files from old uploads folders.");
         }
     }
@@ -373,7 +379,7 @@ class GLS_Shipping_Label_Migration
         }
 
         // Verify nonce
-        if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'gls_old_label_access')) {
+        if (!wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['nonce'])), 'gls_old_label_access')) {
             wp_die(esc_html__('Invalid security token.', 'gls-shipping-for-woocommerce'));
         }
 
@@ -403,15 +409,26 @@ class GLS_Shipping_Label_Migration
             wp_die(esc_html__('PDF label file not found.', 'gls-shipping-for-woocommerce'));
         }
 
-        // Serve the file
+        // Serve the file using WP_Filesystem
+        global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            WP_Filesystem();
+        }
+
+        $file_contents = $wp_filesystem->get_contents($file_path);
+        if (false === $file_contents) {
+            wp_die(esc_html__('Could not read PDF file.', 'gls-shipping-for-woocommerce'));
+        }
+
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="' . basename($file_path) . '"');
         header('Content-Transfer-Encoding: binary');
-        header('Content-Length: ' . filesize($file_path));
+        header('Content-Length: ' . strlen($file_contents));
         header('Cache-Control: private, max-age=0, must-revalidate');
         header('Pragma: public');
 
-        readfile($file_path);
+        echo $file_contents; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Binary PDF data
         exit;
     }
 }

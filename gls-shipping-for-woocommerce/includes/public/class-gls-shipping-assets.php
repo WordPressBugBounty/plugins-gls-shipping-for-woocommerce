@@ -110,6 +110,7 @@ class GLS_Shipping_Assets
     public static function add_module_type_attribute($tag, $handle, $src)
     {
         if ('gls-shipping-dpm' === $handle) {
+            // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Modifying already-enqueued script via script_loader_tag filter
             $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
         }
         return $tag;
@@ -126,6 +127,7 @@ class GLS_Shipping_Assets
         
         // Check if we're on order pages OR shipping settings page
         $isOrderPage = ($screenID === "shop_order" || $screenID === "woocommerce_page_wc-orders" || $screenID === "edit-shop_order");
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check for page identification
         $isShippingSettingsPage = ($screenID === "woocommerce_page_wc-settings" && isset($_GET['tab']) && $_GET['tab'] === 'shipping');
         
         if ($isOrderPage || $isShippingSettingsPage) {

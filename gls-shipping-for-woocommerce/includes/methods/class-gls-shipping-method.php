@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 function gls_shipping_method_init()
 {
@@ -78,6 +81,7 @@ function gls_shipping_method_init()
 					'weight_based_rates' => array(
 						'title'       => __('Weight Based Rates: max_weight|cost', 'gls-shipping-for-woocommerce'),
 						'type'        => 'textarea',
+						/* translators: %s: weight unit (e.g. kg, lbs) */
 						'description' => sprintf(__('Optional: Enter weight based rates (one per line). Format: max_weight|cost. Example: 1|100 means up to 1 %s costs 100. Leave empty to use default price.', 'gls-shipping-for-woocommerce'), $weight_unit),
 						'default'     => '',
 						'placeholder' => 'max_weight|cost
@@ -361,7 +365,7 @@ max_weight|cost',
 				?>
 				<tr valign="top" id="sender_addresses_row">
 					<th scope="row" class="titledesc">
-						<label for="<?php echo esc_attr($field_key); ?>"><?php echo wp_kses_post($data['title']); ?> <?php echo $this->get_tooltip_html($data); ?></label>
+						<label for="<?php echo esc_attr($field_key); ?>"><?php echo wp_kses_post($data['title']); ?> <?php echo wp_kses_post( $this->get_tooltip_html($data) ); ?></label>
 					</th>
 					<td class="forminp">
 						<fieldset>
@@ -370,19 +374,19 @@ max_weight|cost',
 								<table class="sender-addresses-table wp-list-table widefat fixed striped" style="margin-bottom: 10px;">
 									<thead>
 										<tr>
-											<th><?php _e('Default', 'gls-shipping-for-woocommerce'); ?></th>
-											<th><?php _e('Name', 'gls-shipping-for-woocommerce'); ?></th>
-											<th><?php _e('Actions', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php esc_html_e('Default', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php esc_html_e('Name', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php esc_html_e('Actions', 'gls-shipping-for-woocommerce'); ?></th>
 										</tr>
 									</thead>
 									<tbody id="sender-addresses-tbody">
 										<!-- Default "No custom address" option -->
 										<tr class="sender-address-row" data-index="none">
 											<td>
-												<input type="radio" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>_default" value="none" <?php checked(!$this->has_default_address($addresses), true); ?> class="address-default-radio" />
+												<input type="radio" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>_default" value="none" <?php checked(!$this->has_default_address($addresses), true); ?> class="address-default-radio" />
 											</td>
 											<td>
-												<span class="address-name-display" style="font-style: italic; color: #666;"><?php _e('No custom sender address (use default from store settings)', 'gls-shipping-for-woocommerce'); ?></span>
+												<span class="address-name-display" style="font-style: italic; color: #666;"><?php esc_html_e('No custom sender address (use default from store settings)', 'gls-shipping-for-woocommerce'); ?></span>
 											</td>
 											<td>
 												<!-- No actions for default option -->
@@ -397,9 +401,9 @@ max_weight|cost',
 										?>
 									</tbody>
 								</table>
-								<button type="button" id="add-sender-address" class="button button-secondary"><?php _e('Add New Address', 'gls-shipping-for-woocommerce'); ?></button>
+								<button type="button" id="add-sender-address" class="button button-secondary"><?php esc_html_e('Add New Address', 'gls-shipping-for-woocommerce'); ?></button>
 							</div>
-							<?php echo $this->get_description_html($data); ?>
+							<?php echo wp_kses_post( $this->get_description_html($data) ); ?>
 						</fieldset>
 					</td>
 				</tr>
@@ -431,7 +435,7 @@ max_weight|cost',
 				?>
 				<tr valign="top" id="gls_accounts_row" style="<?php echo $this->get_option('account_mode', 'single') === 'single' ? 'display: none;' : ''; ?>">
 					<th scope="row" class="titledesc">
-						<label for="<?php echo esc_attr($field_key); ?>"><?php echo wp_kses_post($data['title']); ?> <?php echo $this->get_tooltip_html($data); ?></label>
+						<label for="<?php echo esc_attr($field_key); ?>"><?php echo wp_kses_post($data['title']); ?> <?php echo wp_kses_post( $this->get_tooltip_html($data) ); ?></label>
 					</th>
 					<td class="forminp">
 						<fieldset>
@@ -440,9 +444,9 @@ max_weight|cost',
 								<table class="gls-accounts-table wp-list-table widefat fixed striped" style="margin-bottom: 10px;">
 									<thead>
 										<tr>
-											<th><?php _e('Active', 'gls-shipping-for-woocommerce'); ?></th>
-											<th><?php _e('Client ID', 'gls-shipping-for-woocommerce'); ?></th>
-											<th><?php _e('Actions', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php esc_html_e('Active', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php esc_html_e('Client ID', 'gls-shipping-for-woocommerce'); ?></th>
+											<th><?php esc_html_e('Actions', 'gls-shipping-for-woocommerce'); ?></th>
 										</tr>
 									</thead>
 									<tbody id="gls-accounts-tbody">
@@ -455,9 +459,9 @@ max_weight|cost',
 										?>
 									</tbody>
 								</table>
-								<button type="button" id="add-gls-account" class="button button-secondary"><?php _e('Add New Account', 'gls-shipping-for-woocommerce'); ?></button>
+								<button type="button" id="add-gls-account" class="button button-secondary"><?php esc_html_e('Add New Account', 'gls-shipping-for-woocommerce'); ?></button>
 							</div>
-							<?php echo $this->get_description_html($data); ?>
+							<?php echo wp_kses_post( $this->get_description_html($data) ); ?>
 						</fieldset>
 					</td>
 				</tr>
@@ -501,28 +505,28 @@ max_weight|cost',
 					'is_default' => false
 				));
 				?>
-				<tr class="sender-address-row" data-index="<?php echo $index; ?>">
+				<tr class="sender-address-row" data-index="<?php echo esc_attr( $index ); ?>">
 					<td>
-						<input type="radio" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>_default" value="<?php echo $index; ?>" <?php checked($address['is_default'], true); ?> class="address-default-radio" />
+						<input type="radio" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>_default" value="<?php echo esc_attr( $index ); ?>" <?php checked($address['is_default'], true); ?> class="address-default-radio" />
 					</td>
 					<td>
 						<span class="address-name-display"><?php echo esc_html($address['name'] ?: __('New Address', 'gls-shipping-for-woocommerce')); ?></span>
 					</td>
 					<td>
-						<button type="button" class="button button-small edit-address"><?php _e('Edit', 'gls-shipping-for-woocommerce'); ?></button>
-						<button type="button" class="button button-small delete-address"><?php _e('Delete', 'gls-shipping-for-woocommerce'); ?></button>
+						<button type="button" class="button button-small edit-address"><?php esc_html_e('Edit', 'gls-shipping-for-woocommerce'); ?></button>
+						<button type="button" class="button button-small delete-address"><?php esc_html_e('Delete', 'gls-shipping-for-woocommerce'); ?></button>
 						
 						<!-- Hidden fields to store all address data -->
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][name]" value="<?php echo esc_attr($address['name']); ?>" class="address-name" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][contact_name]" value="<?php echo esc_attr($address['contact_name']); ?>" class="address-contact-name" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][street]" value="<?php echo esc_attr($address['street']); ?>" class="address-street" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][house_number]" value="<?php echo esc_attr($address['house_number']); ?>" class="address-house-number" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][city]" value="<?php echo esc_attr($address['city']); ?>" class="address-city" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][postcode]" value="<?php echo esc_attr($address['postcode']); ?>" class="address-postcode" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][country]" value="<?php echo esc_attr($address['country']); ?>" class="address-country" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][phone]" value="<?php echo esc_attr($address['phone']); ?>" class="address-phone" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][email]" value="<?php echo esc_attr($address['email']); ?>" class="address-email" />
-						<input type="hidden" name="<?php echo $this->get_field_key('sender_addresses_grid'); ?>[<?php echo $index; ?>][is_default]" value="<?php echo $address['is_default'] ? '1' : '0'; ?>" class="address-is-default" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][name]" value="<?php echo esc_attr($address['name']); ?>" class="address-name" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][contact_name]" value="<?php echo esc_attr($address['contact_name']); ?>" class="address-contact-name" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][street]" value="<?php echo esc_attr($address['street']); ?>" class="address-street" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][house_number]" value="<?php echo esc_attr($address['house_number']); ?>" class="address-house-number" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][city]" value="<?php echo esc_attr($address['city']); ?>" class="address-city" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][postcode]" value="<?php echo esc_attr($address['postcode']); ?>" class="address-postcode" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][country]" value="<?php echo esc_attr($address['country']); ?>" class="address-country" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][phone]" value="<?php echo esc_attr($address['phone']); ?>" class="address-phone" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][email]" value="<?php echo esc_attr($address['email']); ?>" class="address-email" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('sender_addresses_grid') ); ?>[<?php echo esc_attr( $index ); ?>][is_default]" value="<?php echo $address['is_default'] ? '1' : '0'; ?>" class="address-is-default" />
 					</td>
 				</tr>
 				<?php
@@ -543,25 +547,25 @@ max_weight|cost',
 					'active' => false
 				));
 				?>
-				<tr class="gls-account-row" data-index="<?php echo $index; ?>">
+				<tr class="gls-account-row" data-index="<?php echo esc_attr( $index ); ?>">
 					<td>
-						<input type="radio" name="gls_account_active_selection" value="<?php echo $index; ?>" <?php checked($account['active'], true); ?> class="account-active-radio" />
+						<input type="radio" name="gls_account_active_selection" value="<?php echo esc_attr( $index ); ?>" <?php checked($account['active'], true); ?> class="account-active-radio" />
 					</td>
 					<td>
 						<span class="account-clientid-display"><?php echo esc_html($account['client_id'] ?: __('New Account', 'gls-shipping-for-woocommerce')); ?></span>
 					</td>
 					<td>
-						<button type="button" class="button button-small edit-account"><?php _e('Edit', 'gls-shipping-for-woocommerce'); ?></button>
-						<button type="button" class="button button-small delete-account"><?php _e('Delete', 'gls-shipping-for-woocommerce'); ?></button>
+						<button type="button" class="button button-small edit-account"><?php esc_html_e('Edit', 'gls-shipping-for-woocommerce'); ?></button>
+						<button type="button" class="button button-small delete-account"><?php esc_html_e('Delete', 'gls-shipping-for-woocommerce'); ?></button>
 						
 						<!-- Hidden fields to store all account data -->
-						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][name]" value="<?php echo esc_attr($account['name']); ?>" class="account-name" />
-						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][client_id]" value="<?php echo esc_attr($account['client_id']); ?>" class="account-client-id" />
-						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][username]" value="<?php echo esc_attr($account['username']); ?>" class="account-username" />
-						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][password]" value="<?php echo esc_attr($account['password']); ?>" class="account-password" />
-						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][country]" value="<?php echo esc_attr($account['country']); ?>" class="account-country" />
-						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][mode]" value="<?php echo esc_attr($account['mode']); ?>" class="account-mode" />
-						<input type="hidden" name="<?php echo $this->get_field_key('gls_accounts_grid'); ?>[<?php echo $index; ?>][active]" value="<?php echo $account['active'] ? '1' : '0'; ?>" class="account-active-hidden" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('gls_accounts_grid') ); ?>[<?php echo esc_attr( $index ); ?>][name]" value="<?php echo esc_attr($account['name']); ?>" class="account-name" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('gls_accounts_grid') ); ?>[<?php echo esc_attr( $index ); ?>][client_id]" value="<?php echo esc_attr($account['client_id']); ?>" class="account-client-id" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('gls_accounts_grid') ); ?>[<?php echo esc_attr( $index ); ?>][username]" value="<?php echo esc_attr($account['username']); ?>" class="account-username" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('gls_accounts_grid') ); ?>[<?php echo esc_attr( $index ); ?>][password]" value="<?php echo esc_attr($account['password']); ?>" class="account-password" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('gls_accounts_grid') ); ?>[<?php echo esc_attr( $index ); ?>][country]" value="<?php echo esc_attr($account['country']); ?>" class="account-country" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('gls_accounts_grid') ); ?>[<?php echo esc_attr( $index ); ?>][mode]" value="<?php echo esc_attr($account['mode']); ?>" class="account-mode" />
+						<input type="hidden" name="<?php echo esc_attr( $this->get_field_key('gls_accounts_grid') ); ?>[<?php echo esc_attr( $index ); ?>][active]" value="<?php echo $account['active'] ? '1' : '0'; ?>" class="account-active-hidden" />
 					</td>
 				</tr>
 				<?php
@@ -574,10 +578,11 @@ max_weight|cost',
 			{
 				// Sanitize the value
 				$sanitized_value = sanitize_text_field($value);
-				
+
 				// If user selected multiple mode, check if they have any valid accounts
 				if ($sanitized_value === 'multiple') {
-					$accounts_data = isset($_POST[$this->get_field_key('gls_accounts_grid')]) ? $_POST[$this->get_field_key('gls_accounts_grid')] : array();
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput -- WooCommerce handles nonce, data sanitized below
+					$accounts_data = isset($_POST[$this->get_field_key('gls_accounts_grid')]) ? wp_unslash($_POST[$this->get_field_key('gls_accounts_grid')]) : array();
 					
 					// Check if there are any accounts with required credentials
 					$has_valid_accounts = false;
@@ -598,7 +603,7 @@ max_weight|cost',
 						// Add admin notice to inform user
 						add_action('admin_notices', function() {
 							echo '<div class="notice notice-warning is-dismissible">';
-							echo '<p>' . __('Multiple accounts mode was not saved because no valid GLS accounts were found. Please add at least one account to use multiple accounts mode.', 'gls-shipping-for-woocommerce') . '</p>';
+							echo '<p>' . esc_html__('Multiple accounts mode was not saved because no valid GLS accounts were found. Please add at least one account to use multiple accounts mode.', 'gls-shipping-for-woocommerce') . '</p>';
 							echo '</div>';
 						});
 						

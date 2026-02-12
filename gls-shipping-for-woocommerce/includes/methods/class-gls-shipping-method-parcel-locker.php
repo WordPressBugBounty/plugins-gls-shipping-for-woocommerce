@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 function gls_shipping_method_parcel_locker_init()
 {
@@ -66,6 +69,7 @@ function gls_shipping_method_parcel_locker_init()
 					'weight_based_rates' => array(
 						'title'       => __('Weight Based Rates: max_weight|cost', 'gls-shipping-for-woocommerce'),
 						'type'        => 'textarea',
+						/* translators: %s: weight unit (e.g. kg, lbs) */
 						'description' => sprintf(__('Optional: Enter weight based rates (one per line). Format: max_weight|cost. Example: 1|100 means up to 1 %s costs 100. Leave empty to use default price.', 'gls-shipping-for-woocommerce'), $weight_unit),
 						'default'     => '',
 						'placeholder' => 'max_weight|cost

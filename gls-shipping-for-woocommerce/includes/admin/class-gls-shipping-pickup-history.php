@@ -71,9 +71,11 @@ class GLS_Shipping_Pickup_History
             'created_at' => current_time('mysql')
         );
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Custom plugin table
         $result = $wpdb->insert($this->table_name, $data);
-        
+
         if ($result === false) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional error logging for debugging
             error_log('Failed to save pickup history: ' . $wpdb->last_error);
             return false;
         }
@@ -114,15 +116,20 @@ class GLS_Shipping_Pickup_History
         }
 
         // Get total count
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- Table name uses $wpdb->prefix + constant, WHERE uses only hardcoded placeholders
         $count_sql = "SELECT COUNT(*) FROM {$this->table_name} {$where_sql}";
         if (!empty($where_values)) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- SQL has placeholders, values are sanitized
             $count_sql = $wpdb->prepare($count_sql, $where_values);
         }
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table with dynamic filtering
         $total_items = $wpdb->get_var($count_sql);
 
         // Get records - order by newest first (created_at DESC), then by ID DESC as secondary sort
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name uses $wpdb->prefix + constant, WHERE uses only hardcoded placeholders
         $sql = "SELECT * FROM {$this->table_name} {$where_sql} ORDER BY created_at DESC, id DESC LIMIT %d OFFSET %d";
         $query_values = array_merge($where_values, array($per_page, $offset));
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table with prepared placeholders
         $records = $wpdb->get_results($wpdb->prepare($sql, $query_values));
 
         // Parse JSON data
@@ -149,10 +156,12 @@ class GLS_Shipping_Pickup_History
     {
         global $wpdb;
 
+        // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name uses $wpdb->prefix + constant
         $record = $wpdb->get_row($wpdb->prepare(
             "SELECT * FROM {$this->table_name} WHERE id = %d",
             $id
         ));
+        // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
         if ($record) {
             $record->request_data = json_decode($record->request_data, true);

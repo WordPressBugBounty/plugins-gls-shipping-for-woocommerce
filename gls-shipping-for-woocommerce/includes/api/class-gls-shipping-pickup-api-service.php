@@ -62,7 +62,7 @@ private function convert_date_to_dotnet_format($date_string)
         
         // Handle invalid date
         if ($timestamp === false) {
-            throw new Exception('Invalid date format: ' . $date_string);
+            throw new Exception(esc_html('Invalid date format: ' . $date_string));
         }
         
         return '/Date(' . ($timestamp * 1000) . ')/';
@@ -141,36 +141,36 @@ private function convert_date_to_dotnet_format($date_string)
 
         if (is_wp_error($response)) {
             $error_message = $response->get_error_message();
-            throw new Exception('Error communicating with GLS API: ' . $error_message);
+            throw new Exception(esc_html('Error communicating with GLS API: ' . $error_message));
         }
 
         $body = json_decode(wp_remote_retrieve_body($response), true);
         $response_code = wp_remote_retrieve_response_code($response);
 
         if ($response_code !== 200) {
-            throw new Exception('GLS API returned error code: ' . $response_code);
+            throw new Exception(esc_html('GLS API returned error code: ' . $response_code));
         }
 
         // Check for API errors
         if (isset($body['ErrorCode']) && $body['ErrorCode'] !== 0) {
             $error_message = isset($body['ErrorDescription']) ? $body['ErrorDescription'] : 'Unknown API error';
-            throw new Exception('GLS API Error: ' . $error_message);
+            throw new Exception(esc_html('GLS API Error: ' . $error_message));
         }
 
         // Check for pickup request specific errors
         if (isset($body['PickupRequestErrors']) && !empty($body['PickupRequestErrors'])) {
             $pickup_errors = $body['PickupRequestErrors'];
             $error_messages = array();
-            
+
             foreach ($pickup_errors as $error) {
                 if (isset($error['ErrorCode']) && $error['ErrorCode'] !== 0) {
                     $error_msg = isset($error['ErrorDescription']) ? $error['ErrorDescription'] : 'Unknown pickup error';
                     $error_messages[] = $error_msg;
                 }
             }
-            
+
             if (!empty($error_messages)) {
-                throw new Exception('GLS Pickup Error: ' . implode('; ', $error_messages));
+                throw new Exception(esc_html('GLS Pickup Error: ' . implode('; ', $error_messages)));
             }
         }
 
@@ -212,6 +212,7 @@ private function convert_date_to_dotnet_format($date_string)
             'response' => $response
         );
 
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional API logging for debugging
         error_log('GLS Pickup API Response: ' . wp_json_encode($log_entry));
     }
 
@@ -227,6 +228,7 @@ private function convert_date_to_dotnet_format($date_string)
             'request_data' => $pickup_data // pickup_data doesn't contain credentials, safe to log
         );
 
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional API error logging for debugging
         error_log('GLS Pickup API Error: ' . wp_json_encode($log_entry));
     }
 }

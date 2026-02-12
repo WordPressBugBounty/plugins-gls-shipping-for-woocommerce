@@ -182,7 +182,10 @@ class GLS_Shipping_Order
                         
                         <!-- Service Options (Hidden by default) -->
                         <div id="gls-services-options" style="display: none; margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;">
-                            <?php echo $this->render_service_options($order); ?>
+                            <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted internal method outputting form fields
+                            echo $this->render_service_options($order);
+                            ?>
                         </div>
                         
                         <button type="button" class="button gls-print-label" order-id="<?php echo esc_attr($order->get_id()); ?>">
@@ -191,11 +194,13 @@ class GLS_Shipping_Order
                         <?php if (!empty($gls_tracking_numbers)) { ?>
                             <?php foreach ($gls_tracking_numbers as $index => $tracking_number) { ?>
                             <button type="button" class="button gls-get-status" order-id="<?php echo esc_attr($order->get_id()); ?>" parcel-number="<?php echo esc_attr($tracking_number); ?>" style="margin-top: 10px;">
-                                <?php 
+                                <?php
                                 if (count($gls_tracking_numbers) > 1) {
-                                    echo sprintf(esc_html__("Get Parcel Status #%d (%s)", "gls-shipping-for-woocommerce"), $index + 1, esc_html($tracking_number));
+                                    /* translators: %1$d: parcel index number, %2$s: tracking number */
+                                    echo esc_html( sprintf(__("Get Parcel Status #%1\$d (%2\$s)", "gls-shipping-for-woocommerce"), intval($index) + 1, $tracking_number) );
                                 } else {
-                                    echo sprintf(esc_html__("Get Parcel Status (%s)", "gls-shipping-for-woocommerce"), esc_html($tracking_number));
+                                    /* translators: %s: tracking number */
+                                    echo esc_html( sprintf(__("Get Parcel Status (%s)", "gls-shipping-for-woocommerce"), $tracking_number) );
                                 }
                                 ?>
                             </button>
@@ -241,7 +246,10 @@ class GLS_Shipping_Order
                         
                         <!-- Service Options (Hidden by default) -->
                         <div id="gls-services-options-new" style="display: none; margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;">
-                            <?php echo $this->render_service_options($order); ?>
+                            <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted internal method outputting form fields
+                            echo $this->render_service_options($order);
+                            ?>
                         </div>
                         
                         <button type="button" class="button gls-print-label" order-id="<?php echo esc_attr($order->get_id()); ?>">
@@ -313,6 +321,7 @@ class GLS_Shipping_Order
             return array('success' => true, 'data' => $result);
             
         } catch (Exception $e) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional error logging for debugging
             error_log("Failed to generate GLS label for order $order_id: " . $e->getMessage());
             return array('success' => false, 'error' => $e->getMessage());
         }
@@ -320,15 +329,15 @@ class GLS_Shipping_Order
     
     public function generate_label_and_tracking_number()
     {
-        if (!wp_verify_nonce(sanitize_text_field($_POST['postNonce']), 'import-nonce')) {
+        if (!isset($_POST['postNonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['postNonce'])), 'import-nonce')) {
             die('Busted!');
         }
 
-        $order_id = sanitize_text_field($_POST['orderId']);
+        $order_id = isset($_POST['orderId']) ? sanitize_text_field(wp_unslash($_POST['orderId'])) : '';
         $count = isset($_POST['count']) ? intval($_POST['count']) : null;
         $print_position = isset($_POST['printPosition']) ? intval($_POST['printPosition']) : null;
-        $cod_reference = isset($_POST['codReference']) ? sanitize_text_field($_POST['codReference']) : null;
-        $services = isset($_POST['services']) ? json_decode(stripslashes($_POST['services']), true) : null;
+        $cod_reference = isset($_POST['codReference']) ? sanitize_text_field(wp_unslash($_POST['codReference'])) : null;
+        $services = isset($_POST['services']) ? json_decode(sanitize_text_field(wp_unslash($_POST['services'])), true) : null;
         
         // Use centralized method
         $result = $this->generate_single_order_label($order_id, $count, $print_position, $cod_reference, $services);
@@ -408,13 +417,13 @@ class GLS_Shipping_Order
 
     public function get_parcel_status()
     {
-        if (!wp_verify_nonce(sanitize_text_field($_POST['postNonce']), 'import-nonce')) {
+        if (!isset($_POST['postNonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['postNonce'])), 'import-nonce')) {
             wp_send_json_error(array('error' => 'Invalid security token'));
             wp_die();
         }
 
-        $order_id = intval($_POST['orderId']);
-        $parcel_number = sanitize_text_field($_POST['parcelNumber']);
+        $order_id = isset($_POST['orderId']) ? intval($_POST['orderId']) : 0;
+        $parcel_number = isset($_POST['parcelNumber']) ? sanitize_text_field(wp_unslash($_POST['parcelNumber'])) : '';
 
         if (empty($order_id) || empty($parcel_number)) {
             wp_send_json_error(array('error' => 'Missing order ID or parcel number'));
@@ -579,13 +588,13 @@ class GLS_Shipping_Order
      */
     public function update_pickup_location()
     {
-        if (!wp_verify_nonce(sanitize_text_field($_POST['postNonce']), 'import-nonce')) {
+        if (!isset($_POST['postNonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['postNonce'])), 'import-nonce')) {
             wp_send_json_error(array('error' => 'Invalid security token'));
             wp_die();
         }
 
-        $order_id = intval($_POST['orderId']);
-        $pickup_info = isset($_POST['pickupInfo']) ? sanitize_text_field(stripslashes($_POST['pickupInfo'])) : '';
+        $order_id = isset($_POST['orderId']) ? intval($_POST['orderId']) : 0;
+        $pickup_info = isset($_POST['pickupInfo']) ? sanitize_text_field(wp_unslash($_POST['pickupInfo'])) : '';
 
         if (empty($order_id) || empty($pickup_info)) {
             wp_send_json_error(array('error' => 'Missing order ID or pickup information'));
@@ -607,7 +616,8 @@ class GLS_Shipping_Order
             $pickup_data = json_decode($pickup_info);
             if ($pickup_data) {
                 $note = sprintf(
-                    __('GLS pickup location changed to: %s (%s)', 'gls-shipping-for-woocommerce'),
+                    /* translators: %1$s: pickup location name, %2$s: pickup location ID */
+                    __('GLS pickup location changed to: %1$s (%2$s)', 'gls-shipping-for-woocommerce'),
                     $pickup_data->name,
                     $pickup_data->id
                 );
@@ -634,15 +644,25 @@ class GLS_Shipping_Order
             return;
         }
 
-		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
-		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-			return;
+        // If this is an autosave, our form has not been submitted, so we don't want to do anything.
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
 
-		if (did_action('save_post_shop_order') > 1) return;
+        if (did_action('save_post_shop_order') > 1) {
+            return;
+        }
 
         // Check if this is an order edit page
         $screen = get_current_screen();
-        if (!$screen || !in_array($screen->id, ['shop_order', 'woocommerce_page_wc-orders'])) {
+        if (!$screen || !in_array($screen->id, array('shop_order', 'woocommerce_page_wc-orders'), true)) {
+            return;
+        }
+
+        // Verify WooCommerce meta box nonce
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce verification only
+        $nonce = isset($_POST['woocommerce_meta_nonce']) ? wp_unslash($_POST['woocommerce_meta_nonce']) : '';
+        if (!wp_verify_nonce($nonce, 'woocommerce_save_data')) {
             return;
         }
 
@@ -666,19 +686,19 @@ class GLS_Shipping_Order
         } elseif (isset($_POST['gls_print_position_new']) && !empty($_POST['gls_print_position_new'])) {
             $print_position = intval($_POST['gls_print_position_new']);
         }
-        
+
         if ($print_position !== null) {
             $order->update_meta_data('_gls_print_position', $print_position);
         }
 
         // Save COD reference if provided (check both possible fields)
         $cod_reference = null;
-        if (isset($_POST['gls_cod_reference']) && $_POST['gls_cod_reference'] !== '') {
-            $cod_reference = sanitize_text_field($_POST['gls_cod_reference']);
-        } elseif (isset($_POST['gls_cod_reference_new']) && $_POST['gls_cod_reference_new'] !== '') {
-            $cod_reference = sanitize_text_field($_POST['gls_cod_reference_new']);
+        if (isset($_POST['gls_cod_reference']) && !empty($_POST['gls_cod_reference'])) {
+            $cod_reference = sanitize_text_field(wp_unslash($_POST['gls_cod_reference']));
+        } elseif (isset($_POST['gls_cod_reference_new']) && !empty($_POST['gls_cod_reference_new'])) {
+            $cod_reference = sanitize_text_field(wp_unslash($_POST['gls_cod_reference_new']));
         }
-        
+
         if ($cod_reference !== null) {
             $order->update_meta_data('_gls_cod_reference', $cod_reference);
         }
@@ -703,10 +723,10 @@ class GLS_Shipping_Order
 
         // Special handling for select and text fields
         if (isset($_POST['gls_express_delivery_service'])) {
-            $services['express_delivery_service'] = sanitize_text_field($_POST['gls_express_delivery_service']);
+            $services['express_delivery_service'] = sanitize_text_field(wp_unslash($_POST['gls_express_delivery_service']));
         }
         if (isset($_POST['gls_sms_service_text'])) {
-            $services['sms_service_text'] = sanitize_text_field($_POST['gls_sms_service_text']);
+            $services['sms_service_text'] = sanitize_text_field(wp_unslash($_POST['gls_sms_service_text']));
         }
 
         if (!empty($services)) {

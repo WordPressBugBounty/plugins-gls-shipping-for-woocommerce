@@ -1,9 +1,9 @@
 === GLS Shipping for WooCommerce ===
 Contributors: goran87
 Tags: gls, shipping, woocommerce shipping
-Requires at least: 4.4
+Requires at least: 5.9
 Tested up to: 6.9
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,10 @@ To install and configure this plugin:
 == Screenshots ==
 
 == Changelog ==
+
+= 1.4.1 =
+* Fix: Fixed Reflected Cross-Site Scripting (XSS) vulnerability in bulk action admin notices via the 'failed_orders' parameter. Added proper input sanitization and output escaping.
+* Fix: Added proper exception handling for GLS API errors in bulk label operations to prevent fatal errors. API errors are now displayed as admin notices instead of causing crashes.
 
 = 1.4.0 =
 * Secure PDF Label Storage: Labels are now stored in a protected directory with authentication-based download.

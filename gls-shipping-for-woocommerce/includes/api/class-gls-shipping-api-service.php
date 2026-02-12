@@ -92,21 +92,21 @@ class GLS_Shipping_API_Service
 				$error_message .= ': ' . esc_html($body['Message']);
 			}
 			$this->log_error($error_message, $post_fields);
-			throw new Exception($error_message);
+			throw new Exception(esc_html($error_message));
 		}
 
 		// Check for JSON decode errors
 		if (json_last_error() !== JSON_ERROR_NONE) {
 			$error_message = 'Invalid JSON response from GLS API: ' . json_last_error_msg();
 			$this->log_error($error_message, $post_fields);
-			throw new Exception($error_message);
+			throw new Exception(esc_html($error_message));
 		}
 
 		// Check for general API errors (authentication, authorization, etc.)
 		if (isset($body['ErrorCode']) && $body['ErrorCode'] !== 0) {
 			$error_message = isset($body['ErrorDescription']) ? esc_html($body['ErrorDescription']) : 'Unknown GLS API error';
 			$this->log_error($error_message, $post_fields);
-			throw new Exception($error_message);
+			throw new Exception(esc_html($error_message));
 		}
 
 		$failed_orders = [];
@@ -119,7 +119,7 @@ class GLS_Shipping_API_Service
 				// If ClientReferenceList is empty, this is likely a general error (like authentication)
 				if (empty($error['ClientReferenceList'])) {
 					$this->log_error($error_message, $post_fields);
-					throw new Exception($error_message);
+					throw new Exception(esc_html($error_message));
 				}
 				
 				// Process order-specific errors
@@ -151,8 +151,8 @@ class GLS_Shipping_API_Service
 
 	public function get_parcel_status($parcel_number)
 	{
-		$tracking_api_url = $this->get_api_url('ParcelService', 'GetParcelStatuses');
-		
+		$this->api_url = $this->get_api_url('ParcelService', 'GetParcelStatuses');
+
 		$post_fields = array(
 			'Username' => $this->get_option("username"),
 			'Password' => $this->get_password(),
@@ -168,7 +168,7 @@ class GLS_Shipping_API_Service
 			'data_format' => 'body',
 		);
 
-		$response = wp_remote_post($tracking_api_url, $params);
+		$response = wp_remote_post($this->api_url, $params);
 
 		if (is_wp_error($response)) {
 			$error_message = esc_html($response->get_error_message());
@@ -196,7 +196,7 @@ class GLS_Shipping_API_Service
 			$error_message = 'Tracking error: ' . implode(', ', $errors);
 			// Also log the error with more context
 			$this->log_error($error_message . ' (Parcel Number: ' . $parcel_number . ')', $post_fields);
-			throw new Exception($error_message);
+			throw new Exception(esc_html($error_message));
 		}
 
 		return $body;
@@ -218,9 +218,10 @@ class GLS_Shipping_API_Service
 	private function log_error($error_message, $params)
 	{
 		$sanitized_params = $this->sanitize_params_for_logging($params);
-		error_log('** API request to: ' . $this->api_url . ' FAILED ** 
-			Request Params: {' . wp_json_encode($sanitized_params) . '} 
-			Error: ' . $error_message . ' 
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional API error logging for debugging
+		error_log('** API request to: ' . $this->api_url . ' FAILED **
+			Request Params: {' . wp_json_encode($sanitized_params) . '}
+			Error: ' . $error_message . '
 			** END **');
 	}
 
@@ -235,10 +236,11 @@ class GLS_Shipping_API_Service
 		if (isset($body['POD']) && $body['POD']) {
 			$body['POD'] = 'SANITIZED';
 		}
-		
-		error_log('** API request to: ' . $this->api_url . ' SUCCESS ** 
-				Request Params: {' . wp_json_encode($sanitized_params) . '} 
-				Response Body: ' . wp_json_encode($body) . ' 
+
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional API response logging for debugging
+		error_log('** API request to: ' . $this->api_url . ' SUCCESS **
+				Request Params: {' . wp_json_encode($sanitized_params) . '}
+				Response Body: ' . wp_json_encode($body) . '
 				** END **');
 	}
 }

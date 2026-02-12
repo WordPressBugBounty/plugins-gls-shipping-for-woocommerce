@@ -102,7 +102,7 @@ class GLS_Shipping_Pickup
         $message = '';
         $error = '';
         
-        if (isset($_POST['schedule_pickup']) && wp_verify_nonce($_POST['gls_pickup_nonce'], 'gls_pickup_action')) {
+        if (isset($_POST['schedule_pickup']) && isset($_POST['gls_pickup_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['gls_pickup_nonce'])), 'gls_pickup_action')) {
             $result = $this->process_pickup_form();
             if (is_wp_error($result)) {
                 $error = $result->get_error_message();
@@ -114,7 +114,7 @@ class GLS_Shipping_Pickup
         // Get all addresses (including store fallback as first option)
         $all_addresses = GLS_Shipping_Sender_Address_Helper::get_all_addresses_with_store_fallback();
         
-        $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'schedule';
+        $current_tab = isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : 'schedule';
         
         ?>
         <div class="wrap">
@@ -235,6 +235,7 @@ class GLS_Shipping_Pickup
      */
     private function render_history_tab()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Display-only pagination/filtering
         // Check if viewing details
         if (isset($_GET['view_details'])) {
             $this->render_pickup_details(intval($_GET['view_details']));
@@ -242,9 +243,11 @@ class GLS_Shipping_Pickup
         }
 
         // Get filter parameters
-        $search = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
-        $status_filter = isset($_GET['status_filter']) ? sanitize_text_field($_GET['status_filter']) : '';
+        $search = isset($_GET['search']) ? sanitize_text_field(wp_unslash($_GET['search'])) : '';
+        $status_filter = isset($_GET['status_filter']) ? sanitize_text_field(wp_unslash($_GET['status_filter'])) : '';
         $current_page = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
+
         $per_page = 20;
 
         // Get history data
@@ -267,7 +270,7 @@ class GLS_Shipping_Pickup
     private function render_pickup_details($pickup_id)
     {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(__('Permission denied.', 'gls-shipping-for-woocommerce'));
+            wp_die(esc_html__('Permission denied.', 'gls-shipping-for-woocommerce'));
         }
 
         $history = new GLS_Shipping_Pickup_History();
@@ -289,6 +292,7 @@ class GLS_Shipping_Pickup
                 <a href="?page=gls-pickup&tab=history" class="button" style="margin-top: 24px;"><?php esc_html_e('← Back to History', 'gls-shipping-for-woocommerce'); ?></a>
             </div>
 
+            <?php /* translators: %d: pickup ID number */ ?>
             <h2><?php echo esc_html(sprintf(__('Pickup Details #%d', 'gls-shipping-for-woocommerce'), $pickup->id)); ?></h2>
             
             <div class="pickup-details-container">
@@ -497,6 +501,7 @@ class GLS_Shipping_Pickup
         ?>
         <div class="tablenav bottom">
             <div class="tablenav-pages">
+                <?php /* translators: %d: number of items */ ?>
                 <span class="displaying-num"><?php echo esc_html(sprintf(__('%d items', 'gls-shipping-for-woocommerce'), $data['total'])); ?></span>
                 <span class="pagination-links">
                     <?php if ($data['current_page'] > 1): ?>
@@ -540,6 +545,7 @@ class GLS_Shipping_Pickup
 
     /**
      * Process pickup form submission
+     * Nonce verified in calling method (render_pickup_page)
      */
     private function process_pickup_form()
     {
@@ -548,6 +554,7 @@ class GLS_Shipping_Pickup
             return new WP_Error('permission_denied', __('Permission denied.', 'gls-shipping-for-woocommerce'));
         }
 
+        // phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce verified in render_pickup_page() before calling this method
         try {
             // Get all addresses for validation
             $all_addresses = GLS_Shipping_Sender_Address_Helper::get_all_addresses_with_store_fallback();
@@ -565,16 +572,16 @@ class GLS_Shipping_Pickup
                 return new WP_Error('invalid_package_count', __('Package count must be at least 1.', 'gls-shipping-for-woocommerce'));
             }
 
-            $pickup_date_from = sanitize_text_field($_POST['pickup_date_from'] ?? '');
-            $pickup_date_to = sanitize_text_field($_POST['pickup_date_to'] ?? '');
-            
+            $pickup_date_from = isset($_POST['pickup_date_from']) ? sanitize_text_field(wp_unslash($_POST['pickup_date_from'])) : '';
+            $pickup_date_to = isset($_POST['pickup_date_to']) ? sanitize_text_field(wp_unslash($_POST['pickup_date_to'])) : '';
+
             if (empty($pickup_date_from) || empty($pickup_date_to)) {
                 return new WP_Error('missing_dates', __('Pickup dates are required.', 'gls-shipping-for-woocommerce'));
             }
 
             // Combine date and time fields
-            $pickup_time_from = !empty($_POST['pickup_time_from']) ? sanitize_text_field($_POST['pickup_time_from']) : '08:00';
-            $pickup_time_to = !empty($_POST['pickup_time_to']) ? sanitize_text_field($_POST['pickup_time_to']) : '17:00';
+            $pickup_time_from = !empty($_POST['pickup_time_from']) ? sanitize_text_field(wp_unslash($_POST['pickup_time_from'])) : '08:00';
+            $pickup_time_to = !empty($_POST['pickup_time_to']) ? sanitize_text_field(wp_unslash($_POST['pickup_time_to'])) : '17:00';
             
             $pickup_datetime_from = $pickup_date_from . ' ' . $pickup_time_from;
             $pickup_datetime_to = $pickup_date_to . ' ' . $pickup_time_to;
@@ -608,6 +615,7 @@ class GLS_Shipping_Pickup
         } catch (Exception $e) {
             return new WP_Error('api_error', $e->getMessage());
         }
+        // phpcs:enable WordPress.Security.NonceVerification.Missing
     }
 
 }
