@@ -58,8 +58,18 @@
 		}
 
 		function showMapModal(mapClass) {
-			var selectedCountry =
-				document.getElementById("billing_country").value;
+			// Use shipping country when "Ship to a different address" is checked,
+			// so the map matches the country used by PHP calculate_shipping() (destination).
+			var shipToDifferent = document.getElementById(
+				"ship-to-different-address-checkbox"
+			);
+			var countryFieldId =
+				shipToDifferent && shipToDifferent.checked
+					? "shipping_country"
+					: "billing_country";
+			var countryField = document.getElementById(countryFieldId);
+			var selectedCountry = countryField ? countryField.value : "";
+
 			var mapElement = document.querySelector("." + mapClass);
 			var countryLower = selectedCountry.toLowerCase();
 			mapElement.setAttribute("country", countryLower);
