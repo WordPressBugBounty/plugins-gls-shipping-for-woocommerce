@@ -36,6 +36,11 @@ class GLS_Shipping_Assets
             return;
         }
 
+        // Skip on block checkout — blocks integration handles its own dialog
+        if (has_block('woocommerce/checkout')) {
+            return;
+        }
+
         echo '<gls-dpm-dialog country="hr" style="position: relative; z-index: 9999;" class="inchoo-gls-map gls-map-locker" filter-type="parcel-locker"></gls-dpm-dialog>';
         echo '<gls-dpm-dialog country="hr" style="position: relative; z-index: 9999;" class="inchoo-gls-map gls-map-shop" filter-type="parcel-shop"></gls-dpm-dialog>';
     }
@@ -49,6 +54,11 @@ class GLS_Shipping_Assets
     {
         // Only load scripts on cart and checkout pages
         if (!is_cart() && !is_checkout()) {
+            return;
+        }
+
+        // Skip on block checkout — blocks integration handles its own scripts
+        if (has_block('woocommerce/checkout')) {
             return;
         }
 
@@ -78,7 +88,7 @@ class GLS_Shipping_Assets
      *
      * @return string Comma-separated filter saturation values or empty string.
      */
-    private static function get_locker_filter_saturation()
+    public static function get_locker_filter_saturation()
     {
         // Try regular parcel locker method first
         $parcel_locker_settings = get_option('woocommerce_' . GLS_SHIPPING_METHOD_PARCEL_LOCKER_ID . '_settings', array());

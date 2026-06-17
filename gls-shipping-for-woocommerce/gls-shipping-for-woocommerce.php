@@ -3,7 +3,7 @@
 /**
  * Plugin Name: GLS Shipping for WooCommerce
  * Description: Offical GLS Shipping for WooCommerce plugin
- * Version: 1.4.2
+ * Version: 1.5.0
  * Author: Inchoo
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -24,7 +24,7 @@ final class GLS_Shipping_For_Woo
 {
     private static $instance;
 
-    private $version = '1.4.2';
+    private $version = '1.5.0';
 
     private function __construct()
     {
@@ -326,9 +326,30 @@ add_action(
     function () {
         if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
             \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, true);
         }
     }
 );
+
+// Register WooCommerce Checkout Blocks integration
+add_action('woocommerce_blocks_loaded', function () {
+    require_once GLS_SHIPPING_ABSPATH . 'includes/blocks/class-gls-blocks-integration.php';
+
+    // Register Store API endpoint and order hooks early — needed for REST API checkout requests.
+    GLS_Blocks_Integration::register_store_api();
+
+    $gls_blocks_registration = function ($integration_registry) {
+        $integration_registry->register(new GLS_Blocks_Integration());
+    };
+
+    // Checkout block: pickup selection + logo. Cart block: logo only.
+    add_action('woocommerce_blocks_checkout_block_registration', $gls_blocks_registration);
+    add_action('woocommerce_blocks_cart_block_registration', $gls_blocks_registration);
+
+    // WooCommerce enqueues the integration's script but not its stylesheet,
+    // so enqueue the block CSS (GLS logo styles) on the cart/checkout frontend.
+    add_action('wp_enqueue_scripts', array('GLS_Blocks_Integration', 'enqueue_block_styles'));
+});
 
 // Register activation hook to setup labels directory
 register_activation_hook(__FILE__, array('GLS_Shipping_For_Woo', 'on_plugin_activation'));

@@ -1,0 +1,12 @@
+{
+  "name": "gls-shipping-blocks",
+  "private": true,
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "devDependencies": {
+    "@woocommerce/dependency-extraction-webpack-plugin": "^3.0.0",
+    "@wordpress/scripts": "^30.0.0"
+  }
+}

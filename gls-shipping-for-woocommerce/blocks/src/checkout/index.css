@@ -1,0 +1,45 @@
+.gls-blocks-pickup {
+	margin: 16px 0;
+	padding: 0;
+}
+
+.gls-blocks-pickup-button {
+	display: inline-block;
+	padding: 8px 16px;
+	background-color: #0f4c81;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	line-height: 1.5;
+	transition: background-color 0.2s;
+}
+
+.gls-blocks-pickup-button:hover {
+	background-color: #0a3560;
+}
+
+.gls-blocks-pickup-info {
+	margin-top: 12px;
+	padding: 12px 16px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.gls-shipping-logo {
+	display: inline !important;
+	max-height: 32px !important;
+	height: auto !important;
+	width: auto !important;
+	margin-right: 8px !important;
+	margin-left: 0 !important;
+	vertical-align: middle !important;
+	max-width: 54px !important;
+	border: none !important;
+	box-shadow: none !important;
+	background: none !important;
+}

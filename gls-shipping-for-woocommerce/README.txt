@@ -3,7 +3,7 @@ Contributors: goran87
 Tags: gls, shipping, woocommerce shipping
 Requires at least: 5.9
 Tested up to: 6.9
-Stable tag: 1.4.2
+Stable tag: 1.5.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,9 @@ To install and configure this plugin:
 == Screenshots ==
 
 == Changelog ==
+
+= 1.5.0 =
+* Feature: Added support for WooCommerce Checkout Block. 
 
 = 1.4.2 =
 * Fix: Fixed a bug where "Ship with different address" would stil take Billing address for map pin options.
