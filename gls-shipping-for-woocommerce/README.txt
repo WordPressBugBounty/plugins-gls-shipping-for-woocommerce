@@ -3,7 +3,7 @@ Contributors: goran87
 Tags: gls, shipping, woocommerce shipping
 Requires at least: 5.9
 Tested up to: 6.9
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,12 @@ To install and configure this plugin:
 == Screenshots ==
 
 == Changelog ==
+
+= 1.5.1 =
+* Feature: Added "Auto Complete Order" option to automatically mark orders as Completed after a GLS shipping label is generated.
+* Feature: Added per-product "GLS Free Shipping" flag with ANY/ALL cart condition to offer free shipping on GLS methods.
+* Fix: Per-product free shipping now applies to the "GLS Delivery to Address" method configured through Shipping Zones.
+* Fix: Auto Complete Order now also triggers when using the "Bulk Print GLS Labels" bulk action.
 
 = 1.5.0 =
 * Feature: Added support for WooCommerce Checkout Block. 

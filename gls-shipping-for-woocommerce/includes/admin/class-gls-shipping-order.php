@@ -23,6 +23,68 @@ class GLS_Shipping_Order
         // Save GLS settings when order is updated
         add_action('woocommerce_process_shop_order_meta', array($this, 'save_gls_order_settings'), 10, 2);
         add_action('save_post_shop_order', array($this, 'save_gls_order_settings'), 10, 2);
+
+        // Auto-complete order after successful label generation when enabled in settings
+        add_action('gls_label_generated', array($this, 'maybe_auto_complete_order'), 10, 2);
+
+        // Auto-complete orders after successful bulk print label generation
+        add_action('gls_bulk_labels_generated', array($this, 'maybe_auto_complete_bulk_orders'), 10, 3);
+    }
+
+    /**
+     * Auto-complete each successfully processed order after a bulk print label run.
+     *
+     * The bulk print flow does not call save_label_and_tracking_info()
+     *
+     * @param array $order_ids         All order IDs included in the bulk action.
+     * @param array $successful_orders Order IDs that received a label.
+     * @param array $failed_orders     Orders that failed.
+     */
+    public function maybe_auto_complete_bulk_orders($order_ids, $successful_orders, $failed_orders)
+    {
+        if (empty($successful_orders) || !is_array($successful_orders)) {
+            return;
+        }
+
+        foreach ($successful_orders as $order_id) {
+            $this->maybe_auto_complete_order($order_id, null);
+        }
+    }
+
+    /**
+     * Mark order as completed after the GLS shipping label is generated,
+     * if the "Auto Complete Order" option is enabled in the plugin settings.
+     */
+    public function maybe_auto_complete_order($order_id, $order)
+    {
+        $settings = get_option('woocommerce_gls_shipping_method_settings', array());
+        if (empty($settings['auto_complete_order']) || $settings['auto_complete_order'] !== 'yes') {
+            return;
+        }
+
+        if (!$order instanceof WC_Order) {
+            $order = wc_get_order($order_id);
+        }
+
+        if (!$order) {
+            return;
+        }
+
+        // Only auto-complete orders that are in a known "ready to fulfill" state.
+        $allowed_statuses = apply_filters(
+            'gls_auto_complete_allowed_statuses',
+            array('processing', 'on-hold'),
+            $order
+        );
+
+        if (!in_array($order->get_status(), $allowed_statuses, true)) {
+            return;
+        }
+
+        $order->update_status(
+            'completed',
+            __('Order automatically completed after GLS label generation.', 'gls-shipping-for-woocommerce')
+        );
     }
 
     public function add_gls_shipping_info_meta_box()

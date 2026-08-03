@@ -2,18 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gls-wp\n"
-"POT-Creation-Date: 2025-08-22T09:50:00+00:00\n"
-"PO-Revision-Date: 2026-03-02 08:07+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
-"Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=( n == 1 ) ? 0 : ( n >= 2 && n <= 4 ) ? 1 : "
-"2;\n"
+"POT-Creation-Date: 2025-08-22T09:50:00+00:00\n"
+"PO-Revision-Date: 2026-03-02 08:07+0000\n"
+"Language: cs_CZ\n"
+"Plural-Forms: nplurals=3; plural=( n == 1 ) ? 0 : ( n >= 2 && n <= 4 ) ? 1 : 2;\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.1; wp-6.8.3; php-8.3.26"
+"X-Loco-Version: 2.8.1; wp-6.8.3; php-8.3.26\n"
 
 #. translators: %d: number of items
 #: includes/admin/class-gls-shipping-pickup.php:505
@@ -48,7 +47,7 @@ msgstr[0] "Štítek %s se nepodařilo vygenerovat."
 msgstr[1] "Štítek %s se nepodařilo vygenerovat."
 msgstr[2] "Štítek %s se nepodařilo vygenerovat."
 
-#: includes/admin/class-gls-shipping-order.php:490
+#: includes/admin/class-gls-shipping-order.php:518
 msgid "24H Service"
 msgstr "24H služba"
 
@@ -67,40 +66,40 @@ msgid "Account Mode"
 msgstr "Režim účtu"
 
 #: includes/admin/class-gls-shipping-pickup.php:404
-#: includes/methods/class-gls-shipping-method.php:379
-#: includes/methods/class-gls-shipping-method.php:449
+#: includes/methods/class-gls-shipping-method.php:398
+#: includes/methods/class-gls-shipping-method.php:468
 msgid "Actions"
 msgstr "Akce"
 
-#: includes/methods/class-gls-shipping-method.php:447
+#: includes/methods/class-gls-shipping-method.php:466
 msgid "Active"
 msgstr "Aktivní"
 
-#: includes/methods/class-gls-shipping-method.php:462
+#: includes/methods/class-gls-shipping-method.php:481
 msgid "Add New Account"
 msgstr "Přidat nový účet"
 
-#: includes/methods/class-gls-shipping-method.php:404
+#: includes/methods/class-gls-shipping-method.php:423
 msgid "Add New Address"
 msgstr "Přidat novou adresu"
 
 #: includes/admin/class-gls-shipping-pickup.php:365
-#: includes/blocks/class-gls-blocks-integration.php:123
+#: includes/blocks/class-gls-blocks-integration.php:150
 #: includes/public/class-gls-shipping-assets.php:71
 #: includes/public/class-gls-shipping-assets.php:149
 msgid "Address"
 msgstr "Adresa"
 
-#: includes/admin/class-gls-shipping-order.php:87
+#: includes/admin/class-gls-shipping-order.php:115
 #: includes/public/class-gls-shipping-my-account.php:40
 msgid "Address:"
 msgstr "Adresa:"
 
-#: includes/admin/class-gls-shipping-order.php:557
+#: includes/admin/class-gls-shipping-order.php:585
 msgid "Addressee Only (AOS)"
 msgstr "Pouze adresát (AOS)"
 
-#: includes/methods/class-gls-shipping-method.php:304
+#: includes/methods/class-gls-shipping-method.php:323
 msgid "Addressee Only Service (AOS)"
 msgstr "Addressee Only Service (AOS)"
 
@@ -117,12 +116,11 @@ msgstr "Nastavení API pro všechny možnosti přepravy GLS."
 msgid "Austria"
 msgstr "Rakousko"
 
-#: includes/methods/class-gls-shipping-method.php:251
-msgid ""
-"Availability depends on the country. Can’t be used with FDS and FSS services."
+#: includes/methods/class-gls-shipping-method.php:270
+msgid "Availability depends on the country. Can’t be used with FDS and FSS services."
 msgstr "Dostupnost závisí na zemi. Nelze použít se službami FDS a FSS."
 
-#: includes/methods/class-gls-shipping-method.php:313
+#: includes/methods/class-gls-shipping-method.php:332
 msgid "Available within specific limits based on the country."
 msgstr "K dispozici v rámci určitých limitů v závislosti na zemi."
 
@@ -144,7 +142,7 @@ msgstr "Hromadné generování štítků GLS"
 msgid "Bulk Print GLS Labels"
 msgstr "Hromadný tisk štítků GLS"
 
-#: includes/methods/class-gls-shipping-method.php:270
+#: includes/methods/class-gls-shipping-method.php:289
 msgid "Can’t be used with T09, T10, and T12 services."
 msgstr "Nelze použít se službami T09, T10 a T12."
 
@@ -154,44 +152,33 @@ msgstr "Nelze použít se službami T09, T10 a T12."
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:82
 #: includes/methods/class-gls-shipping-method-zones.php:80
 #: includes/methods/class-gls-shipping-method.php:94
-msgid ""
-"Cart total amount above which shipping will be free. Set to 0 to disable."
-msgstr ""
-"Celková částka košíku, nad kterou bude doprava zdarma. Nastavením na 0 "
-"deaktivujete."
+msgid "Cart total amount above which shipping will be free. Set to 0 to disable."
+msgstr "Celková částka košíku, nad kterou bude doprava zdarma. Nastavením na 0 deaktivujete."
 
-#: includes/admin/class-gls-shipping-order.php:94
-#: includes/admin/class-gls-shipping-order.php:96
+#: includes/admin/class-gls-shipping-order.php:122
+#: includes/admin/class-gls-shipping-order.php:124
 msgid "Change Pickup Location"
 msgstr "Změnit místo vyzvednutí"
 
 #: includes/admin/class-gls-shipping-product-restrictions.php:40
-msgid ""
-"Check this box if this product cannot be shipped to parcel shops or parcel "
-"lockers. This will hide those shipping options when this product is in the "
-"cart."
-msgstr ""
-"parcel shopy nebo parcel lockery. Tím se skryjí tyto možnosti dopravy, když "
-"je tento produkt v košíku."
+msgid "Check this box if this product cannot be shipped to parcel shops or parcel lockers. This will hide those shipping options when this product is in the cart."
+msgstr "parcel shopy nebo parcel lockery. Tím se skryjí tyto možnosti dopravy, když je tento produkt v košíku."
 
 #: includes/methods/class-gls-shipping-method.php:120
 msgid "Choose between single or multiple GLS accounts."
 msgstr "Vyberte mezi jedním nebo více GLS účty."
 
 #: includes/admin/class-gls-shipping-pickup.php:215
-msgid ""
-"Choose the pickup address from configured sender addresses or store default."
-msgstr ""
-"Vyberte adresu vyzvednutí z nakonfigurovaných adres odesílatele nebo výchozí "
-"adresu obchodu."
+msgid "Choose the pickup address from configured sender addresses or store default."
+msgstr "Vyberte adresu vyzvednutí z nakonfigurovaných adres odesílatele nebo výchozí adresu obchodu."
 
 #: includes/methods/class-gls-shipping-method.php:135
-#: includes/methods/class-gls-shipping-method.php:448
+#: includes/methods/class-gls-shipping-method.php:467
 msgid "Client ID"
 msgstr "Klientské ID"
 
-#: includes/admin/class-gls-shipping-order.php:171
-#: includes/admin/class-gls-shipping-order.php:235
+#: includes/admin/class-gls-shipping-order.php:199
+#: includes/admin/class-gls-shipping-order.php:263
 msgid "COD Reference:"
 msgstr "COD reference:"
 
@@ -207,8 +194,8 @@ msgstr "Jméno kontaktu"
 msgid "Contact Phone"
 msgstr "Kontaktní telefon"
 
-#: includes/admin/class-gls-shipping-order.php:512
-#: includes/methods/class-gls-shipping-method.php:261
+#: includes/admin/class-gls-shipping-order.php:540
+#: includes/methods/class-gls-shipping-method.php:280
 msgid "Contact Service (CS1)"
 msgstr "Kontaktovat službu (CS1)"
 
@@ -225,14 +212,14 @@ msgstr "Nepodařilo se přečíst PDF soubor."
 msgid "Count"
 msgstr "Počet"
 
-#: includes/blocks/class-gls-blocks-integration.php:124
+#: includes/blocks/class-gls-blocks-integration.php:151
 #: includes/methods/class-gls-shipping-method.php:153
 #: includes/public/class-gls-shipping-assets.php:72
 #: includes/public/class-gls-shipping-assets.php:150
 msgid "Country"
 msgstr "Země"
 
-#: includes/admin/class-gls-shipping-order.php:88
+#: includes/admin/class-gls-shipping-order.php:116
 #: includes/public/class-gls-shipping-my-account.php:41
 msgid "Country:"
 msgstr "Země"
@@ -247,7 +234,7 @@ msgstr "Vytvořeno"
 msgid "Croatia"
 msgstr "Chorvatsko"
 
-#: includes/methods/class-gls-shipping-method.php:327
+#: includes/methods/class-gls-shipping-method.php:346
 msgid "Customize how GLS shipping methods are displayed to customers."
 msgstr "Přizpůsobte způsob zobrazení GLS dopravních metod zákazníkům."
 
@@ -257,7 +244,7 @@ msgstr "Přizpůsobte způsob zobrazení GLS dopravních metod zákazníkům."
 msgid "Czech Republic"
 msgstr "Česká republika"
 
-#: includes/methods/class-gls-shipping-method.php:377
+#: includes/methods/class-gls-shipping-method.php:396
 msgid "Default"
 msgstr "Výchozí"
 
@@ -265,8 +252,8 @@ msgstr "Výchozí"
 msgid "Default Account"
 msgstr "Výchozí účet"
 
-#: includes/methods/class-gls-shipping-method.php:517
-#: includes/methods/class-gls-shipping-method.php:559
+#: includes/methods/class-gls-shipping-method.php:536
+#: includes/methods/class-gls-shipping-method.php:578
 msgid "Delete"
 msgstr "Odstranit"
 
@@ -302,15 +289,15 @@ msgstr "Doručení do GLS Parcel Shopu"
 msgid "Denmark"
 msgstr "Dánsko"
 
-#: includes/admin/class-gls-shipping-order.php:500
+#: includes/admin/class-gls-shipping-order.php:528
 msgid "Disabled"
 msgstr "Vypnuto"
 
-#: includes/methods/class-gls-shipping-method.php:332
+#: includes/methods/class-gls-shipping-method.php:351
 msgid "Display GLS logo next to shipping methods"
 msgstr "Zobrazte logo GLS vedle dopravních metod"
 
-#: includes/methods/class-gls-shipping-method.php:325
+#: includes/methods/class-gls-shipping-method.php:344
 msgid "Display Options"
 msgstr "Možnosti zobrazení"
 
@@ -322,8 +309,8 @@ msgstr "Stáhněte si GLS Label"
 msgid "Earliest date and time for pickup."
 msgstr "Nejbližší datum a čas vyzvednutí."
 
-#: includes/methods/class-gls-shipping-method.php:516
-#: includes/methods/class-gls-shipping-method.php:558
+#: includes/methods/class-gls-shipping-method.php:535
+#: includes/methods/class-gls-shipping-method.php:577
 msgid "Edit"
 msgstr "Upravit"
 
@@ -333,27 +320,27 @@ msgstr "Upravit"
 msgid "Enable"
 msgstr "Povolit"
 
-#: includes/methods/class-gls-shipping-method.php:242
+#: includes/methods/class-gls-shipping-method.php:261
 msgid "Enable 24H"
 msgstr "Povolit 24H"
 
-#: includes/methods/class-gls-shipping-method.php:306
+#: includes/methods/class-gls-shipping-method.php:325
 msgid "Enable AOS"
 msgstr "Povolit AOS"
 
-#: includes/methods/class-gls-shipping-method.php:263
+#: includes/methods/class-gls-shipping-method.php:282
 msgid "Enable CS1"
 msgstr "Povolit CS1"
 
-#: includes/methods/class-gls-shipping-method.php:269
+#: includes/methods/class-gls-shipping-method.php:288
 msgid "Enable FDS"
 msgstr "Povolit FDS"
 
-#: includes/methods/class-gls-shipping-method.php:277
+#: includes/methods/class-gls-shipping-method.php:296
 msgid "Enable FSS"
 msgstr "Povolit FSS"
 
-#: includes/methods/class-gls-shipping-method.php:312
+#: includes/methods/class-gls-shipping-method.php:331
 msgid "Enable INS"
 msgstr "Povolit INS"
 
@@ -365,11 +352,11 @@ msgstr "Povolit protokolování"
 msgid "Enable logging of GLS API requests and responses"
 msgstr "Povolit protokolování požadavků a odpovědí rozhraní GLS API"
 
-#: includes/methods/class-gls-shipping-method.php:285
+#: includes/methods/class-gls-shipping-method.php:304
 msgid "Enable SM1"
 msgstr "Povolit SM1"
 
-#: includes/methods/class-gls-shipping-method.php:300
+#: includes/methods/class-gls-shipping-method.php:319
 msgid "Enable SM2"
 msgstr "Povolit SM2"
 
@@ -379,17 +366,13 @@ msgstr "Povolit SM2"
 msgid "Enable this shipping globally."
 msgstr "Povolit tuto dopravu globálně."
 
-#: includes/methods/class-gls-shipping-method.php:237
+#: includes/methods/class-gls-shipping-method.php:256
 msgid "Enable/Disable each of GLS Services for your store."
 msgstr "Povolit/zakázat jednotlivé služby GLS pro váš obchod."
 
 #: includes/methods/class-gls-shipping-method.php:206
-msgid ""
-"Enter the format for order reference. Use {{order_id}} where you want the "
-"order ID to be inserted."
-msgstr ""
-"Zadejte formát odkazu na objednávku. Použijte {{order_id}}, kam chcete "
-"vložit ID objednávky."
+msgid "Enter the format for order reference. Use {{order_id}} where you want the order ID to be inserted."
+msgstr "Zadejte formát odkazu na objednávku. Použijte {{order_id}}, kam chcete vložit ID objednávky."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:63
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:65
@@ -422,15 +405,15 @@ msgstr "Chyba"
 msgid "Error: %s"
 msgstr "Chyba: %s"
 
-#: includes/methods/class-gls-shipping-method.php:248
+#: includes/methods/class-gls-shipping-method.php:267
 msgid "Express Delivery Service (T09, T10, T12)"
 msgstr "Expresní doručovací služba (T09, T10, T12)"
 
-#: includes/methods/class-gls-shipping-method.php:250
+#: includes/methods/class-gls-shipping-method.php:269
 msgid "Express Delivery Service Time"
 msgstr "Čas expresního doručení"
 
-#: includes/admin/class-gls-shipping-order.php:497
+#: includes/admin/class-gls-shipping-order.php:525
 msgid "Express Service:"
 msgstr "Expresní služba:"
 
@@ -443,31 +426,29 @@ msgstr "ID neúspěšných objednávek: %s"
 
 #: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:103
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:134
-msgid ""
-"Filter locker locations on the map for Hungary. Only applies when country is "
-"Hungary."
-msgstr ""
-"Filtrovat umístění výdejních boxů na mapě pro Maďarsko. Platí pouze v "
-"případě, že je země Maďarsko.\n"
+msgid "Filter locker locations on the map for Hungary. Only applies when country is Hungary."
+msgstr "Filtrovat umístění boxů na mapě pro Maďarsko. Platí pouze pokud je země Maďarsko."
+"Filtrovat umístění výdejních boxů na mapě pro Maďarsko. Platí pouze v případě, že je země Maďarsko.\n"
+""
 
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:103
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:103
 msgid "Finland"
 msgstr "Finsko"
 
-#: includes/admin/class-gls-shipping-order.php:521
+#: includes/admin/class-gls-shipping-order.php:549
 msgid "Flexible Delivery (FDS)"
 msgstr "Flexibilní doručovací služba (FDS)"
 
-#: includes/methods/class-gls-shipping-method.php:267
+#: includes/methods/class-gls-shipping-method.php:286
 msgid "Flexible Delivery Service (FDS)"
 msgstr "Flexibilní doručovací služba (FDS)"
 
-#: includes/admin/class-gls-shipping-order.php:530
+#: includes/admin/class-gls-shipping-order.php:558
 msgid "Flexible Delivery SMS (FSS)"
 msgstr "Flexibilní SMS doručovací služba (FSS)"
 
-#: includes/methods/class-gls-shipping-method.php:275
+#: includes/methods/class-gls-shipping-method.php:294
 msgid "Flexible Delivery SMS Service (FSS)"
 msgstr "Flexibilní SMS doručovací služba (FSS)"
 
@@ -489,7 +470,7 @@ msgstr "Hranice dopravy zdarma"
 msgid "Generate GLS Label"
 msgstr "Vygenerovat štítek GLS"
 
-#: includes/admin/class-gls-shipping-order.php:256
+#: includes/admin/class-gls-shipping-order.php:284
 msgid "Generate Shipping Label"
 msgstr "Generoval přepravní štítek"
 
@@ -499,20 +480,20 @@ msgid "Germany"
 msgstr "Německo"
 
 #. translators: %1$d: parcel index number, %2$s: tracking number
-#: includes/admin/class-gls-shipping-order.php:200
+#: includes/admin/class-gls-shipping-order.php:228
 #, php-format
-#| msgid "Get Parcel Status #%d (%s)"
 msgid "Get Parcel Status #%1$d (%2$s)"
-msgstr ""
+msgstr "Získat stav zásilky #%1$d (%2$s)"
 "Získat stav zásilky #%1$d (%2$s)\n"
+""
 
 #. translators: %s: tracking number
-#: includes/admin/class-gls-shipping-order.php:203
+#: includes/admin/class-gls-shipping-order.php:231
 #, php-format
-#| msgid "Get Parcel Status"
 msgid "Get Parcel Status (%s)"
-msgstr ""
+msgstr "Získat stav zásilky (%s)"
 "Získat stav zásilky (%s)\n"
+""
 
 #: includes/methods/class-gls-shipping-method.php:129
 msgid "GLS Accounts"
@@ -556,13 +537,12 @@ msgid "GLS Pickup"
 msgstr "GLS vyzvednutí"
 
 #. translators: %1$s: pickup location name, %2$s: pickup location ID
-#: includes/admin/class-gls-shipping-order.php:620
+#: includes/admin/class-gls-shipping-order.php:648
 #, php-format
-#| msgid "GLS pickup location changed to: %s (%s)"
 msgid "GLS pickup location changed to: %1$s (%2$s)"
 msgstr "Místo vyzvednutí GLS změněno na: %1$s (%2$s)"
 
-#: includes/admin/class-gls-shipping-order.php:84
+#: includes/admin/class-gls-shipping-order.php:112
 #: includes/public/class-gls-shipping-my-account.php:37
 msgid "GLS Pickup Location:"
 msgstr "Místo vyzvednutí GLS:"
@@ -571,7 +551,7 @@ msgstr "Místo vyzvednutí GLS:"
 msgid "GLS Pickup Management"
 msgstr "Správa vyzvednutí GLS"
 
-#: includes/methods/class-gls-shipping-method.php:235
+#: includes/methods/class-gls-shipping-method.php:254
 msgid "GLS Services"
 msgstr "Služby GLS"
 
@@ -580,7 +560,7 @@ msgstr "Služby GLS"
 msgid "GLS Shipping for WooCommerce"
 msgstr "Přeprava GLS pro WooCommerce"
 
-#: includes/admin/class-gls-shipping-order.php:38
+#: includes/admin/class-gls-shipping-order.php:66
 msgid "GLS Shipping Info"
 msgstr "Přepravní info GLS"
 
@@ -589,23 +569,19 @@ msgid "GLS Shipping Restriction"
 msgstr "Omezení přepravy GLS"
 
 #: includes/admin/class-gls-shipping-label-migration.php:368
-msgid ""
-"GLS Shipping: Migrating labels to secure storage. This runs automatically in "
-"the background."
-msgstr ""
-"GLS Shipping: Migrace štítků do zabezpečeného úložiště. Toto probíhá "
-"automaticky na pozadí."
+msgid "GLS Shipping: Migrating labels to secure storage. This runs automatically in the background."
+msgstr "GLS Shipping: Migrace štítků do zabezpečeného úložiště. Toto probíhá automaticky na pozadí."
 
 #: includes/admin/class-gls-shipping-bulk.php:455
 msgid "GLS Tracking Number"
 msgstr "Sledovací číslo GLS"
 
-#: includes/admin/class-gls-shipping-order.php:113
+#: includes/admin/class-gls-shipping-order.php:141
 #: includes/public/class-gls-shipping-my-account.php:48
 msgid "GLS Tracking Number: "
 msgstr "Sledovací číslo GLS:"
 
-#: includes/admin/class-gls-shipping-order.php:104
+#: includes/admin/class-gls-shipping-order.php:132
 msgid "GLS Tracking Numbers:"
 msgstr "Sledovací čísla GLS:"
 
@@ -614,7 +590,7 @@ msgstr "Sledovací čísla GLS:"
 msgid "Greece"
 msgstr "Řecko"
 
-#: includes/methods/class-gls-shipping-method.php:240
+#: includes/methods/class-gls-shipping-method.php:259
 msgid "Guaranteed 24h Service (24H)"
 msgstr "Záruční 24H služba (24H)"
 
@@ -643,7 +619,7 @@ msgstr "Filtr vytíženosti výdejních boxů v Maďarsku"
 msgid "ID"
 msgstr "ID"
 
-#: includes/admin/class-gls-shipping-order.php:85
+#: includes/admin/class-gls-shipping-order.php:113
 #: includes/public/class-gls-shipping-my-account.php:38
 msgid "ID:"
 msgstr "ID:"
@@ -653,11 +629,11 @@ msgstr "ID:"
 msgid "Inchoo"
 msgstr "Inchoo"
 
-#: includes/admin/class-gls-shipping-order.php:566
+#: includes/admin/class-gls-shipping-order.php:594
 msgid "Insurance (INS)"
 msgstr "Pojištění (INS)"
 
-#: includes/methods/class-gls-shipping-method.php:310
+#: includes/methods/class-gls-shipping-method.php:329
 msgid "Insurance Service (INS)"
 msgstr "Pojištění (INS)"
 
@@ -701,45 +677,33 @@ msgid "Luxembourg"
 msgstr "Lucembursko"
 
 #: includes/methods/class-gls-shipping-method.php:131
-msgid ""
-"Manage multiple GLS accounts. Each account can have different credentials "
-"and country settings."
-msgstr ""
-"Spravujte více GLS účtů. Každý účet může mít různé přihlašovací údaje a "
-"nastavení země."
+msgid "Manage multiple GLS accounts. Each account can have different credentials and country settings."
+msgstr "Spravujte více GLS účtů. Každý účet může mít různé přihlašovací údaje a nastavení země."
 
 #: includes/methods/class-gls-shipping-method.php:180
-msgid ""
-"Manage multiple sender addresses. Each address can be set as default for "
-"shipments."
-msgstr ""
-"Spravujte více adres odesílatele. Každou adresu lze nastavit jako výchozí "
-"pro zásilky."
+msgid "Manage multiple sender addresses. Each address can be set as default for shipments."
+msgstr "Spravujte více adres odesílatele. Každou adresu lze nastavit jako výchozí pro zásilky."
 
 #: includes/methods/class-gls-shipping-method.php:168
 msgid "Mode"
 msgstr "Mód"
 
-#: includes/methods/class-gls-shipping-method.php:606
-msgid ""
-"Multiple accounts mode was not saved because no valid GLS accounts were "
-"found. Please add at least one account to use multiple accounts mode."
-msgstr ""
-"Režim více účtů nebyl uložen, protože nebyly nalezeny žádné platné účty GLS. "
-"Pro použití režimu více účtů přidejte alespoň jeden účet."
+#: includes/methods/class-gls-shipping-method.php:625
+msgid "Multiple accounts mode was not saved because no valid GLS accounts were found. Please add at least one account to use multiple accounts mode."
+msgstr "Režim více účtů nebyl uložen, protože nebyly nalezeny žádné platné účty GLS. Pro použití režimu více účtů přidejte alespoň jeden účet."
 
 #: includes/methods/class-gls-shipping-method.php:125
 msgid "Multiple GLS Accounts"
 msgstr "Více GLS účtů"
 
-#: includes/blocks/class-gls-blocks-integration.php:122
-#: includes/methods/class-gls-shipping-method.php:378
+#: includes/blocks/class-gls-blocks-integration.php:149
+#: includes/methods/class-gls-shipping-method.php:397
 #: includes/public/class-gls-shipping-assets.php:70
 #: includes/public/class-gls-shipping-assets.php:148
 msgid "Name"
 msgstr "Jméno"
 
-#: includes/admin/class-gls-shipping-order.php:86
+#: includes/admin/class-gls-shipping-order.php:114
 #: includes/public/class-gls-shipping-my-account.php:39
 msgid "Name:"
 msgstr "Jméno:"
@@ -749,15 +713,15 @@ msgstr "Jméno:"
 msgid "Netherlands"
 msgstr "Nizozemsko"
 
-#: includes/methods/class-gls-shipping-method.php:555
+#: includes/methods/class-gls-shipping-method.php:574
 msgid "New Account"
 msgstr "Nový účet"
 
-#: includes/methods/class-gls-shipping-method.php:513
+#: includes/methods/class-gls-shipping-method.php:532
 msgid "New Address"
 msgstr "Nová adresa"
 
-#: includes/methods/class-gls-shipping-method.php:389
+#: includes/methods/class-gls-shipping-method.php:408
 msgid "No custom sender address (use default from store settings)"
 msgstr "Žádná vlastní adresa odesílatele (použít výchozí z nastavení obchodu)"
 
@@ -765,11 +729,11 @@ msgstr "Žádná vlastní adresa odesílatele (použít výchozí z nastavení o
 msgid "No pickup requests found."
 msgstr "Nebyly nalezeny žádné požadavky na vyzvednutí."
 
-#: includes/methods/class-gls-shipping-method.php:243
+#: includes/methods/class-gls-shipping-method.php:262
 msgid "Not available in Serbia."
 msgstr "Nedostupné v Srbsku."
 
-#: includes/methods/class-gls-shipping-method.php:278
+#: includes/methods/class-gls-shipping-method.php:297
 msgid "Not available without FDS service."
 msgstr "Nedostupné bez služby FDS."
 
@@ -777,8 +741,8 @@ msgstr "Nedostupné bez služby FDS."
 msgid "Number of Packages"
 msgstr "Počet balíčků"
 
-#: includes/admin/class-gls-shipping-order.php:149
-#: includes/admin/class-gls-shipping-order.php:213
+#: includes/admin/class-gls-shipping-order.php:177
+#: includes/admin/class-gls-shipping-order.php:241
 msgid "Number of Packages:"
 msgstr "Počet balíčků:"
 
@@ -799,13 +763,8 @@ msgstr "Pouze v Srbsku! POŽADOVANÉ"
 #: includes/methods/class-gls-shipping-method-zones.php:71
 #: includes/methods/class-gls-shipping-method.php:85
 #, php-format
-msgid ""
-"Optional: Enter weight based rates (one per line). Format: max_weight|cost. "
-"Example: 1|100 means up to 1 %s costs 100. Leave empty to use default price."
-msgstr ""
-"Volitelné: Zadejte sazby založené na hmotnosti (jedna na řádek). Formát: "
-"max_hmotnost|cena. Příklad: 1|100 znamená až 1 %s stojí 100. Ponechte "
-"prázdné pro použití výchozí ceny."
+msgid "Optional: Enter weight based rates (one per line). Format: max_weight|cost. Example: 1|100 means up to 1 %s costs 100. Leave empty to use default price."
+msgstr "Volitelné: Zadejte sazby založené na hmotnosti (jedna na řádek). Formát: max_hmotnost|cena. Příklad: 1|100 znamená až 1 %s stojí 100. Ponechte prázdné pro použití výchozí ceny."
 
 #: includes/admin/class-gls-shipping-label-migration.php:395
 msgid "Order not found."
@@ -829,35 +788,18 @@ msgid "Package count must be at least 1."
 msgstr "Počet balíků musí být alespoň 1."
 
 #: includes/methods/class-gls-shipping-method.php:199
-msgid ""
-"Parcel info printed on label. Use placeholders: {{order_id}}, "
-"{{customer_comment}}, {{customer_name}}, {{customer_email}}, "
-"{{customer_phone}}, {{order_total}}, {{shipping_method}}."
-msgstr ""
-"{{customer_comment}}, {{customer_name}}, {{customer_email}}, "
-"{{customer_phone}}, {{order_total}}, {{shipping_method}}."
+msgid "Parcel info printed on label. Use placeholders: {{order_id}}, {{customer_comment}}, {{customer_name}}, {{customer_email}}, {{customer_phone}}, {{order_total}}, {{shipping_method}}."
+msgstr "{{customer_comment}}, {{customer_name}}, {{customer_email}}, {{customer_phone}}, {{order_total}}, {{shipping_method}}."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:24
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:22
-msgid ""
-"Parcel Shop Delivery (PSD) service that ships parcels to the GLS Locker. GLS "
-"Parcel Locker can be selected from the interactive GLS Parcel Shop and GLS "
-"Locker finder map."
-msgstr ""
-"Služba Parcel Shop Delivery (PSD), která zasílá balíky do GLS Locker. GLS "
-"Parcel Locker lze vybrat na interaktivní mapě vyhledávače GLS Parcel Shop a "
-"GLS Locker."
+msgid "Parcel Shop Delivery (PSD) service that ships parcels to the GLS Locker. GLS Parcel Locker can be selected from the interactive GLS Parcel Shop and GLS Locker finder map."
+msgstr "Služba Parcel Shop Delivery (PSD), která zasílá balíky do GLS Locker. GLS Parcel Locker lze vybrat na interaktivní mapě vyhledávače GLS Parcel Shop a GLS Locker."
 
 #: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:24
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:22
-msgid ""
-"Parcel Shop Delivery (PSD) service that ships parcels to the GLS Parcel Shop."
-" GLS Parcel Shop can be selected from the interactive GLS Parcel Shop and "
-"GLS Locker finder map."
-msgstr ""
-"Služba Parcel Shop Delivery (PSD), která zasílá balíky do GLS Parcel Shopu. "
-"GLS Parcel Shop lze vybrat na interaktivní mapě vyhledávače GLS Parcel Shop "
-"a GLS Locker."
+msgid "Parcel Shop Delivery (PSD) service that ships parcels to the GLS Parcel Shop. GLS Parcel Shop can be selected from the interactive GLS Parcel Shop and GLS Locker finder map."
+msgstr "Služba Parcel Shop Delivery (PSD), která zasílá balíky do GLS Parcel Shopu. GLS Parcel Shop lze vybrat na interaktivní mapě vyhledávače GLS Parcel Shop a GLS Locker."
 
 #: includes/methods/class-gls-shipping-method-zones.php:24
 #: includes/methods/class-gls-shipping-method.php:24
@@ -920,13 +862,13 @@ msgstr "Historie vyzvednutí"
 msgid "Pickup ID"
 msgstr "ID vyzvednutí"
 
-#: includes/blocks/class-gls-blocks-integration.php:121
+#: includes/blocks/class-gls-blocks-integration.php:148
 #: includes/public/class-gls-shipping-assets.php:69
 #: includes/public/class-gls-shipping-assets.php:147
 msgid "Pickup Location"
 msgstr "Místo vyzvednutí"
 
-#: includes/admin/class-gls-shipping-order.php:627
+#: includes/admin/class-gls-shipping-order.php:655
 msgid "Pickup location updated successfully"
 msgstr "Místo vyzvednutí bylo úspěšně aktualizováno"
 
@@ -942,8 +884,8 @@ msgstr "Vyplánováno vyzvednutí úspěšně!"
 msgid "Pickup To"
 msgstr "Vyzvednutí do"
 
-#: includes/blocks/class-gls-blocks-integration.php:125
-#: includes/blocks/class-gls-blocks-integration.php:216
+#: includes/blocks/class-gls-blocks-integration.php:152
+#: includes/blocks/class-gls-blocks-integration.php:248
 #: includes/public/class-gls-shipping-checkout.php:68
 msgid "Please select a parcel locker/shop by clicking on Select Parcel button."
 msgstr "Prosím, vyberte Parcel Shop nebo Locker kliknutím na tlačítko Vybrat."
@@ -958,7 +900,7 @@ msgstr "Polsko"
 msgid "Portugal"
 msgstr "Portugalsko"
 
-#: includes/admin/class-gls-shipping-order.php:146
+#: includes/admin/class-gls-shipping-order.php:174
 msgid "Print Label"
 msgstr "Vytisknout štítek"
 
@@ -966,8 +908,8 @@ msgstr "Vytisknout štítek"
 msgid "Print Position"
 msgstr "Pozice tisku"
 
-#: includes/admin/class-gls-shipping-order.php:158
-#: includes/admin/class-gls-shipping-order.php:222
+#: includes/admin/class-gls-shipping-order.php:186
+#: includes/admin/class-gls-shipping-order.php:250
 msgid "Print Position:"
 msgstr "Pozice tisku:"
 
@@ -975,7 +917,7 @@ msgstr "Pozice tisku:"
 msgid "Production"
 msgstr "Produkce"
 
-#: includes/admin/class-gls-shipping-order.php:192
+#: includes/admin/class-gls-shipping-order.php:220
 msgid "Regenerate Shipping Label"
 msgstr "Obnovit přepravní štítek"
 
@@ -998,10 +940,8 @@ msgid "Sandbox"
 msgstr "Sandbox"
 
 #: includes/admin/class-gls-shipping-pickup.php:160
-msgid ""
-"Schedule a pickup request with GLS to collect packages from your location."
-msgstr ""
-"Naplánujte požadavek na vyzvednutí s GLS pro sběr balíků z vaší lokace."
+msgid "Schedule a pickup request with GLS to collect packages from your location."
+msgstr "Naplánujte požadavek na vyzvednutí s GLS pro sběr balíků z vaší lokace."
 
 #: includes/admin/class-gls-shipping-pickup.php:137
 #: includes/admin/class-gls-shipping-pickup.php:227
@@ -1014,12 +954,12 @@ msgstr "Plánovat vyzvednutí"
 msgid "Select countries to support for this shipping method."
 msgstr "Vyberte země, které chcete pro tento způsob dopravy podporovat."
 
-#: includes/blocks/class-gls-blocks-integration.php:119
+#: includes/blocks/class-gls-blocks-integration.php:146
 #: includes/public/class-gls-shipping-checkout.php:102
 msgid "Select Parcel Locker"
 msgstr "Vyberte výdejní automat"
 
-#: includes/blocks/class-gls-blocks-integration.php:120
+#: includes/blocks/class-gls-blocks-integration.php:147
 #: includes/public/class-gls-shipping-checkout.php:104
 msgid "Select Parcel Shop"
 msgstr "Vyberte pobočku"
@@ -1067,17 +1007,13 @@ msgstr "Srbsko"
 msgid "Shipping Price"
 msgstr "Cena dopravy"
 
-#: includes/methods/class-gls-shipping-method.php:330
+#: includes/methods/class-gls-shipping-method.php:349
 msgid "Show GLS Logo"
 msgstr "Zobrazit logo GLS"
 
-#: includes/methods/class-gls-shipping-method.php:333
-msgid ""
-"Show the GLS logo icon next to all GLS shipping methods in cart and checkout "
-"to highlight your GLS delivery options."
-msgstr ""
-"Zobrazte ikonu loga GLS vedle všech GLS dopravních metod v košíku a při "
-"pokladně pro zvýraznění vašich GLS možností doručení."
+#: includes/methods/class-gls-shipping-method.php:352
+msgid "Show the GLS logo icon next to all GLS shipping methods in cart and checkout to highlight your GLS delivery options."
+msgstr "Zobrazte ikonu loga GLS vedle všech GLS dopravních metod v košíku a při pokladně pro zvýraznění vašich GLS možností doručení."
 
 #: includes/methods/class-gls-shipping-method.php:124
 msgid "Single GLS Account"
@@ -1095,52 +1031,44 @@ msgstr "Slovensko"
 msgid "Slovenia"
 msgstr "Slovinsko"
 
-#: includes/methods/class-gls-shipping-method.php:293
+#: includes/methods/class-gls-shipping-method.php:312
 msgid "SM1 Service Text"
 msgstr "SM1 Service Text"
 
-#: includes/admin/class-gls-shipping-order.php:548
+#: includes/admin/class-gls-shipping-order.php:576
 msgid "SMS Pre-advice (SM2)"
 msgstr "SMS předvýzva (SM2)"
 
-#: includes/methods/class-gls-shipping-method.php:298
+#: includes/methods/class-gls-shipping-method.php:317
 msgid "SMS Pre-advice Service (SM2)"
 msgstr "SMS předvýzva služba (SM2)"
 
-#: includes/admin/class-gls-shipping-order.php:539
-#: includes/methods/class-gls-shipping-method.php:283
+#: includes/admin/class-gls-shipping-order.php:567
+#: includes/methods/class-gls-shipping-method.php:302
 msgid "SMS Service (SM1)"
 msgstr "SMS služba (SM1)"
 
-#: includes/methods/class-gls-shipping-method.php:291
+#: includes/methods/class-gls-shipping-method.php:310
 msgid "SMS Service Text"
 msgstr "SMS Service Text"
 
-#: includes/methods/class-gls-shipping-method.php:294
-msgid ""
-"SMS Service Text. Variables that can be used in the text of the SMS: "
-"#ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
-msgstr ""
-"Text služby SMS. Proměnné, které lze použít v textu SMS: #ParcelNr#, #COD#, "
-"#PickupDate#, #From_Name#, #ClientRef#."
+#: includes/methods/class-gls-shipping-method.php:313
+msgid "SMS Service Text. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
+msgstr "Text služby SMS. Proměnné, které lze použít v textu SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 
-#: includes/methods/class-gls-shipping-method.php:286
+#: includes/methods/class-gls-shipping-method.php:305
 msgid "SMS service with a maximum text length of 130."
 msgstr "Služba SMS s maximální délkou textu 130."
 
-#: includes/admin/class-gls-shipping-order.php:574
+#: includes/admin/class-gls-shipping-order.php:602
 msgid "SMS Text:"
 msgstr "SMS Text:"
 
 #. translators: %s: comma-separated list of product names that have shipping restrictions
-#: includes/admin/class-gls-shipping-product-restrictions.php:130
+#: includes/admin/class-gls-shipping-product-restrictions.php:206
 #, php-format
-msgid ""
-"Some products in your cart (%s) cannot be shipped to parcel shops or parcel "
-"lockers. Only standard delivery options are available."
-msgstr ""
-"Některé produkty ve vašem košíku (%s) nemohou být odeslány do parcel shopů "
-"nebo parcel lockerů. Jsou k dispozici pouze standardní možnosti dopravy."
+msgid "Some products in your cart (%s) cannot be shipped to parcel shops or parcel lockers. Only standard delivery options are available."
+msgstr "Některé produkty ve vašem košíku (%s) nemohou být odeslány do parcel shopů nebo parcel lockerů. Jsou k dispozici pouze standardní možnosti dopravy."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:102
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:102
@@ -1151,16 +1079,14 @@ msgstr "Španělsko"
 msgid "Status"
 msgstr "Stav"
 
-#: includes/methods/class-gls-shipping-method.php:318
-#: includes/methods/class-gls-shipping-method.php:320
+#: includes/methods/class-gls-shipping-method.php:337
+#: includes/methods/class-gls-shipping-method.php:339
 msgid "Store Phone Number"
 msgstr "Uložit telefonní číslo"
 
-#: includes/methods/class-gls-shipping-method.php:321
+#: includes/methods/class-gls-shipping-method.php:340
 msgid "Store Phone number that will be sent to GLS as a contact information."
-msgstr ""
-"Uložit Telefonní číslo, které bude odesláno společnosti GLS jako kontaktní "
-"informace."
+msgstr "Uložit Telefonní číslo, které bude odesláno společnosti GLS jako kontaktní informace."
 
 #: includes/admin/class-gls-shipping-pickup.php:309
 msgid "Success"
@@ -1217,7 +1143,7 @@ msgstr "Aktualizováno"
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: includes/admin/class-gls-shipping-order.php:579
+#: includes/admin/class-gls-shipping-order.php:607
 msgid "Variables: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#"
 msgstr "Proměnné: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#"
 
@@ -1244,7 +1170,47 @@ msgstr "Nemáte oprávnění ke stahování přepravních štítků."
 msgid "← Back to History"
 msgstr "← Zpět do historie"
 
-#: includes/admin/class-gls-shipping-order.php:179
-#: includes/admin/class-gls-shipping-order.php:243
+#: includes/admin/class-gls-shipping-order.php:207
+#: includes/admin/class-gls-shipping-order.php:271
 msgid "⚙️ Advanced Services"
 msgstr "⚙️ Pokročilé služby"
+
+#: includes/admin/class-gls-shipping-order.php:52
+msgid "Order automatically completed after GLS label generation."
+msgstr "Objednávka byla automaticky dokončena po vygenerování štítku GLS."
+
+#: includes/admin/class-gls-shipping-product-restrictions.php:46
+msgid "GLS Free Shipping"
+msgstr "GLS doprava zdarma"
+
+#: includes/admin/class-gls-shipping-product-restrictions.php:47
+msgid "Check this box to offer free shipping on GLS methods when this product is in the cart. Only affects GLS shipping methods."
+msgstr "Zaškrtněte toto pole, abyste nabídli dopravu zdarma pro GLS metody, když je tento produkt v košíku. Ovlivňuje pouze GLS přepravní metody."
+
+#: includes/methods/class-gls-shipping-method.php:235
+msgid "Auto Complete Order"
+msgstr "Automaticky dokončit objednávku"
+
+#: includes/methods/class-gls-shipping-method.php:237
+msgid "Automatically mark order as Completed after label is printed"
+msgstr "Automaticky označit objednávku jako Dokončenou po vytisknutí štítku"
+
+#: includes/methods/class-gls-shipping-method.php:238
+msgid "When enabled, the order status will be set to Completed after a GLS shipping label is successfully generated."
+msgstr "Pokud je povoleno, stav objednávky bude nastaven na Dokončeno po úspěšném vygenerování přepravního štítku GLS."
+
+#: includes/methods/class-gls-shipping-method.php:243
+msgid "Free Shipping Product Condition"
+msgstr "Podmínka dopravy zdarma podle produktu"
+
+#: includes/methods/class-gls-shipping-method.php:245
+msgid "Controls when the per-product \"GLS Free Shipping\" flag triggers free GLS shipping. ANY: free shipping if at least one cart item is flagged. ALL: free shipping only if every cart item is flagged."
+msgstr "Určuje, kdy příznak \"GLS doprava zdarma\" u produktu aktivuje dopravu zdarma GLS. ANY: doprava zdarma, pokud je alespoň jedna položka v košíku označena. ALL: doprava zdarma pouze pokud je každá položka v košíku označena."
+
+#: includes/methods/class-gls-shipping-method.php:249
+msgid "ANY – at least one product in cart is flagged"
+msgstr "ANY – alespoň jeden produkt v košíku je označen"
+
+#: includes/methods/class-gls-shipping-method.php:250
+msgid "ALL – every product in cart must be flagged"
+msgstr "ALL – každý produkt v košíku musí být označen"

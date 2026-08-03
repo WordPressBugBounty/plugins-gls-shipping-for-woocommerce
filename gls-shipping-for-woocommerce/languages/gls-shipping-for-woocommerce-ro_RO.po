@@ -2,18 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gls-wp\n"
-"POT-Creation-Date: 2025-08-22T09:50:00+00:00\n"
-"PO-Revision-Date: 2026-03-02 08:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
-"Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 :(((n%100>19)||(( n%100==0)&&(n!"
-"=0)))? 2 : 1));\n"
+"POT-Creation-Date: 2025-08-22T09:50:00+00:00\n"
+"PO-Revision-Date: 2026-03-02 08:22+0000\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 :(((n%100>19)||(( n%100==0)&&(n!=0)))? 2 : 1));\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.1; wp-6.8.3; php-8.3.26"
+"X-Loco-Version: 2.8.1; wp-6.8.3; php-8.3.26\n"
 
 #. translators: %d: number of items
 #: includes/admin/class-gls-shipping-pickup.php:505
@@ -48,7 +47,7 @@ msgstr[0] "Eticheta %s nu a putut fi generată."
 msgstr[1] "Eticheta %s nu a putut fi generată."
 msgstr[2] "Eticheta %s nu a putut fi generată."
 
-#: includes/admin/class-gls-shipping-order.php:490
+#: includes/admin/class-gls-shipping-order.php:518
 msgid "24H Service"
 msgstr "Serviciu 24H"
 
@@ -56,9 +55,7 @@ msgstr "Serviciu 24H"
 #: includes/admin/class-gls-shipping-bulk.php:382
 #, php-format
 msgid "<br><a href=\"%s\" target=\"_blank\">Click here to download the PDF</a>"
-msgstr ""
-"<br><a href=\"%s\" target=\"_blank\">Faceți clic aici pentru a descărca PDF-"
-"ul</a>"
+msgstr "<br><a href=\"%s\" target=\"_blank\">Faceți clic aici pentru a descărca PDF-ul</a>"
 
 #: includes/admin/class-gls-shipping-pickup.php:400
 msgid "Account"
@@ -69,40 +66,40 @@ msgid "Account Mode"
 msgstr "Mod cont"
 
 #: includes/admin/class-gls-shipping-pickup.php:404
-#: includes/methods/class-gls-shipping-method.php:379
-#: includes/methods/class-gls-shipping-method.php:449
+#: includes/methods/class-gls-shipping-method.php:398
+#: includes/methods/class-gls-shipping-method.php:468
 msgid "Actions"
 msgstr "Acțiuni"
 
-#: includes/methods/class-gls-shipping-method.php:447
+#: includes/methods/class-gls-shipping-method.php:466
 msgid "Active"
 msgstr "Activ"
 
-#: includes/methods/class-gls-shipping-method.php:462
+#: includes/methods/class-gls-shipping-method.php:481
 msgid "Add New Account"
 msgstr "Adaugă cont nou"
 
-#: includes/methods/class-gls-shipping-method.php:404
+#: includes/methods/class-gls-shipping-method.php:423
 msgid "Add New Address"
 msgstr "Adăugați o adresă nouă"
 
 #: includes/admin/class-gls-shipping-pickup.php:365
-#: includes/blocks/class-gls-blocks-integration.php:123
+#: includes/blocks/class-gls-blocks-integration.php:150
 #: includes/public/class-gls-shipping-assets.php:71
 #: includes/public/class-gls-shipping-assets.php:149
 msgid "Address"
 msgstr "Adresă"
 
-#: includes/admin/class-gls-shipping-order.php:87
+#: includes/admin/class-gls-shipping-order.php:115
 #: includes/public/class-gls-shipping-my-account.php:40
 msgid "Address:"
 msgstr "Adresă:"
 
-#: includes/admin/class-gls-shipping-order.php:557
+#: includes/admin/class-gls-shipping-order.php:585
 msgid "Addressee Only (AOS)"
 msgstr "Doar destinatar (AOS)"
 
-#: includes/methods/class-gls-shipping-method.php:304
+#: includes/methods/class-gls-shipping-method.php:323
 msgid "Addressee Only Service (AOS)"
 msgstr "We do not use this service in RO"
 
@@ -119,14 +116,11 @@ msgstr "Setări API pentru toate opțiunile de expediere GLS."
 msgid "Austria"
 msgstr "Austria"
 
-#: includes/methods/class-gls-shipping-method.php:251
-msgid ""
-"Availability depends on the country. Can’t be used with FDS and FSS services."
-msgstr ""
-"Disponibilitatea depinde de fiecare țară. Nu poate fi utilizat cu serviciile "
-"FDS și FSS."
+#: includes/methods/class-gls-shipping-method.php:270
+msgid "Availability depends on the country. Can’t be used with FDS and FSS services."
+msgstr "Disponibilitatea depinde de fiecare țară. Nu poate fi utilizat cu serviciile FDS și FSS."
 
-#: includes/methods/class-gls-shipping-method.php:313
+#: includes/methods/class-gls-shipping-method.php:332
 msgid "Available within specific limits based on the country."
 msgstr "Disponibil în anumite limite specifice în funcție de țară."
 
@@ -148,7 +142,7 @@ msgstr "Generați în bloc etichete GLS"
 msgid "Bulk Print GLS Labels"
 msgstr "Imprimare în vrac etichete GLS"
 
-#: includes/methods/class-gls-shipping-method.php:270
+#: includes/methods/class-gls-shipping-method.php:289
 msgid "Can’t be used with T09, T10, and T12 services."
 msgstr "Nu poate fi utilizat cu serviciul T12."
 
@@ -158,45 +152,33 @@ msgstr "Nu poate fi utilizat cu serviciul T12."
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:82
 #: includes/methods/class-gls-shipping-method-zones.php:80
 #: includes/methods/class-gls-shipping-method.php:94
-msgid ""
-"Cart total amount above which shipping will be free. Set to 0 to disable."
-msgstr ""
-"Suma totală coș peste care transportul va fi gratuit. Setați la 0 pentru a "
-"dezactiva."
+msgid "Cart total amount above which shipping will be free. Set to 0 to disable."
+msgstr "Suma totală coș peste care transportul va fi gratuit. Setați la 0 pentru a dezactiva."
 
-#: includes/admin/class-gls-shipping-order.php:94
-#: includes/admin/class-gls-shipping-order.php:96
+#: includes/admin/class-gls-shipping-order.php:122
+#: includes/admin/class-gls-shipping-order.php:124
 msgid "Change Pickup Location"
 msgstr "Schimbați locația de ridicare"
 
 #: includes/admin/class-gls-shipping-product-restrictions.php:40
-msgid ""
-"Check this box if this product cannot be shipped to parcel shops or parcel "
-"lockers. This will hide those shipping options when this product is in the "
-"cart."
-msgstr ""
-"Bifați această casetă dacă acest produs nu poate fi livrat către magazine de "
-"colete sau dulapuri pentru colete. Această acțiune va ascunde opțiunile de "
-"livrare atunci când produsul se află în coș."
+msgid "Check this box if this product cannot be shipped to parcel shops or parcel lockers. This will hide those shipping options when this product is in the cart."
+msgstr "Bifați această casetă dacă acest produs nu poate fi livrat către magazine de colete sau dulapuri pentru colete. Această acțiune va ascunde opțiunile de livrare atunci când produsul se află în coș."
 
 #: includes/methods/class-gls-shipping-method.php:120
 msgid "Choose between single or multiple GLS accounts."
 msgstr "Alegeți între unul sau mai multe conturi GLS."
 
 #: includes/admin/class-gls-shipping-pickup.php:215
-msgid ""
-"Choose the pickup address from configured sender addresses or store default."
-msgstr ""
-"Alegeți adresa de preluare dintre adresele expeditorului configurate sau "
-"adresa implicită din magazin."
+msgid "Choose the pickup address from configured sender addresses or store default."
+msgstr "Alegeți adresa de preluare dintre adresele expeditorului configurate sau adresa implicită din magazin."
 
 #: includes/methods/class-gls-shipping-method.php:135
-#: includes/methods/class-gls-shipping-method.php:448
+#: includes/methods/class-gls-shipping-method.php:467
 msgid "Client ID"
 msgstr "ID client"
 
-#: includes/admin/class-gls-shipping-order.php:171
-#: includes/admin/class-gls-shipping-order.php:235
+#: includes/admin/class-gls-shipping-order.php:199
+#: includes/admin/class-gls-shipping-order.php:263
 msgid "COD Reference:"
 msgstr "Referință COD:"
 
@@ -212,8 +194,8 @@ msgstr "Numele contactului"
 msgid "Contact Phone"
 msgstr "Telefon contact"
 
-#: includes/admin/class-gls-shipping-order.php:512
-#: includes/methods/class-gls-shipping-method.php:261
+#: includes/admin/class-gls-shipping-order.php:540
+#: includes/methods/class-gls-shipping-method.php:280
 msgid "Contact Service (CS1)"
 msgstr "Serviciu de contact (CS1)"
 
@@ -230,14 +212,14 @@ msgstr "Fișierul PDF nu a putut fi citit."
 msgid "Count"
 msgstr "Număr"
 
-#: includes/blocks/class-gls-blocks-integration.php:124
+#: includes/blocks/class-gls-blocks-integration.php:151
 #: includes/methods/class-gls-shipping-method.php:153
 #: includes/public/class-gls-shipping-assets.php:72
 #: includes/public/class-gls-shipping-assets.php:150
 msgid "Country"
 msgstr "Țară"
 
-#: includes/admin/class-gls-shipping-order.php:88
+#: includes/admin/class-gls-shipping-order.php:116
 #: includes/public/class-gls-shipping-my-account.php:41
 msgid "Country:"
 msgstr "Țară:"
@@ -252,11 +234,9 @@ msgstr "Creat"
 msgid "Croatia"
 msgstr "Croația"
 
-#: includes/methods/class-gls-shipping-method.php:327
+#: includes/methods/class-gls-shipping-method.php:346
 msgid "Customize how GLS shipping methods are displayed to customers."
-msgstr ""
-"Personalizați modul în care metodele de transport GLS sunt afișate "
-"clienților."
+msgstr "Personalizați modul în care metodele de transport GLS sunt afișate clienților."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:99
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:99
@@ -264,7 +244,7 @@ msgstr ""
 msgid "Czech Republic"
 msgstr "Republica Cehă"
 
-#: includes/methods/class-gls-shipping-method.php:377
+#: includes/methods/class-gls-shipping-method.php:396
 msgid "Default"
 msgstr "Implicit"
 
@@ -272,8 +252,8 @@ msgstr "Implicit"
 msgid "Default Account"
 msgstr "Cont implicit"
 
-#: includes/methods/class-gls-shipping-method.php:517
-#: includes/methods/class-gls-shipping-method.php:559
+#: includes/methods/class-gls-shipping-method.php:536
+#: includes/methods/class-gls-shipping-method.php:578
 msgid "Delete"
 msgstr "Șterge"
 
@@ -309,15 +289,15 @@ msgstr "Livrare la GLS Parcel Shop"
 msgid "Denmark"
 msgstr "Danemarca"
 
-#: includes/admin/class-gls-shipping-order.php:500
+#: includes/admin/class-gls-shipping-order.php:528
 msgid "Disabled"
 msgstr "Dezactivat"
 
-#: includes/methods/class-gls-shipping-method.php:332
+#: includes/methods/class-gls-shipping-method.php:351
 msgid "Display GLS logo next to shipping methods"
 msgstr "Afișează logo-ul GLS lângă metodele de transport"
 
-#: includes/methods/class-gls-shipping-method.php:325
+#: includes/methods/class-gls-shipping-method.php:344
 msgid "Display Options"
 msgstr "Opțiuni afișare"
 
@@ -329,8 +309,8 @@ msgstr "Descărcați eticheta GLS"
 msgid "Earliest date and time for pickup."
 msgstr "Cea mai timpurie dată și oră pentru ridicare."
 
-#: includes/methods/class-gls-shipping-method.php:516
-#: includes/methods/class-gls-shipping-method.php:558
+#: includes/methods/class-gls-shipping-method.php:535
+#: includes/methods/class-gls-shipping-method.php:577
 msgid "Edit"
 msgstr "Editează"
 
@@ -340,27 +320,27 @@ msgstr "Editează"
 msgid "Enable"
 msgstr "Activați"
 
-#: includes/methods/class-gls-shipping-method.php:242
+#: includes/methods/class-gls-shipping-method.php:261
 msgid "Enable 24H"
 msgstr "Activare 24H"
 
-#: includes/methods/class-gls-shipping-method.php:306
+#: includes/methods/class-gls-shipping-method.php:325
 msgid "Enable AOS"
 msgstr "We do not have this service"
 
-#: includes/methods/class-gls-shipping-method.php:263
+#: includes/methods/class-gls-shipping-method.php:282
 msgid "Enable CS1"
 msgstr "We do not have this service"
 
-#: includes/methods/class-gls-shipping-method.php:269
+#: includes/methods/class-gls-shipping-method.php:288
 msgid "Enable FDS"
 msgstr "Activare FDS"
 
-#: includes/methods/class-gls-shipping-method.php:277
+#: includes/methods/class-gls-shipping-method.php:296
 msgid "Enable FSS"
 msgstr "Activare FSS"
 
-#: includes/methods/class-gls-shipping-method.php:312
+#: includes/methods/class-gls-shipping-method.php:331
 msgid "Enable INS"
 msgstr "Activare INS"
 
@@ -372,11 +352,11 @@ msgstr "Activați logarea"
 msgid "Enable logging of GLS API requests and responses"
 msgstr "Activați logarea cererilor și răspunsurilor la API GLS"
 
-#: includes/methods/class-gls-shipping-method.php:285
+#: includes/methods/class-gls-shipping-method.php:304
 msgid "Enable SM1"
 msgstr "Activare SM1"
 
-#: includes/methods/class-gls-shipping-method.php:300
+#: includes/methods/class-gls-shipping-method.php:319
 msgid "Enable SM2"
 msgstr "Activare SM2"
 
@@ -386,19 +366,13 @@ msgstr "Activare SM2"
 msgid "Enable this shipping globally."
 msgstr "Activați această expediere la nivel global."
 
-#: includes/methods/class-gls-shipping-method.php:237
+#: includes/methods/class-gls-shipping-method.php:256
 msgid "Enable/Disable each of GLS Services for your store."
-msgstr ""
-"Activați/dezactivați fiecare dintre serviciile GLS pentru magazinul "
-"dumneavoastră."
+msgstr "Activați/dezactivați fiecare dintre serviciile GLS pentru magazinul dumneavoastră."
 
 #: includes/methods/class-gls-shipping-method.php:206
-msgid ""
-"Enter the format for order reference. Use {{order_id}} where you want the "
-"order ID to be inserted."
-msgstr ""
-"Introduceți formatul pentru referința comenzii. Folosiți {{order_id}}} în "
-"locul în care doriți să fie introdus ID-ul comenzii."
+msgid "Enter the format for order reference. Use {{order_id}} where you want the order ID to be inserted."
+msgstr "Introduceți formatul pentru referința comenzii. Folosiți {{order_id}}} în locul în care doriți să fie introdus ID-ul comenzii."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:63
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:65
@@ -422,7 +396,6 @@ msgid "Enter your GLS Username."
 msgstr "Introduceți numele de utilizator GLS."
 
 #: includes/admin/class-gls-shipping-pickup.php:312
-#| msgid "Error:"
 msgid "Error"
 msgstr "Eroare"
 
@@ -432,15 +405,15 @@ msgstr "Eroare"
 msgid "Error: %s"
 msgstr "Eroare: %s"
 
-#: includes/methods/class-gls-shipping-method.php:248
+#: includes/methods/class-gls-shipping-method.php:267
 msgid "Express Delivery Service (T09, T10, T12)"
 msgstr "Serviciul de livrare expres (T12)"
 
-#: includes/methods/class-gls-shipping-method.php:250
+#: includes/methods/class-gls-shipping-method.php:269
 msgid "Express Delivery Service Time"
 msgstr "Timpul serviciului de livrare Express"
 
-#: includes/admin/class-gls-shipping-order.php:497
+#: includes/admin/class-gls-shipping-order.php:525
 msgid "Express Service:"
 msgstr "Serviciu Express:"
 
@@ -453,31 +426,27 @@ msgstr "ID-uri de comandă nereușită: %s"
 
 #: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:103
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:134
-msgid ""
-"Filter locker locations on the map for Hungary. Only applies when country is "
-"Hungary."
-msgstr ""
-"Filtrează locațiile lockerelor pe hartă pentru Ungaria. Se aplică doar când "
-"țara este Ungaria."
+msgid "Filter locker locations on the map for Hungary. Only applies when country is Hungary."
+msgstr "Filtrează locațiile lockerelor pe hartă pentru Ungaria. Se aplică doar când țara este Ungaria."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:103
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:103
 msgid "Finland"
 msgstr "Finlanda"
 
-#: includes/admin/class-gls-shipping-order.php:521
+#: includes/admin/class-gls-shipping-order.php:549
 msgid "Flexible Delivery (FDS)"
 msgstr "Livrare flexibilă (FDS)"
 
-#: includes/methods/class-gls-shipping-method.php:267
+#: includes/methods/class-gls-shipping-method.php:286
 msgid "Flexible Delivery Service (FDS)"
 msgstr "Serviciul de livrare flexibilă (FDS)"
 
-#: includes/admin/class-gls-shipping-order.php:530
+#: includes/admin/class-gls-shipping-order.php:558
 msgid "Flexible Delivery SMS (FSS)"
 msgstr "Livrare flexibilă SMS (FSS)"
 
-#: includes/methods/class-gls-shipping-method.php:275
+#: includes/methods/class-gls-shipping-method.php:294
 msgid "Flexible Delivery SMS Service (FSS)"
 msgstr "Serviciul SMS de livrare flexibilă (FSS)"
 
@@ -499,7 +468,7 @@ msgstr "Pragul de livrare gratuită"
 msgid "Generate GLS Label"
 msgstr "Generați eticheta GLS"
 
-#: includes/admin/class-gls-shipping-order.php:256
+#: includes/admin/class-gls-shipping-order.php:284
 msgid "Generate Shipping Label"
 msgstr "Generarea etichetei de expediere"
 
@@ -509,19 +478,18 @@ msgid "Germany"
 msgstr "Germania"
 
 #. translators: %1$d: parcel index number, %2$s: tracking number
-#: includes/admin/class-gls-shipping-order.php:200
+#: includes/admin/class-gls-shipping-order.php:228
 #, php-format
-#| msgid "Get Parcel Status #%d (%s)"
 msgid "Get Parcel Status #%1$d (%2$s)"
 msgstr "Obține statusul coletului #%1$d (%2$s)"
 
 #. translators: %s: tracking number
-#: includes/admin/class-gls-shipping-order.php:203
+#: includes/admin/class-gls-shipping-order.php:231
 #, php-format
-#| msgid "Get Parcel Status"
 msgid "Get Parcel Status (%s)"
-msgstr ""
+msgstr "Obține statusul coletului (%s)"
 "Obține statusul coletului (%s)\n"
+""
 
 #: includes/methods/class-gls-shipping-method.php:129
 msgid "GLS Accounts"
@@ -565,13 +533,12 @@ msgid "GLS Pickup"
 msgstr "Ridicare GLS"
 
 #. translators: %1$s: pickup location name, %2$s: pickup location ID
-#: includes/admin/class-gls-shipping-order.php:620
+#: includes/admin/class-gls-shipping-order.php:648
 #, php-format
-#| msgid "GLS pickup location changed to: %s (%s)"
 msgid "GLS pickup location changed to: %1$s (%2$s)"
 msgstr "Locația de ridicare GLS a fost modificată la: %1$s (%2$s)"
 
-#: includes/admin/class-gls-shipping-order.php:84
+#: includes/admin/class-gls-shipping-order.php:112
 #: includes/public/class-gls-shipping-my-account.php:37
 msgid "GLS Pickup Location:"
 msgstr "GLS Locația de preluare:"
@@ -580,7 +547,7 @@ msgstr "GLS Locația de preluare:"
 msgid "GLS Pickup Management"
 msgstr "Gestionare ridicări GLS"
 
-#: includes/methods/class-gls-shipping-method.php:235
+#: includes/methods/class-gls-shipping-method.php:254
 msgid "GLS Services"
 msgstr "Servicii GLS"
 
@@ -589,7 +556,7 @@ msgstr "Servicii GLS"
 msgid "GLS Shipping for WooCommerce"
 msgstr "GLS Shipping pentru WooCommerce"
 
-#: includes/admin/class-gls-shipping-order.php:38
+#: includes/admin/class-gls-shipping-order.php:66
 msgid "GLS Shipping Info"
 msgstr "Informații de expediere GLS"
 
@@ -598,23 +565,19 @@ msgid "GLS Shipping Restriction"
 msgstr "Restricția de transport GLS"
 
 #: includes/admin/class-gls-shipping-label-migration.php:368
-msgid ""
-"GLS Shipping: Migrating labels to secure storage. This runs automatically in "
-"the background."
-msgstr ""
-"GLS Shipping: Migrarea etichetelor în stocare securizată. Aceasta rulează "
-"automat în fundal."
+msgid "GLS Shipping: Migrating labels to secure storage. This runs automatically in the background."
+msgstr "GLS Shipping: Migrarea etichetelor în stocare securizată. Aceasta rulează automat în fundal."
 
 #: includes/admin/class-gls-shipping-bulk.php:455
 msgid "GLS Tracking Number"
 msgstr "Număr de urmărire GLS"
 
-#: includes/admin/class-gls-shipping-order.php:113
+#: includes/admin/class-gls-shipping-order.php:141
 #: includes/public/class-gls-shipping-my-account.php:48
 msgid "GLS Tracking Number: "
 msgstr "Număr de urmărire GLS:"
 
-#: includes/admin/class-gls-shipping-order.php:104
+#: includes/admin/class-gls-shipping-order.php:132
 msgid "GLS Tracking Numbers:"
 msgstr "Numere de urmărire GLS:"
 
@@ -623,7 +586,7 @@ msgstr "Numere de urmărire GLS:"
 msgid "Greece"
 msgstr "Grecia"
 
-#: includes/methods/class-gls-shipping-method.php:240
+#: includes/methods/class-gls-shipping-method.php:259
 msgid "Guaranteed 24h Service (24H)"
 msgstr "Serviciu garantat 24h (24H)"
 
@@ -652,7 +615,7 @@ msgstr "Filtru de saturare a lockerelor din Ungaria"
 msgid "ID"
 msgstr "ID"
 
-#: includes/admin/class-gls-shipping-order.php:85
+#: includes/admin/class-gls-shipping-order.php:113
 #: includes/public/class-gls-shipping-my-account.php:38
 msgid "ID:"
 msgstr "ID:"
@@ -662,11 +625,11 @@ msgstr "ID:"
 msgid "Inchoo"
 msgstr "?"
 
-#: includes/admin/class-gls-shipping-order.php:566
+#: includes/admin/class-gls-shipping-order.php:594
 msgid "Insurance (INS)"
 msgstr "Asigurare (INS)"
 
-#: includes/methods/class-gls-shipping-method.php:310
+#: includes/methods/class-gls-shipping-method.php:329
 msgid "Insurance Service (INS)"
 msgstr "Serviciul de asigurare (INS)"
 
@@ -680,9 +643,7 @@ msgstr "Token de securitate invalid."
 
 #: gls-shipping-for-woocommerce.php:177
 msgid "Invalid security token. Please refresh the page and try again."
-msgstr ""
-"Token de securitate invalid. Vă rugăm să reîmprospătați pagina și să "
-"încercați din nou."
+msgstr "Token de securitate invalid. Vă rugăm să reîmprospătați pagina și să încercați din nou."
 
 #: includes/admin/class-gls-shipping-pickup.php:564
 msgid "Invalid sender address selected."
@@ -712,46 +673,33 @@ msgid "Luxembourg"
 msgstr "Luxemburg"
 
 #: includes/methods/class-gls-shipping-method.php:131
-msgid ""
-"Manage multiple GLS accounts. Each account can have different credentials "
-"and country settings."
-msgstr ""
-"Gestionați mai multe conturi GLS. Fiecare cont poate avea acreditări și "
-"setări de țară diferite."
+msgid "Manage multiple GLS accounts. Each account can have different credentials and country settings."
+msgstr "Gestionați mai multe conturi GLS. Fiecare cont poate avea acreditări și setări de țară diferite."
 
 #: includes/methods/class-gls-shipping-method.php:180
-msgid ""
-"Manage multiple sender addresses. Each address can be set as default for "
-"shipments."
-msgstr ""
-"Gestionați mai multe adrese de expeditor. Fiecare adresă poate fi setată ca "
-"implicită pentru expedieri."
+msgid "Manage multiple sender addresses. Each address can be set as default for shipments."
+msgstr "Gestionați mai multe adrese de expeditor. Fiecare adresă poate fi setată ca implicită pentru expedieri."
 
 #: includes/methods/class-gls-shipping-method.php:168
 msgid "Mode"
 msgstr "Mod"
 
-#: includes/methods/class-gls-shipping-method.php:606
-msgid ""
-"Multiple accounts mode was not saved because no valid GLS accounts were "
-"found. Please add at least one account to use multiple accounts mode."
-msgstr ""
-"Modul conturi multiple nu a fost salvat deoarece nu au fost găsite conturi "
-"GLS valide. Adăugați cel puțin un cont pentru a utiliza modul conturi "
-"multiple."
+#: includes/methods/class-gls-shipping-method.php:625
+msgid "Multiple accounts mode was not saved because no valid GLS accounts were found. Please add at least one account to use multiple accounts mode."
+msgstr "Modul conturi multiple nu a fost salvat deoarece nu au fost găsite conturi GLS valide. Adăugați cel puțin un cont pentru a utiliza modul conturi multiple."
 
 #: includes/methods/class-gls-shipping-method.php:125
 msgid "Multiple GLS Accounts"
 msgstr "Conturi multiple GLS"
 
-#: includes/blocks/class-gls-blocks-integration.php:122
-#: includes/methods/class-gls-shipping-method.php:378
+#: includes/blocks/class-gls-blocks-integration.php:149
+#: includes/methods/class-gls-shipping-method.php:397
 #: includes/public/class-gls-shipping-assets.php:70
 #: includes/public/class-gls-shipping-assets.php:148
 msgid "Name"
 msgstr "Nume"
 
-#: includes/admin/class-gls-shipping-order.php:86
+#: includes/admin/class-gls-shipping-order.php:114
 #: includes/public/class-gls-shipping-my-account.php:39
 msgid "Name:"
 msgstr "Nume:"
@@ -761,29 +709,27 @@ msgstr "Nume:"
 msgid "Netherlands"
 msgstr "Olanda"
 
-#: includes/methods/class-gls-shipping-method.php:555
+#: includes/methods/class-gls-shipping-method.php:574
 msgid "New Account"
 msgstr "Cont nou"
 
-#: includes/methods/class-gls-shipping-method.php:513
+#: includes/methods/class-gls-shipping-method.php:532
 msgid "New Address"
 msgstr "Adresă nouă"
 
-#: includes/methods/class-gls-shipping-method.php:389
+#: includes/methods/class-gls-shipping-method.php:408
 msgid "No custom sender address (use default from store settings)"
-msgstr ""
-"Nicio adresă personalizată de expeditor (utilizați setările implicite ale "
-"magazinului)"
+msgstr "Nicio adresă personalizată de expeditor (utilizați setările implicite ale magazinului)"
 
 #: includes/admin/class-gls-shipping-pickup.php:454
 msgid "No pickup requests found."
 msgstr "Nu s-au găsit cereri de ridicare."
 
-#: includes/methods/class-gls-shipping-method.php:243
+#: includes/methods/class-gls-shipping-method.php:262
 msgid "Not available in Serbia."
 msgstr "Nu este disponibil în Serbia."
 
-#: includes/methods/class-gls-shipping-method.php:278
+#: includes/methods/class-gls-shipping-method.php:297
 msgid "Not available without FDS service."
 msgstr "Nu este disponibil fără serviciul FDS."
 
@@ -791,8 +737,8 @@ msgstr "Nu este disponibil fără serviciul FDS."
 msgid "Number of Packages"
 msgstr "Numărul de pachete"
 
-#: includes/admin/class-gls-shipping-order.php:149
-#: includes/admin/class-gls-shipping-order.php:213
+#: includes/admin/class-gls-shipping-order.php:177
+#: includes/admin/class-gls-shipping-order.php:241
 msgid "Number of Packages:"
 msgstr "Numărul de pachete:"
 
@@ -813,13 +759,8 @@ msgstr "Doar în Serbia! NECESAR"
 #: includes/methods/class-gls-shipping-method-zones.php:71
 #: includes/methods/class-gls-shipping-method.php:85
 #, php-format
-msgid ""
-"Optional: Enter weight based rates (one per line). Format: max_weight|cost. "
-"Example: 1|100 means up to 1 %s costs 100. Leave empty to use default price."
-msgstr ""
-"Opțional: Introduceți tarife bazate pe ponderare (unul pe linie). Format: "
-"max_weight|cost. Exemplu: 1|100 înseamnă că până la 1 %s costă 100. Lăsați "
-"câmpul gol pentru a utiliza prețul implicit."
+msgid "Optional: Enter weight based rates (one per line). Format: max_weight|cost. Example: 1|100 means up to 1 %s costs 100. Leave empty to use default price."
+msgstr "Opțional: Introduceți tarife bazate pe ponderare (unul pe linie). Format: max_weight|cost. Exemplu: 1|100 înseamnă că până la 1 %s costă 100. Lăsați câmpul gol pentru a utiliza prețul implicit."
 
 #: includes/admin/class-gls-shipping-label-migration.php:395
 msgid "Order not found."
@@ -843,36 +784,18 @@ msgid "Package count must be at least 1."
 msgstr "Numărul de pachete trebuie să fie cel puțin 1."
 
 #: includes/methods/class-gls-shipping-method.php:199
-msgid ""
-"Parcel info printed on label. Use placeholders: {{order_id}}, "
-"{{customer_comment}}, {{customer_name}}, {{customer_email}}, "
-"{{customer_phone}}, {{order_total}}, {{shipping_method}}."
-msgstr ""
-"Informațiile despre colet sunt tipărite pe etichetă. Folosiți provizorii: "
-"{{order_id}}, {{customer_comment}}, {{customer_name}}, {{customer_email}}, "
-"{{customer_phone}}, {{order_total}}, {{shipping_method}}."
+msgid "Parcel info printed on label. Use placeholders: {{order_id}}, {{customer_comment}}, {{customer_name}}, {{customer_email}}, {{customer_phone}}, {{order_total}}, {{shipping_method}}."
+msgstr "Informațiile despre colet sunt tipărite pe etichetă. Folosiți provizorii: {{order_id}}, {{customer_comment}}, {{customer_name}}, {{customer_email}}, {{customer_phone}}, {{order_total}}, {{shipping_method}}."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker-zones.php:24
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:22
-msgid ""
-"Parcel Shop Delivery (PSD) service that ships parcels to the GLS Locker. GLS "
-"Parcel Locker can be selected from the interactive GLS Parcel Shop and GLS "
-"Locker finder map."
-msgstr ""
-"Serviciul de livrare Parcel Shop (PSD) care expediază colete către GLS "
-"Locker. GLS Parcel Locker poate fi selectat de pe harta interactivă de "
-"căutare a GLS Parcel Shop și GLS Locker."
+msgid "Parcel Shop Delivery (PSD) service that ships parcels to the GLS Locker. GLS Parcel Locker can be selected from the interactive GLS Parcel Shop and GLS Locker finder map."
+msgstr "Serviciul de livrare Parcel Shop (PSD) care expediază colete către GLS Locker. GLS Parcel Locker poate fi selectat de pe harta interactivă de căutare a GLS Parcel Shop și GLS Locker."
 
 #: includes/methods/class-gls-shipping-method-parcel-shop-zones.php:24
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:22
-msgid ""
-"Parcel Shop Delivery (PSD) service that ships parcels to the GLS Parcel Shop."
-" GLS Parcel Shop can be selected from the interactive GLS Parcel Shop and "
-"GLS Locker finder map."
-msgstr ""
-"Serviciul de livrare colete (PSD) care expediază colete către magazinul de "
-"colete GLS. GLS Parcel Shop poate fi selectat de pe harta interactivă GLS "
-"Parcel Shop și GLS Locker."
+msgid "Parcel Shop Delivery (PSD) service that ships parcels to the GLS Parcel Shop. GLS Parcel Shop can be selected from the interactive GLS Parcel Shop and GLS Locker finder map."
+msgstr "Serviciul de livrare colete (PSD) care expediază colete către magazinul de colete GLS. GLS Parcel Shop poate fi selectat de pe harta interactivă GLS Parcel Shop și GLS Locker."
 
 #: includes/methods/class-gls-shipping-method-zones.php:24
 #: includes/methods/class-gls-shipping-method.php:24
@@ -935,13 +858,13 @@ msgstr "Istoric ridicări"
 msgid "Pickup ID"
 msgstr "ID ridicare"
 
-#: includes/blocks/class-gls-blocks-integration.php:121
+#: includes/blocks/class-gls-blocks-integration.php:148
 #: includes/public/class-gls-shipping-assets.php:69
 #: includes/public/class-gls-shipping-assets.php:147
 msgid "Pickup Location"
 msgstr "Locație ridicare"
 
-#: includes/admin/class-gls-shipping-order.php:627
+#: includes/admin/class-gls-shipping-order.php:655
 msgid "Pickup location updated successfully"
 msgstr "Locația de ridicare a fost actualizată cu succes"
 
@@ -957,13 +880,11 @@ msgstr "Ridicarea a fost programată cu succes!"
 msgid "Pickup To"
 msgstr "Ridicare până la"
 
-#: includes/blocks/class-gls-blocks-integration.php:125
-#: includes/blocks/class-gls-blocks-integration.php:216
+#: includes/blocks/class-gls-blocks-integration.php:152
+#: includes/blocks/class-gls-blocks-integration.php:248
 #: includes/public/class-gls-shipping-checkout.php:68
 msgid "Please select a parcel locker/shop by clicking on Select Parcel button."
-msgstr ""
-"Vă rugăm să selectați un locker/parcel shop, făcând clic pe butonul "
-"Selectați coletul."
+msgstr "Vă rugăm să selectați un locker/parcel shop, făcând clic pe butonul Selectați coletul."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:111
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:111
@@ -975,7 +896,7 @@ msgstr "Polonia"
 msgid "Portugal"
 msgstr "Portugalia"
 
-#: includes/admin/class-gls-shipping-order.php:146
+#: includes/admin/class-gls-shipping-order.php:174
 msgid "Print Label"
 msgstr "Tipărire etichetă"
 
@@ -983,8 +904,8 @@ msgstr "Tipărire etichetă"
 msgid "Print Position"
 msgstr "Poziție de imprimare"
 
-#: includes/admin/class-gls-shipping-order.php:158
-#: includes/admin/class-gls-shipping-order.php:222
+#: includes/admin/class-gls-shipping-order.php:186
+#: includes/admin/class-gls-shipping-order.php:250
 msgid "Print Position:"
 msgstr "Poziția de imprimare:"
 
@@ -992,7 +913,7 @@ msgstr "Poziția de imprimare:"
 msgid "Production"
 msgstr "Producție"
 
-#: includes/admin/class-gls-shipping-order.php:192
+#: includes/admin/class-gls-shipping-order.php:220
 msgid "Regenerate Shipping Label"
 msgstr "Regenerați eticheta de expediere"
 
@@ -1015,11 +936,8 @@ msgid "Sandbox"
 msgstr "Sandbox"
 
 #: includes/admin/class-gls-shipping-pickup.php:160
-msgid ""
-"Schedule a pickup request with GLS to collect packages from your location."
-msgstr ""
-"Programați o cerere de ridicare cu GLS pentru a colecta pachetele de la "
-"locația dvs."
+msgid "Schedule a pickup request with GLS to collect packages from your location."
+msgstr "Programați o cerere de ridicare cu GLS pentru a colecta pachetele de la locația dvs."
 
 #: includes/admin/class-gls-shipping-pickup.php:137
 #: includes/admin/class-gls-shipping-pickup.php:227
@@ -1032,12 +950,12 @@ msgstr "Programați ridicarea"
 msgid "Select countries to support for this shipping method."
 msgstr "Selectați țările pentru care să suportați această metodă de transport."
 
-#: includes/blocks/class-gls-blocks-integration.php:119
+#: includes/blocks/class-gls-blocks-integration.php:146
 #: includes/public/class-gls-shipping-checkout.php:102
 msgid "Select Parcel Locker"
 msgstr "Selectați caseta pentru colete"
 
-#: includes/blocks/class-gls-blocks-integration.php:120
+#: includes/blocks/class-gls-blocks-integration.php:147
 #: includes/public/class-gls-shipping-checkout.php:104
 msgid "Select Parcel Shop"
 msgstr "Selectați magazinul de colete"
@@ -1085,17 +1003,13 @@ msgstr "Serbia"
 msgid "Shipping Price"
 msgstr "Preț de livrare"
 
-#: includes/methods/class-gls-shipping-method.php:330
+#: includes/methods/class-gls-shipping-method.php:349
 msgid "Show GLS Logo"
 msgstr "Afișați logo-ul GLS"
 
-#: includes/methods/class-gls-shipping-method.php:333
-msgid ""
-"Show the GLS logo icon next to all GLS shipping methods in cart and checkout "
-"to highlight your GLS delivery options."
-msgstr ""
-"Afișați pictograma cu sigla GLS lângă toate metodele de livrare GLS în coș "
-"și la finalizarea comenzii pentru a evidenția opțiunile de livrare GLS."
+#: includes/methods/class-gls-shipping-method.php:352
+msgid "Show the GLS logo icon next to all GLS shipping methods in cart and checkout to highlight your GLS delivery options."
+msgstr "Afișați pictograma cu sigla GLS lângă toate metodele de livrare GLS în coș și la finalizarea comenzii pentru a evidenția opțiunile de livrare GLS."
 
 #: includes/methods/class-gls-shipping-method.php:124
 msgid "Single GLS Account"
@@ -1113,53 +1027,44 @@ msgstr "Slovacia"
 msgid "Slovenia"
 msgstr "Slovenia"
 
-#: includes/methods/class-gls-shipping-method.php:293
+#: includes/methods/class-gls-shipping-method.php:312
 msgid "SM1 Service Text"
 msgstr "SM1 Serviciu Text"
 
-#: includes/admin/class-gls-shipping-order.php:548
+#: includes/admin/class-gls-shipping-order.php:576
 msgid "SMS Pre-advice (SM2)"
 msgstr "SMS pre-aviz (SM2)"
 
-#: includes/methods/class-gls-shipping-method.php:298
+#: includes/methods/class-gls-shipping-method.php:317
 msgid "SMS Pre-advice Service (SM2)"
 msgstr "SMS Pre-advice Service (SM2)"
 
-#: includes/admin/class-gls-shipping-order.php:539
-#: includes/methods/class-gls-shipping-method.php:283
+#: includes/admin/class-gls-shipping-order.php:567
+#: includes/methods/class-gls-shipping-method.php:302
 msgid "SMS Service (SM1)"
 msgstr "SMS Service (SM1)"
 
-#: includes/methods/class-gls-shipping-method.php:291
+#: includes/methods/class-gls-shipping-method.php:310
 msgid "SMS Service Text"
 msgstr "SMS Service Text"
 
-#: includes/methods/class-gls-shipping-method.php:294
-msgid ""
-"SMS Service Text. Variables that can be used in the text of the SMS: "
-"#ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
-msgstr ""
-"Serviciul SMS Text. Variabile care pot fi utilizate în textul SMS-ului: "
-"#ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
+#: includes/methods/class-gls-shipping-method.php:313
+msgid "SMS Service Text. Variables that can be used in the text of the SMS: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
+msgstr "Serviciul SMS Text. Variabile care pot fi utilizate în textul SMS-ului: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#."
 
-#: includes/methods/class-gls-shipping-method.php:286
+#: includes/methods/class-gls-shipping-method.php:305
 msgid "SMS service with a maximum text length of 130."
 msgstr "Serviciul SMS cu o lungime maximă a textului de 130 de caractere."
 
-#: includes/admin/class-gls-shipping-order.php:574
+#: includes/admin/class-gls-shipping-order.php:602
 msgid "SMS Text:"
 msgstr "Text SMS:"
 
 #. translators: %s: comma-separated list of product names that have shipping restrictions
-#: includes/admin/class-gls-shipping-product-restrictions.php:130
+#: includes/admin/class-gls-shipping-product-restrictions.php:206
 #, php-format
-msgid ""
-"Some products in your cart (%s) cannot be shipped to parcel shops or parcel "
-"lockers. Only standard delivery options are available."
-msgstr ""
-"Unele produse din coșul dvs. (%s) nu pot fi livrate către magazine de colete "
-"sau dulapuri pentru colete. Sunt disponibile doar opțiunile de livrare "
-"standard."
+msgid "Some products in your cart (%s) cannot be shipped to parcel shops or parcel lockers. Only standard delivery options are available."
+msgstr "Unele produse din coșul dvs. (%s) nu pot fi livrate către magazine de colete sau dulapuri pentru colete. Sunt disponibile doar opțiunile de livrare standard."
 
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:102
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:102
@@ -1170,16 +1075,14 @@ msgstr "Spania"
 msgid "Status"
 msgstr "Stare"
 
-#: includes/methods/class-gls-shipping-method.php:318
-#: includes/methods/class-gls-shipping-method.php:320
+#: includes/methods/class-gls-shipping-method.php:337
+#: includes/methods/class-gls-shipping-method.php:339
 msgid "Store Phone Number"
 msgstr "Numărul de telefon al magazinului"
 
-#: includes/methods/class-gls-shipping-method.php:321
+#: includes/methods/class-gls-shipping-method.php:340
 msgid "Store Phone number that will be sent to GLS as a contact information."
-msgstr ""
-"Stocați numărul de telefon care va fi trimis către GLS ca informații de "
-"contact."
+msgstr "Stocați numărul de telefon care va fi trimis către GLS ca informații de contact."
 
 #: includes/admin/class-gls-shipping-pickup.php:309
 msgid "Success"
@@ -1236,7 +1139,7 @@ msgstr "Actualizat"
 msgid "Username"
 msgstr "Nume utilizator"
 
-#: includes/admin/class-gls-shipping-order.php:579
+#: includes/admin/class-gls-shipping-order.php:607
 msgid "Variables: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#"
 msgstr "Variabile: #ParcelNr#, #COD#, #PickupDate#, #From_Name#, #ClientRef#"
 
@@ -1263,7 +1166,47 @@ msgstr "Nu aveți permisiunea de a descărca etichetele de expediere."
 msgid "← Back to History"
 msgstr "← Înapoi la istoric"
 
-#: includes/admin/class-gls-shipping-order.php:179
-#: includes/admin/class-gls-shipping-order.php:243
+#: includes/admin/class-gls-shipping-order.php:207
+#: includes/admin/class-gls-shipping-order.php:271
 msgid "⚙️ Advanced Services"
 msgstr "⚙️ Servicii avansate"
+
+#: includes/admin/class-gls-shipping-order.php:52
+msgid "Order automatically completed after GLS label generation."
+msgstr "Comanda a fost finalizată automat după generarea etichetei GLS."
+
+#: includes/admin/class-gls-shipping-product-restrictions.php:46
+msgid "GLS Free Shipping"
+msgstr "GLS livrare gratuită"
+
+#: includes/admin/class-gls-shipping-product-restrictions.php:47
+msgid "Check this box to offer free shipping on GLS methods when this product is in the cart. Only affects GLS shipping methods."
+msgstr "Bifați această casetă pentru a oferi livrare gratuită prin metodele GLS atunci când acest produs este în coș. Afectează doar metodele de livrare GLS."
+
+#: includes/methods/class-gls-shipping-method.php:235
+msgid "Auto Complete Order"
+msgstr "Finalizează automat comanda"
+
+#: includes/methods/class-gls-shipping-method.php:237
+msgid "Automatically mark order as Completed after label is printed"
+msgstr "Marchează automat comanda ca Finalizată după tipărirea etichetei"
+
+#: includes/methods/class-gls-shipping-method.php:238
+msgid "When enabled, the order status will be set to Completed after a GLS shipping label is successfully generated."
+msgstr "Când este activat, statusul comenzii va fi setat la Finalizat după generarea cu succes a unei etichete de livrare GLS."
+
+#: includes/methods/class-gls-shipping-method.php:243
+msgid "Free Shipping Product Condition"
+msgstr "Condiție de livrare gratuită pe produs"
+
+#: includes/methods/class-gls-shipping-method.php:245
+msgid "Controls when the per-product \"GLS Free Shipping\" flag triggers free GLS shipping. ANY: free shipping if at least one cart item is flagged. ALL: free shipping only if every cart item is flagged."
+msgstr "Controlează când marcajul \"GLS livrare gratuită\" pe produs declanșează livrarea gratuită GLS. ANY: livrare gratuită dacă cel puțin un produs din coș este marcat. ALL: livrare gratuită doar dacă fiecare produs din coș este marcat."
+
+#: includes/methods/class-gls-shipping-method.php:249
+msgid "ANY – at least one product in cart is flagged"
+msgstr "ANY – cel puțin un produs din coș este marcat"
+
+#: includes/methods/class-gls-shipping-method.php:250
+msgid "ALL – every product in cart must be flagged"
+msgstr "ALL – fiecare produs din coș trebuie să fie marcat"

@@ -33,14 +33,21 @@ class GLS_Shipping_Product_Restrictions
         global $post;
 
         echo '<div class="options_group">';
-        
+
         woocommerce_wp_checkbox(array(
             'id' => '_gls_restrict_parcel_shipping',
             'label' => __('GLS Shipping Restriction', 'gls-shipping-for-woocommerce'),
             'description' => __('Check this box if this product cannot be shipped to parcel shops or parcel lockers. This will hide those shipping options when this product is in the cart.', 'gls-shipping-for-woocommerce'),
             'desc_tip' => true,
         ));
-        
+
+        woocommerce_wp_checkbox(array(
+            'id' => '_gls_free_shipping',
+            'label' => __('GLS Free Shipping', 'gls-shipping-for-woocommerce'),
+            'description' => __('Check this box to offer free shipping on GLS methods when this product is in the cart. Only affects GLS shipping methods.', 'gls-shipping-for-woocommerce'),
+            'desc_tip' => true,
+        ));
+
         echo '</div>';
     }
 
@@ -52,6 +59,10 @@ class GLS_Shipping_Product_Restrictions
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for product meta
         $restrict_parcel_shipping = isset($_POST['_gls_restrict_parcel_shipping']) ? 'yes' : 'no';
         update_post_meta($post_id, '_gls_restrict_parcel_shipping', $restrict_parcel_shipping);
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for product meta
+        $free_shipping = isset($_POST['_gls_free_shipping']) ? 'yes' : 'no';
+        update_post_meta($post_id, '_gls_free_shipping', $free_shipping);
     }
 
     /**
@@ -63,30 +74,96 @@ class GLS_Shipping_Product_Restrictions
             return $rates;
         }
 
-        $has_restricted_products = $this->cart_has_restricted_products();
-        
-        if (!$has_restricted_products) {
-            return $rates;
-        }
+        if ($this->cart_has_restricted_products()) {
+            // Remove parcel shop and parcel locker shipping methods
+            $restricted_methods = array(
+                'gls_shipping_method_parcel_shop',
+                'gls_shipping_method_parcel_locker',
+                'gls_shipping_method_parcel_shop_zones',
+                'gls_shipping_method_parcel_locker_zones'
+            );
 
-        // Remove parcel shop and parcel locker shipping methods
-        $restricted_methods = array(
-            'gls_shipping_method_parcel_shop',
-            'gls_shipping_method_parcel_locker',
-            'gls_shipping_method_parcel_shop_zones',
-            'gls_shipping_method_parcel_locker_zones'
-        );
-
-        foreach ($rates as $rate_key => $rate) {
-            foreach ($restricted_methods as $restricted_method) {
-                if (strpos($rate_key, $restricted_method) === 0) {
-                    unset($rates[$rate_key]);
-                    break;
+            foreach ($rates as $rate_key => $rate) {
+                foreach ($restricted_methods as $restricted_method) {
+                    if (strpos($rate_key, $restricted_method) === 0) {
+                        unset($rates[$rate_key]);
+                        break;
+                    }
                 }
             }
         }
 
+        if ($this->cart_has_free_shipping_products()) {
+            $rates = $this->apply_free_shipping_to_gls_rates($rates);
+        }
+
         return $rates;
+    }
+
+    /**
+     * Zero out the cost on all GLS shipping rates.
+     */
+    private function apply_free_shipping_to_gls_rates($rates)
+    {
+        $gls_method_ids = array(
+            'gls_shipping_method',
+            'gls_shipping_method_zones',
+            'gls_shipping_method_parcel_shop',
+            'gls_shipping_method_parcel_locker',
+            'gls_shipping_method_parcel_shop_zones',
+            'gls_shipping_method_parcel_locker_zones',
+        );
+
+        foreach ($rates as $rate_key => $rate) {
+            if (!in_array($rate->get_method_id(), $gls_method_ids, true)) {
+                continue;
+            }
+
+            $rate->set_cost(0);
+
+            $taxes = $rate->get_taxes();
+            if (is_array($taxes)) {
+                $rate->set_taxes(array_fill_keys(array_keys($taxes), 0));
+            }
+        }
+
+        return $rates;
+    }
+
+    /**
+     * Check if cart qualifies for free GLS shipping based on the per-product flag
+     * and the global ANY/ALL condition configured in the GLS method settings.
+     */
+    private function cart_has_free_shipping_products()
+    {
+        if (!WC()->cart) {
+            return false;
+        }
+
+        $cart = WC()->cart->get_cart();
+        if (empty($cart)) {
+            return false;
+        }
+
+        $settings = get_option('woocommerce_gls_shipping_method_settings', array());
+        $condition = isset($settings['free_shipping_product_condition']) ? $settings['free_shipping_product_condition'] : 'any';
+
+        if ($condition === 'all') {
+            foreach ($cart as $cart_item) {
+                if (get_post_meta($cart_item['product_id'], '_gls_free_shipping', true) !== 'yes') {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        foreach ($cart as $cart_item) {
+            if (get_post_meta($cart_item['product_id'], '_gls_free_shipping', true) === 'yes') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
