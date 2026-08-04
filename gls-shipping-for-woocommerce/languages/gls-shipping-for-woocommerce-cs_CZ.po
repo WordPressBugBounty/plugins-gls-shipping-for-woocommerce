@@ -428,8 +428,6 @@ msgstr "ID neúspěšných objednávek: %s"
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:134
 msgid "Filter locker locations on the map for Hungary. Only applies when country is Hungary."
 msgstr "Filtrovat umístění boxů na mapě pro Maďarsko. Platí pouze pokud je země Maďarsko."
-"Filtrovat umístění výdejních boxů na mapě pro Maďarsko. Platí pouze v případě, že je země Maďarsko.\n"
-""
 
 #: includes/methods/class-gls-shipping-method-parcel-locker.php:103
 #: includes/methods/class-gls-shipping-method-parcel-shop.php:103
@@ -484,16 +482,12 @@ msgstr "Německo"
 #, php-format
 msgid "Get Parcel Status #%1$d (%2$s)"
 msgstr "Získat stav zásilky #%1$d (%2$s)"
-"Získat stav zásilky #%1$d (%2$s)\n"
-""
 
 #. translators: %s: tracking number
 #: includes/admin/class-gls-shipping-order.php:231
 #, php-format
 msgid "Get Parcel Status (%s)"
 msgstr "Získat stav zásilky (%s)"
-"Získat stav zásilky (%s)\n"
-""
 
 #: includes/methods/class-gls-shipping-method.php:129
 msgid "GLS Accounts"

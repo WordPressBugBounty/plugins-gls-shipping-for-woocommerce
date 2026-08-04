@@ -488,8 +488,6 @@ msgstr "Obține statusul coletului #%1$d (%2$s)"
 #, php-format
 msgid "Get Parcel Status (%s)"
 msgstr "Obține statusul coletului (%s)"
-"Obține statusul coletului (%s)\n"
-""
 
 #: includes/methods/class-gls-shipping-method.php:129
 msgid "GLS Accounts"

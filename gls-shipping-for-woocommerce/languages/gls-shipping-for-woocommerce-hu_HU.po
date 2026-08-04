@@ -485,8 +485,6 @@ msgstr "Csomag státusz lekérdezése #%1$d (%2$s)"
 #, php-format
 msgid "Get Parcel Status (%s)"
 msgstr "Csomag állapotának lekérdezése (%s)"
-"Csomag státusz lekérdezése (%s)\n"
-""
 
 #: includes/methods/class-gls-shipping-method.php:129
 msgid "GLS Accounts"
