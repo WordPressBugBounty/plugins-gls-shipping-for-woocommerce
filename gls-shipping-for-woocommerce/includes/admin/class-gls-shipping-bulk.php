@@ -146,11 +146,14 @@ class GLS_Shipping_Bulk
                     if (!empty($body['PrintLabelsInfoList'])) {
                         // Group tracking codes by order ID to handle multiple parcels per order
                         $orders_data = array();
-                        
+
+                        // Map each parcel back to its order by matching the reference we sent.
+                        $reference_map = $this->build_client_reference_map($order_ids);
+
                         foreach ($body['PrintLabelsInfoList'] as $labelInfo) {
                             if (isset($labelInfo['ClientReference'])) {
-                                $order_id = str_replace('Order:', '', $labelInfo['ClientReference']);
-                                
+                                $order_id = GLS_Shipping_API_Service::resolve_order_id_from_reference($labelInfo['ClientReference'], $reference_map);
+
                                 if (!isset($orders_data[$order_id])) {
                                     $orders_data[$order_id] = array(
                                         'tracking_codes' => array(),
@@ -230,6 +233,29 @@ class GLS_Shipping_Bulk
         }
     
         return $redirect;
+    }
+
+    /**
+     * Build a map of expected ClientReference => order ID for the given orders,
+     * using the same "Order Reference Format" setting that was used to send them.
+     *
+     * @param array $order_ids Order IDs included in the bulk action.
+     * @return array Map of client reference string => order ID.
+     */
+    private function build_client_reference_map($order_ids)
+    {
+        $settings = get_option('woocommerce_gls_shipping_method_settings', array());
+        $reference_format = !empty($settings['client_reference_format'])
+            ? $settings['client_reference_format']
+            : 'Order:{{order_id}}';
+
+        $reference_map = array();
+        foreach ($order_ids as $order_id) {
+            $reference = str_replace('{{order_id}}', $order_id, $reference_format);
+            $reference_map[$reference] = $order_id;
+        }
+
+        return $reference_map;
     }
 
     public function bulk_create_print_labels($body)

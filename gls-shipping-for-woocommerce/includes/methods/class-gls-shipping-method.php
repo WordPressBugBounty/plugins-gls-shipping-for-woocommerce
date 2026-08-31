@@ -47,6 +47,38 @@ function gls_shipping_method_init()
 			}
 
 			/**
+			 * Validate the "Order Reference Format" field on save.
+			 *
+			 * The {{order_id}} placeholder is REQUIRED: it is the only piece of the
+			 * reference that lets us map GLS parcels back to their WooCommerce order
+			 * (needed for bulk-print tracking numbers). If the merchant removes it,
+			 * we re-add it and show a notice, so the reference can never become
+			 * un-parseable.
+			 *
+			 * WooCommerce's Settings API auto-calls validate_{key}_field on save.
+			 *
+			 * @param string $key   Field key.
+			 * @param string $value Submitted value.
+			 * @return string Sanitized value guaranteed to contain {{order_id}}.
+			 */
+			public function validate_client_reference_format_field($key, $value)
+			{
+				$value = $this->validate_text_field($key, $value);
+
+				if (strpos($value, '{{order_id}}') === false) {
+					$value = ('' === trim($value)) ? 'Order:{{order_id}}' : rtrim($value) . ' {{order_id}}';
+
+					if (class_exists('WC_Admin_Settings')) {
+						WC_Admin_Settings::add_error(
+							__('GLS: "Order Reference Format" must contain {{order_id}}. It was added automatically so parcel tracking numbers can be matched to their orders.', 'gls-shipping-for-woocommerce')
+						);
+					}
+				}
+
+				return $value;
+			}
+
+			/**
 			 * Initializes form fields for the GLS Shipping Method settings.
 			 *
 			 * Defines the structure and default values for the settings form fields

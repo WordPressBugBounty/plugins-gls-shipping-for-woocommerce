@@ -31,6 +31,26 @@ class GLS_Shipping_API_Service
 		return GLS_Shipping_Account_Helper::get_account_setting($key);
 	}
 
+	/**
+	 * Resolve a WooCommerce order ID from a GLS ClientReference.
+	 *
+	 * @param string $client_reference ClientReference returned by the GLS API.
+	 * @param array  $reference_map     Optional map of sent reference => order ID.
+	 * @return string Resolved order ID (or the raw reference if nothing matched).
+	 */
+	public static function resolve_order_id_from_reference($client_reference, $reference_map = array())
+	{
+		if (isset($reference_map[$client_reference])) {
+			return $reference_map[$client_reference];
+		}
+
+		if (preg_match('/(\d+)(?!.*\d)/', $client_reference, $matches)) {
+			return $matches[1];
+		}
+
+		return $client_reference;
+	}
+
 
 	public function get_api_url($serviceName, $methodName, $format = 'json')
 	{
@@ -124,7 +144,7 @@ class GLS_Shipping_API_Service
 				
 				// Process order-specific errors
 				foreach ($error['ClientReferenceList'] as $clientRef) {
-					$order_id = str_replace('Order:', '', $clientRef);
+					$order_id = self::resolve_order_id_from_reference($clientRef);
 					$failed_orders[] = [
 						'order_id' => $order_id,
 						'error_message' => $error_message,
