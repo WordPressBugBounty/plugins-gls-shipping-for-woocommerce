@@ -261,6 +261,7 @@ max_weight|cost',
 							'A4_4x1'  => 'A4_4x1',
 							'Connect' => 'Connect',
 							'Thermo'  => 'Thermo',
+							'ShipItThermoPdf' => 'ShipIt',
 						),
 					),
 					'auto_complete_order' => array(
